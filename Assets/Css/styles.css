@@ -284,6 +284,26 @@ body {
 }
 
 
+
+/* Estilos para la sección de productos más comprados */
+.producto-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.producto-card .product-img {
+    transition: transform 0.3s ease;
+}
+
+.producto-card:hover .product-img {
+    transform: scale(1.05);
+}
+
+
 /* Adaptación para dispositivos móviles */
 
 @media (max-width: 768px) {
