@@ -1,17 +1,295 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="Assets/Css/styles.css">
-</head>
-<body>
-    
+  <head>
+    <meta charset="UTF-8" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>VidaFit | Inicio</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="./Assets/Css/styles.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="./Assets/Css/productos-destacados.css"
+    />
+  </head>
+
+  <body>
+    <!-- CONSERVA AQUÍ EL HEADER Y EL BANNER DEL EQUIPO -->
+
+    <main>
+      <section
+        class="vf-destacados"
+        id="productos-destacados"
+        aria-labelledby="vf-destacados-titulo"
+      >
+        <header class="vf-destacados__encabezado">
+          <div>
+            <p class="vf-destacados__etiqueta">
+              Selección VidaFit
+            </p>
+
+            <h2 id="vf-destacados-titulo">
+              Fórmulas para acompañar
+              <em>cada parte de tu proceso</em>
+            </h2>
+          </div>
+
+          <div class="vf-destacados__resumen">
+            <p>
+              Suplementos creados para acompañar tu entrenamiento,
+              bienestar y recuperación.
+            </p>
+
+            <a
+              class="vf-destacados__catalogo"
+              href="./catalogo.html"
+            >
+              Explorar el catálogo
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </header>
+
+        <div class="vf-destacados__grid">
+          <!-- CREATINA -->
+
+          <article
+            class="vf-destacados__producto"
+            data-producto="creatina"
+            data-nombre="Creatina Monohidrato"
+          >
+            <figure class="vf-destacados__imagen">
+              <img
+                src="./Assets/img/productos-destacados/creatina.png"
+                alt="Creatina Monohidrato VidaFit"
+              />
+
+              <figcaption class="vf-destacados__distintivo">
+                Más vendido
+              </figcaption>
+            </figure>
+
+            <div class="vf-destacados__contenido">
+              <p class="vf-destacados__categoria">
+                Rendimiento
+              </p>
+
+              <h3>Creatina Monohidrato</h3>
+
+              <div
+                class="vf-destacados__calificacion"
+                aria-label="Calificación 5 de 5"
+              >
+                <span class="vf-destacados__estrellas">
+                  ★★★★★
+                </span>
+
+                <small>5.0 (128)</small>
+              </div>
+
+              <div class="vf-destacados__acciones">
+                <div class="vf-destacados__precio">
+                  <small>Precio</small>
+                  <strong>$79.900</strong>
+                </div>
+
+                <button
+                  class="vf-destacados__agregar"
+                  type="button"
+                  aria-label="Agregar Creatina Monohidrato"
+                  aria-pressed="false"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROTEÍNA -->
+
+          <article
+            class="vf-destacados__producto"
+            data-producto="proteina"
+            data-nombre="Proteína Whey"
+          >
+            <figure class="vf-destacados__imagen">
+              <img
+                src="./Assets/img/productos-destacados/proteina.png"
+                alt="Proteína Whey VidaFit"
+              />
+
+              <figcaption class="vf-destacados__distintivo">
+                Favorito
+              </figcaption>
+            </figure>
+
+            <div class="vf-destacados__contenido">
+              <p class="vf-destacados__categoria">
+                Nutrición
+              </p>
+
+              <h3>Proteína Whey</h3>
+
+              <div
+                class="vf-destacados__calificacion"
+                aria-label="Calificación 5 de 5"
+              >
+                <span class="vf-destacados__estrellas">
+                  ★★★★★
+                </span>
+
+                <small>4.9 (96)</small>
+              </div>
+
+              <div class="vf-destacados__acciones">
+                <div class="vf-destacados__precio">
+                  <small>Precio</small>
+                  <strong>$139.900</strong>
+                </div>
+
+                <button
+                  class="vf-destacados__agregar"
+                  type="button"
+                  aria-label="Agregar Proteína Whey"
+                  aria-pressed="false"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- OMEGA 3 -->
+
+          <article
+            class="vf-destacados__producto"
+            data-producto="omega"
+            data-nombre="Omega 3"
+          >
+            <figure class="vf-destacados__imagen">
+              <img
+                src="./Assets/img/productos-destacados/omega.png"
+                alt="Omega 3 VidaFit"
+              />
+            </figure>
+
+            <div class="vf-destacados__contenido">
+              <p class="vf-destacados__categoria">
+                Bienestar
+              </p>
+
+              <h3>Omega 3</h3>
+
+              <div
+                class="vf-destacados__calificacion"
+                aria-label="Calificación 4 de 5"
+              >
+                <span class="vf-destacados__estrellas">
+                  ★★★★☆
+                </span>
+
+                <small>4.7 (74)</small>
+              </div>
+
+              <div class="vf-destacados__acciones">
+                <div class="vf-destacados__precio">
+                  <small>Precio</small>
+                  <strong>$59.900</strong>
+                </div>
+
+                <button
+                  class="vf-destacados__agregar"
+                  type="button"
+                  aria-label="Agregar Omega 3"
+                  aria-pressed="false"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- GLICINATO DE MAGNESIO -->
+
+          <article
+            class="vf-destacados__producto"
+            data-producto="glicinato"
+            data-nombre="Glicinato de Magnesio"
+          >
+            <figure class="vf-destacados__imagen">
+              <img
+                src="./Assets/img/productos-destacados/glicinato.png"
+                alt="Glicinato de Magnesio VidaFit"
+              />
+            </figure>
+
+            <div class="vf-destacados__contenido">
+              <p class="vf-destacados__categoria">
+                Recuperación
+              </p>
+
+              <h3>Glicinato de Magnesio</h3>
+
+              <div
+                class="vf-destacados__calificacion"
+                aria-label="Calificación 5 de 5"
+              >
+                <span class="vf-destacados__estrellas">
+                  ★★★★★
+                </span>
+
+                <small>4.8 (83)</small>
+              </div>
+
+              <div class="vf-destacados__acciones">
+                <div class="vf-destacados__precio">
+                  <small>Precio</small>
+                  <strong>$64.900</strong>
+                </div>
+
+                <button
+                  class="vf-destacados__agregar"
+                  type="button"
+                  aria-label="Agregar Glicinato de Magnesio"
+                  aria-pressed="false"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p
+          class="vf-destacados__mensaje"
+          id="vf-destacados-mensaje"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </section>
+    </main>
+
+    <!-- CONSERVA AQUÍ EL FOOTER DEL EQUIPO -->
+
+    <script
+      src="./Assets/Js/productos-destacados.js"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    ></script>
+  </body>
 </html>
