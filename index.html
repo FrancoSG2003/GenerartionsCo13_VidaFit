@@ -10,16 +10,27 @@
 
     <title>VidaFit | Inicio</title>
 
+    <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
     />
 
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <!-- CSS general del equipo -->
     <link
       rel="stylesheet"
       href="./Assets/Css/styles.css"
     />
 
+    <!-- CSS de productos destacados -->
     <link
       rel="stylesheet"
       href="./Assets/Css/productos-destacados.css"
@@ -27,9 +38,521 @@
   </head>
 
   <body>
-    <!-- CONSERVA AQUÍ EL HEADER Y EL BANNER DEL EQUIPO -->
+    <!-- =============================================
+         NAVEGACIÓN DEL EQUIPO
+         ============================================= -->
+
+    <header>
+      <nav
+        id="nav"
+        class="navbar navbar-expand-lg bg-secondary px-4 py-2 fixed-top"
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./index.html">
+            <img
+              class="logo"
+              src="./Assets/img/VidaFit logo 1.png"
+              alt="Logo VidaFit"
+              width="100"
+            />
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Abrir navegación"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div
+            class="collapse navbar-collapse"
+            id="navbarNav"
+          >
+            <ul
+              class="navbar-nav ms-auto align-items-center gap-3"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="./index.html"
+                >
+                  Inicio
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="./catalogo.html"
+                >
+                  Productos
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="./sobreNosotros.html"
+                >
+                  Nosotros
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="./contacto.html"
+                >
+                  Contacto
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#equipo"
+                  aria-label="Perfil de usuario"
+                >
+                  <i
+                    class="bi bi-person-fill"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
 
     <main>
+      <!-- =============================================
+           CARRUSEL DEL EQUIPO
+           ============================================= -->
+
+      <section
+        id="carruselPrincipal"
+        class="carousel slide carousel-fade carrusel-principal"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+        aria-label="Promociones principales de VidaFit"
+      >
+        <!-- Indicadores -->
+
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carruselPrincipal"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Primera diapositiva"
+          ></button>
+
+          <button
+            type="button"
+            data-bs-target="#carruselPrincipal"
+            data-bs-slide-to="1"
+            aria-label="Segunda diapositiva"
+          ></button>
+
+          <button
+            type="button"
+            data-bs-target="#carruselPrincipal"
+            data-bs-slide-to="2"
+            aria-label="Tercera diapositiva"
+          ></button>
+        </div>
+
+        <!-- Diapositivas -->
+
+        <div class="carousel-inner">
+          <!-- Suplementos -->
+
+          <article
+            class="carousel-item active diapositiva-carrusel carrusel-suplementos"
+          >
+            <div class="container contenido-carrusel">
+              <div class="texto-carrusel">
+                <p class="subtitulo-carrusel">
+                  Suplementos deportivos
+                </p>
+
+                <h1 class="titulo-carrusel">
+                  La energía que te hace falta
+                </h1>
+
+                <p class="descripcion-carrusel">
+                  Encuentra proteínas, creatinas, vitaminas y
+                  suplementos para acompañar tus objetivos.
+                </p>
+
+                <a
+                  href="./catalogo.html"
+                  class="btn boton-carrusel"
+                >
+                  Ver catálogo
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Entrenamiento -->
+
+          <article
+            class="carousel-item diapositiva-carrusel carrusel-entrenamiento"
+          >
+            <div class="container contenido-carrusel">
+              <div class="texto-carrusel">
+                <p class="subtitulo-carrusel">
+                  Rendimiento y entrenamiento
+                </p>
+
+                <h2 class="titulo-carrusel">
+                  Lleva tu rendimiento al siguiente nivel
+                </h2>
+
+                <p class="descripcion-carrusel">
+                  Descubre accesorios y productos pensados para
+                  complementar cada uno de tus entrenamientos.
+                </p>
+
+                <a
+                  href="./catalogo.html"
+                  class="btn boton-carrusel"
+                >
+                  Explorar productos
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Bienestar -->
+
+          <article
+            class="carousel-item diapositiva-carrusel carrusel-bienestar"
+          >
+            <div class="container contenido-carrusel">
+              <div class="texto-carrusel">
+                <p class="subtitulo-carrusel">
+                  Entrenamiento y bienestar
+                </p>
+
+                <h2 class="titulo-carrusel">
+                  Todo lo que necesitas para avanzar
+                </h2>
+
+                <p class="descripcion-carrusel">
+                  Compra productos fitness de forma sencilla,
+                  segura y desde cualquier lugar.
+                </p>
+
+                <a
+                  href="./catalogo.html"
+                  class="btn boton-carrusel"
+                >
+                  Comprar ahora
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Controles -->
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carruselPrincipal"
+          data-bs-slide="prev"
+        >
+          <span
+            class="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span class="visually-hidden">
+            Diapositiva anterior
+          </span>
+        </button>
+
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carruselPrincipal"
+          data-bs-slide="next"
+        >
+          <span
+            class="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span class="visually-hidden">
+            Siguiente diapositiva
+          </span>
+        </button>
+      </section>
+
+
+      <!-- =============================================
+           CATEGORÍAS DEL EQUIPO
+           ============================================= -->
+
+      <section
+        id="categorias"
+        class="seccion-categorias py-5"
+      >
+        <div class="container">
+          <h2 class="titulo-categorias text-center">
+            <strong>Explora nuestras categorías</strong>
+          </h2>
+
+          <div class="row">
+            <!-- Proteínas -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <article
+                class="card categoria-card h-100 border-0"
+              >
+                <img
+                  src="./Assets/img/proteina-bg.png"
+                  class="categoria-fondo"
+                  alt="Proteínas"
+                />
+
+                <div class="overlay-categoria"></div>
+
+                <div class="contenido-categoria">
+                  <h3 class="card-title">
+                    Proteínas
+                  </h3>
+
+                  <p class="card-text"></p>
+
+                  <a
+                    href="./catalogo.html"
+                    class="btn btn-categoria"
+                  >
+                    <span>Ver catálogo</span>
+
+                    <span class="icono-categoria">
+                      <i
+                        class="bi bi-arrow-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Creatinas -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <article
+                class="card categoria-card h-100 border-0"
+              >
+                <img
+                  src="./Assets/img/creatina-bg.png"
+                  class="categoria-fondo"
+                  alt="Creatinas"
+                />
+
+                <div class="overlay-categoria"></div>
+
+                <div class="contenido-categoria">
+                  <h3 class="card-title">
+                    Creatinas
+                  </h3>
+
+                  <p class="card-text"></p>
+
+                  <a
+                    href="./catalogo.html"
+                    class="btn btn-categoria"
+                  >
+                    <span>Ver catálogo</span>
+
+                    <span class="icono-categoria">
+                      <i
+                        class="bi bi-arrow-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Pre Entreno -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <article
+                class="card categoria-card h-100 border-0"
+              >
+                <img
+                  src="./Assets/img/pre-Entreno-bg.png"
+                  class="categoria-fondo"
+                  alt="Pre Entreno"
+                />
+
+                <div class="overlay-categoria"></div>
+
+                <div class="contenido-categoria">
+                  <h3 class="card-title">
+                    Pre Entreno
+                  </h3>
+
+                  <p class="card-text"></p>
+
+                  <a
+                    href="./catalogo.html"
+                    class="btn btn-categoria"
+                  >
+                    <span>Ver catálogo</span>
+
+                    <span class="icono-categoria">
+                      <i
+                        class="bi bi-arrow-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="row py-3">
+            <!-- Vitaminas -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <article
+                class="card categoria-card h-100 border-0"
+              >
+                <img
+                  src="./Assets/img/vitaminas-bg.png"
+                  class="categoria-fondo"
+                  alt="Vitaminas"
+                />
+
+                <div class="overlay-categoria"></div>
+
+                <div class="contenido-categoria">
+                  <h3 class="card-title">
+                    Vitaminas
+                  </h3>
+
+                  <p class="card-text"></p>
+
+                  <a
+                    href="./catalogo.html"
+                    class="btn btn-categoria"
+                  >
+                    <span>Ver catálogo</span>
+
+                    <span class="icono-categoria">
+                      <i
+                        class="bi bi-arrow-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Snacks -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <article
+                class="card categoria-card h-100 border-0"
+              >
+                <img
+                  src="./Assets/img/snacks-bg.png"
+                  class="categoria-fondo"
+                  alt="Snacks saludables"
+                />
+
+                <div class="overlay-categoria"></div>
+
+                <div class="contenido-categoria">
+                  <h3 class="card-title">
+                    Snacks saludables
+                  </h3>
+
+                  <p class="card-text"></p>
+
+                  <a
+                    href="./catalogo.html"
+                    class="btn btn-categoria"
+                  >
+                    <span>Ver catálogo</span>
+
+                    <span class="icono-categoria">
+                      <i
+                        class="bi bi-arrow-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Accesorios -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <article
+                class="card categoria-card h-100 border-0"
+              >
+                <img
+                  src="./Assets/img/Accesorios-bg.png"
+                  class="categoria-fondo"
+                  alt="Accesorios"
+                />
+
+                <div class="overlay-categoria"></div>
+
+                <div class="contenido-categoria">
+                  <h3 class="card-title">
+                    Accesorios
+                  </h3>
+
+                  <p class="card-text"></p>
+
+                  <a
+                    href="./catalogo.html"
+                    class="btn btn-categoria"
+                  >
+                    <span>Ver catálogo</span>
+
+                    <span class="icono-categoria">
+                      <i
+                        class="bi bi-arrow-right"
+                        aria-hidden="true"
+                      ></i>
+                    </span>
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- =============================================
+           PRODUCTOS DESTACADOS DE ESTEFANÍA
+           ============================================= -->
+
       <section
         class="vf-destacados"
         id="productos-destacados"
@@ -64,7 +587,7 @@
         </header>
 
         <div class="vf-destacados__grid">
-          <!-- CREATINA -->
+          <!-- Creatina -->
 
           <article
             class="vf-destacados__producto"
@@ -91,9 +614,12 @@
 
               <div
                 class="vf-destacados__calificacion"
-                aria-label="Calificación 5 de 5"
+                aria-label="Calificación 5 de 5 estrellas"
               >
-                <span class="vf-destacados__estrellas">
+                <span
+                  class="vf-destacados__estrellas"
+                  aria-hidden="true"
+                >
                   ★★★★★
                 </span>
 
@@ -118,7 +644,7 @@
             </div>
           </article>
 
-          <!-- PROTEÍNA -->
+          <!-- Proteína -->
 
           <article
             class="vf-destacados__producto"
@@ -145,9 +671,12 @@
 
               <div
                 class="vf-destacados__calificacion"
-                aria-label="Calificación 5 de 5"
+                aria-label="Calificación 5 de 5 estrellas"
               >
-                <span class="vf-destacados__estrellas">
+                <span
+                  class="vf-destacados__estrellas"
+                  aria-hidden="true"
+                >
                   ★★★★★
                 </span>
 
@@ -172,7 +701,7 @@
             </div>
           </article>
 
-          <!-- OMEGA 3 -->
+          <!-- Omega 3 -->
 
           <article
             class="vf-destacados__producto"
@@ -195,9 +724,12 @@
 
               <div
                 class="vf-destacados__calificacion"
-                aria-label="Calificación 4 de 5"
+                aria-label="Calificación 4 de 5 estrellas"
               >
-                <span class="vf-destacados__estrellas">
+                <span
+                  class="vf-destacados__estrellas"
+                  aria-hidden="true"
+                >
                   ★★★★☆
                 </span>
 
@@ -222,7 +754,7 @@
             </div>
           </article>
 
-          <!-- GLICINATO DE MAGNESIO -->
+          <!-- Glicinato de magnesio -->
 
           <article
             class="vf-destacados__producto"
@@ -245,9 +777,12 @@
 
               <div
                 class="vf-destacados__calificacion"
-                aria-label="Calificación 5 de 5"
+                aria-label="Calificación 5 de 5 estrellas"
               >
-                <span class="vf-destacados__estrellas">
+                <span
+                  class="vf-destacados__estrellas"
+                  aria-hidden="true"
+                >
                   ★★★★★
                 </span>
 
@@ -282,14 +817,19 @@
       </section>
     </main>
 
-    <!-- CONSERVA AQUÍ EL FOOTER DEL EQUIPO -->
+
+    <!-- JavaScript de productos destacados -->
 
     <script
       src="./Assets/Js/productos-destacados.js"
     ></script>
 
+    <!-- JavaScript de Bootstrap -->
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
     ></script>
   </body>
 </html>
