@@ -73,22 +73,63 @@
     padding: 0 8%;
 }
 
+.subtitulo-banner {
+    margin-bottom: 10px;
+    color: #4da3ff;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+
+    #banner {
+        min-height: 375px;
+        margin-top: 70px;
+        justify-content: center;
+        text-align: center;
+        background-size: cover;
+        background-position: center;
+    }
+
+    #banner .container {
+        padding: 0 30px;
+    }
+
+    #banner h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+
+    #banner p {
+        font-size: 1.5rem;
+        line-height: 1.5;
+        margin-bottom: 25px;
+    }
+
+    #btnVerMas {
+        font-size: 1rem;
+        padding: 10px 25px;
+    }
+}
+
 #btnVerMas{
-    background: linear-gradient(
-        to bottom,
-        #7BEA35 0%,
-        #38B72A 45%,
-        #066E21 100%
-    );
-    border: solid 2px var(--color-secundario);
+    padding: 12px 28px;
+    border: 2px solid #2684ff;
+    border-radius: 8px;
+    background-color: #1266d3;
+    color: white;
+    font-weight: 600;
     transition: 0.3s;
 }
 
 #btnVerMas:hover{
+    border-color: #5ca7ff;
+    background-color: #0d4fa8;
+    color: white;
     transform: translateY(-5px);
-    box-shadow:
-        0 0 10px #22C55E,
-        0 0 25px #22C55E;
 }
 
 
