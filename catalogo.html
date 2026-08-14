@@ -79,6 +79,28 @@
             </div>
         </section>
 
+        <!-- Filtro por precio -->
+        <section class="mb-4">
+            <h5 class="fw-bold">Filtros</h5>
+
+            <div class="mb-3">
+                <label for="filtro-precio" class="form-label">
+                    Precio máximo:
+                    <span id="precio-seleccionado">$250.000</span>
+                </label>
+
+                <input
+                    type="range"
+                    class="form-range"
+                    id="filtro-precio"
+                    min="0"
+                    max="250000"
+                    step="10000"
+                    value="250000"
+                >
+            </div>
+        </section>
+
     
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
 
@@ -428,5 +450,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <script src="Assets/Js/filtros-catalogo.js"></script>
+        
 </body>
 </html>
