@@ -23,25 +23,47 @@ formProducto.addEventListener('submit', function (event) {
     const imagen = document.getElementById('imagen').value.trim();
     const descripcion = document.getElementById('descripcion').value.trim();
 
+
+    if (!nombre || !categoria || !descripcion || !imagen || isNaN(precio) || isNaN(stock) || precio <= 0 || stock <= 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Datos inválidos',
+            text: 'Por favor, llena todos los campos y asegúrate de que el precio y stock sean mayores a cero.',
+            confirmButtonColor: '#212529'
+        });
+        return;
+    }
+
     const nuevoProducto = {
         id: Date.now(),
         nombre: nombre,
         categoria: categoria,
         precio: precio,
         stock: stock,
-        imagen: imagen.trim() !== '' ? imagen : IMAGEN_FALLBACK,
+        imagen: imagen,
         descripcion: descripcion
     };
 
     listaProductos.push(nuevoProducto);
+    guardarProducto();
     actualizarInterfaz();
     formProducto.reset();
+    Swal.fire({
+        icon: 'success',
+        title: 'Producto agregado',
+        text: 'El producto ha sido agregado exitosamente.',
+        confirmButtonColor: '#212529'
+    });
 });
 
 function actualizarInterfaz() {
     renderizarProductos();
     actualizarContador();
     imprimirJsonConsola();
+}
+
+function guardarProducto() {
+    localStorage.setItem("productos", JSON.stringify(listaProductos))
 }
 
 function renderizarProductos() {
@@ -89,6 +111,7 @@ function actualizarContador() {
 
 window.eliminarProducto = function (id) {
     listaProductos = listaProductos.filter(producto => producto.id !== id);
+    guardarProducto();
     actualizarInterfaz();
 };
 
@@ -96,3 +119,5 @@ function imprimirJsonConsola() {
     console.log("--Catálogo--");
     console.log(JSON.stringify(listaProductos, null, 2));
 }
+
+actualizarInterfaz();
