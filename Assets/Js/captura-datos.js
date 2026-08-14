@@ -1,4 +1,4 @@
-let listaProductos = [];
+let listaProductos = JSON.parse(localStorage.getItem("productos")) || [];
 
 const formProducto = document.getElementById('form-producto');
 const contenedorProductos = document.getElementById('contenedor-productos');
@@ -9,19 +9,19 @@ const IMAGEN_FALLBACK = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22ht
 
 // Arreglo de imagen y evitar bucles
 window.handleImageError = function (img) {
-    img.onerror = null; 
+    img.onerror = null;
     img.src = IMAGEN_FALLBACK;
 };
 
 formProducto.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const nombre = document.getElementById('nombre').value;
-    const categoria = document.getElementById('categoria').value;
-    const precio = parseFloat(document.getElementById('precio').value) || 0;
-    const stock = parseInt(document.getElementById('stock').value, 10) || 0;
-    const imagen = document.getElementById('imagen').value;
-    const descripcion = document.getElementById('descripcion').value;
+    const nombre = document.getElementById('nombre').value.trim();
+    const categoria = document.getElementById('categoria').value.trim();
+    const precio = parseFloat(document.getElementById('precio').value.trim());
+    const stock = parseInt(document.getElementById('stock').value.trim(), 10);
+    const imagen = document.getElementById('imagen').value.trim();
+    const descripcion = document.getElementById('descripcion').value.trim();
 
     const nuevoProducto = {
         id: Date.now(),
