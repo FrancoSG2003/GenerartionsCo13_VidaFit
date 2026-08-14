@@ -1,4 +1,4 @@
-:root{
+:root {
     --color-nav: #2563EB;
     --color-nav1: #F8FAFC;
     --color-nav2: #E2E8F0;
@@ -12,7 +12,7 @@
     box-sizing: border-box;
 }
 
-/*||----------NavBar----------*/
+/* ||---------- NavBar ---------- */
 
 #nav {
     background-color: var(--color-nav3) !important;
@@ -32,14 +32,14 @@
 #nav .navbar-brand img {
     display: block;
     margin-left: 50px;
-    height: 70px; 
+    height: 70px;
     width: auto;
 }
 
 #nav .nav-link {
     color: var(--color-textos) !important;
     position: relative;
-    transition: color .3s ease;
+    transition: color 0.3s ease;
 }
 
 #nav .nav-link::after {
@@ -50,7 +50,7 @@
     width: 0;
     height: 3px;
     background-color: black;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     transform: translateX(-50%);
 }
 
@@ -58,15 +58,97 @@
     width: 100%;
 }
 
+/* ||---------- Configuración general ---------- */
 
 body {
     padding-top: 50px;
 }
-.card-icon {
-    height: 150px;
+
+/* ||---------- Banner Sobre Nosotros ---------- */
+
+.banner-nosotros {
+    width: 100%;
+    min-height: 420px;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.55)
+        ),
+        url("../img/Banner.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+    text-align: center;
 }
 
-.hero-image{
+.banner-nosotros-contenido {
+    width: 100%;
+    max-width: 800px;
+    color: white;
+}
+
+.banner-nosotros-contenido h1 {
+    margin: 0 0 16px;
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.banner-nosotros-contenido p {
+    margin: 0;
+    color: white;
+    font-size: 1.25rem;
+    line-height: 1.6;
+}
+
+/* ||---------- Iconos de Misión y Visión ---------- */
+
+.card-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* ||---------- Estilos originales ---------- */
+
+.navbarPropia img {
+    width: 150px;
+    height: 70px;
+}
+
+.hero-image {
     max-width: 70%;
     height: auto;
+}
+
+/* ||---------- Diseño adaptable ---------- */
+
+@media (max-width: 768px) {
+
+    .banner-nosotros {
+        min-height: 320px;
+        padding: 30px 20px;
+    }
+
+    .banner-nosotros-contenido h1 {
+        font-size: 2rem;
+    }
+
+    .banner-nosotros-contenido p {
+        font-size: 1rem;
+    }
+
+    .card-icon {
+        width: 80px;
+        height: 80px;
+    }
 }

@@ -123,9 +123,13 @@
     background-color: #1266d3;
     color: white;
     font-weight: 600;
+    transition: 0.3s;
 }
 
 #btnVerMas:hover{
+    border-color: #5ca7ff;
+    background-color: #0d4fa8;
+    color: white;
     transform: translateY(-5px);
     border-color: #5ca7ff;
     background-color: #0d4fa8;
