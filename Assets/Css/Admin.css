@@ -1,0 +1,238 @@
+:root {
+    --color-nav: #2563EB;
+    --color-nav1: #F8FAFC;
+    --color-nav2: #E2E8F0;
+    --color-nav3: #CBD5E1;
+    --color-secundario: #22C55E;
+    --color-textos: #0D1117;
+    --Blanco-Suave: #FFF9F1;
+}
+
+
+/* GENERAL */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--color-textos);
+}
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* SIDEBAR */
+
+.sideBar {
+    width: 220px;
+    min-height: 100vh;
+    background-color: var(--color-nav);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 20px;
+    border-right: 2px solid var(--color-nav3);
+    border-radius: 0 0 10px 0;
+}
+
+.headerBar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    margin-bottom: 55px;
+}
+
+.admin-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: var(--color-nav1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-icon i {
+    font-size: 25px;
+    color: var(--color-nav);
+}
+
+.headerBar h3 {
+    margin: 0;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+
+/* MENÚ */
+
+.sideBar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.sideBar nav a {
+    padding: 14px 15px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.sideBar nav a:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: white;
+    transform: translateX(4px);
+}
+
+
+
+/* CERRAR SESIÓN */
+
+.cerrar-sesion {
+    margin-top: auto;
+    padding: 14px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.cerrar-sesion:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.cerrar-sesion .icono-cerrado {
+    font-size: 20px;
+}
+
+.cerrar-sesion .icono-abierto {
+    display: none;
+    font-size: 20px;
+}
+
+.cerrar-sesion:hover .icono-cerrado {
+    display: none;
+}
+
+.cerrar-sesion:hover .icono-abierto {
+    display: inline;
+}
+
+
+/* CONTENIDO */
+
+.contenido {
+    flex: 1;
+    min-height: 100vh;
+    background-color: var(--Blanco-Suave);
+}
+
+
+/* HEADER */
+
+header {
+    position: relative;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--color-nav3);
+}
+
+header h1 {
+    font-size: 25px;
+    margin: 0;
+    font-weight: bold;
+}
+
+
+/* CONTADOR */
+
+.contadorVisitas {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: var(--Blanco-Suave);
+}
+
+.contadorVisitas h5 {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    color: var(--color-textos);
+}
+
+.contadorVisitas span {
+    font-weight: bold;
+}
+
+
+/* ESTADÍSTICAS */
+
+.estadisticas {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.card-estadistica {
+    width: 170px;
+    height: 70px;
+    background-color: var(--color-nav2);
+    border: 2px solid var(--color-nav3);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.card-estadistica span {
+    font-size: 14px;
+    color: var(--color-textos);
+}
+
+.card-estadistica strong {
+    font-size: 20px;
+}
+
+
+/* HISTORIAL */
+
+.historial-ventas {
+    width: 85%;
+    height: 270px;
+    margin: 30px auto 0;
+    background-color: var(--color-nav2);
+    border: 2px solid var(--color-nav3);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+}
+
+.historial-ventas h2 {
+    margin: 0;
+
+    color: var(--color-nav);
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
