@@ -6,3 +6,7 @@ integrantes:
 - David Quiroz
 - Thomas Montaño
 - Simon Franco
+
+
+link tarea 7:
+https://francosg2003.github.io/GenerartionsCo13_VidaFit/adminIndex.html
