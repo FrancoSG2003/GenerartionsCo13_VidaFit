@@ -48,7 +48,7 @@ El proyecto busca integrar una interfaz moderna, intuitiva y responsive con func
 
  - [Jasbleydy Camacho](https://www.linkedin.com/in/jasbleydy-camacho-233526278/)
 
- - [Estefania Mancipe]()
+ - [Estefania Mancipe](https://www.linkedin.com/in/estefania-mancipe-76613648/)
 
  - [Simon Franco Guisado](https://www.linkedin.com/in/simon-franco-guisado/)
 
