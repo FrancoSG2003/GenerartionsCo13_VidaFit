@@ -7,3 +7,31 @@
     --color-textos: #0D1117;     
     --Blanco-Suave: #FFF9F1; 
 }
+
+/* Separador */
+.flat-divider {
+    position: relative;
+    text-align: center;
+}
+
+.flat-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-textos);
+    z-index: 1;
+}
+
+.flat-divider h5 {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+
+    margin: 0;
+    padding: 0 15px;
+
+    background-color: var(--color-nav1);
+}
