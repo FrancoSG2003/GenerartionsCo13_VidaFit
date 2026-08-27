@@ -109,9 +109,9 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
+                                class="nav-link ingreso-link"
                                 href="index.html">
-
+                                <i class="bi bi-house-fill"></i>
                                 Inicio
                             </a>
                         </li>
@@ -119,10 +119,10 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link active"
+                                class="nav-link ingreso-link"
                                 aria-current="page"
                                 href="catalogo.html">
-
+                                <i class="bi bi-grid-fill"></i>
                                 Productos
                             </a>
                         </li>
@@ -130,9 +130,9 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
+                                class="nav-link ingreso-link"
                                 href="sobreNosotros.html">
-
+                                <i class="bi bi-people-fill"></i>
                                 Nosotros
                             </a>
                         </li>
@@ -140,20 +140,21 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
+                                class="nav-link ingreso-link"
                                 href="contacto.html">
-
-                                Contacto
+                                <i class="bi bi-headset"></i>
+                                <span>Contacto</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
+                                class="nav-link ingreso-link"
                                 href="index.html#equipo">
 
                                 <i class="bi bi-person-fill"></i>
+                                <span>Ingreso</span>
                             </a>
                         </li>
 
@@ -166,7 +167,8 @@
                                 aria-controls="carritoLateral"
                                 aria-expanded="false">
 
-                                Carrito
+                                <i class="bi bi-cart3"></i>
+                                <span>Carrito</span>
 
                                 <span
                                     id="contadorCarrito"
@@ -1342,8 +1344,8 @@
 
     <!-- Carrito lateral -->
     <div
-        id="overflow"
-        class="overflow d-none position-fixed top-0 start-0 w-100 h-100">
+        id="overlay"
+        class="overlay d-none position-fixed top-0 start-0 w-100 h-100">
 
         <div
             id="fondoCarrito"
@@ -1433,7 +1435,7 @@
 
                 <div class="col-4">
                     <img
-                        class="producto-imagen img-fluid rounded"
+                        class="producto-imagen-carrito img-fluid rounded"
                         src=""
                         alt="">
                 </div>
@@ -1490,6 +1492,50 @@
         </article>
     </template>
 
+        <!-- Footer -->
+    <footer class="mt-5 py-5 bg-dark text-white">
+    <div class="container-fluid px-4">
+        <div class="row gy-4">
+            <div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
+                <h2>VidaFit</h2>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
+                <h5 class="fw-bold">Contacto</h5>
+                <p class="mb-1">+57 3815469870</p>
+                <p class="mb-0">vidafitproyect@gmail.com</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
+                <h5 class="fw-bold">Horarios</h5>
+                <p class="mb-1">Lunes-Viernes: 7AM - 8PM</p>
+                <p class="mb-0">Sábados: 6AM - 3PM</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h5 class="fw-bold mb-3">Síguenos</h5>
+                <div class="d-flex gap-3 fs-4">
+                    <a href="https://www.facebook.com/profile.php?id=61593114950771" target="_blank" class="text-white text-decoration-none">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/vidafitproyect/" target="_blank" class="text-white text-decoration-none">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@vidafit6553" target="_blank" class="text-white text-decoration-none">
+                        <i class="bi bi-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="text-center">
+            <small>
+                © 2026 VidaFit. Derechos reservados
+            </small>
+        </div>
+    </div>
+</footer>
+
+
     <!-- Bootstrap JavaScript -->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
@@ -1497,6 +1543,7 @@
 
     <!-- ÚNICO archivo del catálogo -->
     <script src="Assets/Js/filtros-catalogo.js"></script>
+    <script src="Assets/Js/carrito-compra.js"></script>
 
 </body>
 
