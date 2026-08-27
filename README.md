@@ -44,7 +44,7 @@ El proyecto busca integrar una interfaz moderna, intuitiva y responsive con func
 
  - [David Quiroz](https://www.linkedin.com/in/david-quiroz-gonzalez-569490206/)
 
- - [Thomas Montaño](https://www.linkedin.com/in/sebastians-pereira-maldonado-/)
+ - [Thomas Montaño](https://www.linkedin.com/in/thomas-monta%C3%B1o-08944333a/)
 
  - [Jasbleydy Camacho](https://www.linkedin.com/in/jasbleydy-camacho-233526278/)
 
