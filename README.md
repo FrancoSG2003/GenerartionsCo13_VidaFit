@@ -46,7 +46,7 @@ El proyecto busca integrar una interfaz moderna, intuitiva y responsive con func
 
  - [Thomas Montaño](https://www.linkedin.com/in/sebastians-pereira-maldonado-/)
 
- - [Jasbleydy Camacho]()
+ - [Jasbleydy Camacho](https://www.linkedin.com/in/jasbleydy-camacho-233526278/)
 
  - [Estefania Mancipe]()
 
