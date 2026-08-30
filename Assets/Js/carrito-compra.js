@@ -22,6 +22,18 @@ btnCerrarCarrito.addEventListener("click", cerrarCarrito);
 btnContinuarComprando.addEventListener("click", cerrarCarrito);
 
 botonesAgregarCarrito.forEach(function (boton) {
+    const tarjeta = boton.closest(".producto-card");
+
+    if (!tarjeta) {
+        return;
+    }
+
+    if (tarjeta.dataset.stock === "false") {
+        boton.disabled = true;
+        boton.textContent = "Agotado";
+        return;
+    }
+
     boton.addEventListener("click", agregarProducto);
 });
 
@@ -49,6 +61,10 @@ function agregarProducto(event) {
     const tarjeta = boton.closest(".producto-card");
 
     if (!tarjeta) {
+        return;
+    }
+
+    if (tarjeta.dataset.stock === "false") {
         return;
     }
 
