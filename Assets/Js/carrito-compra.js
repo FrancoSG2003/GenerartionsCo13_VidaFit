@@ -241,13 +241,6 @@ function vaciarCarrito() {
                 icon: "success" 
             }); 
         
-        } else if (result.dismiss === Swal.DismissReason.cancel) { 
-            
-            swalWithBootstrapButtons.fire({ 
-                title: "Cancelado", 
-                text: "Tus productos siguen en el carrito.", 
-                icon: "error" 
-            }); 
         } 
     }); 
 }
