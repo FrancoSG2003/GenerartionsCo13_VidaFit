@@ -70,6 +70,7 @@ function agregarProducto(event) {
         carrito.push(producto);
     }
 
+    guardarCarritoLocal();
     renderizarCarrito();
 }
 
@@ -141,6 +142,7 @@ function aumentarCantidad(id) {
 
     producto.cantidad++;
 
+    guardarCarritoLocal();
     renderizarCarrito();
 }
 
@@ -158,6 +160,7 @@ function disminuirCantidad(id) {
         producto.cantidad--;
     }
 
+    guardarCarritoLocal();
     renderizarCarrito();
 }
 
@@ -173,6 +176,7 @@ function eliminarProducto(id) {
 
     carrito.splice(posicionProducto, 1);
 
+    guardarCarritoLocal();
     renderizarCarrito();
 }
 
@@ -197,4 +201,23 @@ function formatearPrecio(precio) {
 }
 
 
+function guardarCarritoLocal() {
+    localStorage.setItem("carritoVidaFit", JSON.stringify(carrito));
+}
+
+
+function cargarCarritoLocal() {
+    const carritoGuardado = localStorage.getItem("carritoVidaFit");
+
+    if (!carritoGuardado) {
+        return;
+    }
+
+    const productosGuardados = JSON.parse(carritoGuardado);
+
+    carrito.push(...productosGuardados);
+}
+
+
+cargarCarritoLocal();
 renderizarCarrito();
