@@ -95,6 +95,10 @@ function renderizarCarrito() {
         const cantidadProducto = productoCarrito.querySelector(".producto-cantidad");
         const subtotalProducto = productoCarrito.querySelector(".producto-subtotal");
 
+        const btnDisminuirCantidad = productoCarrito.querySelector(".btnDisminuirCantidad");
+        const btnAumentarCantidad = productoCarrito.querySelector(".btnAumentarCantidad");
+        const btnEliminarProducto = productoCarrito.querySelector(".btnEliminarProducto");
+
         tarjetaProducto.dataset.id = producto.id;
 
         imagenProducto.src = producto.imagen;
@@ -107,10 +111,69 @@ function renderizarCarrito() {
         const subtotal = producto.precio * producto.cantidad;
         subtotalProducto.textContent = formatearPrecio(subtotal);
 
+        btnDisminuirCantidad.addEventListener("click", function () {
+            disminuirCantidad(producto.id);
+        });
+
+        btnAumentarCantidad.addEventListener("click", function () {
+            aumentarCantidad(producto.id);
+        });
+
+        btnEliminarProducto.addEventListener("click", function () {
+            eliminarProducto(producto.id);
+        });
+
         contenedorProductosCarrito.appendChild(productoCarrito);
     });
 
     actualizarResumenCarrito();
+}
+
+
+function aumentarCantidad(id) {
+    const producto = carrito.find(function (item) {
+        return item.id === id;
+    });
+
+    if (!producto) {
+        return;
+    }
+
+    producto.cantidad++;
+
+    renderizarCarrito();
+}
+
+
+function disminuirCantidad(id) {
+    const producto = carrito.find(function (item) {
+        return item.id === id;
+    });
+
+    if (!producto) {
+        return;
+    }
+
+    if (producto.cantidad > 1) {
+        producto.cantidad--;
+    }
+
+    renderizarCarrito();
+}
+
+
+function eliminarProducto(id) {
+    const posicionProducto = carrito.findIndex(function (item) {
+        return item.id === id;
+    });
+
+    if (posicionProducto === -1) {
+        return;
+    }
+
+    carrito.splice(posicionProducto, 1);
+
+    renderizarCarrito();
 }
 
 
