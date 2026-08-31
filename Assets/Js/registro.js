@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     form.addEventListener("submit", (e) => {
-        e.preventDefault(); // Evita que se recargue la página por defecto
+        e.preventDefault();
 
 
         const nombreCompleto = document.getElementById("nombreCompleto").value.trim();
