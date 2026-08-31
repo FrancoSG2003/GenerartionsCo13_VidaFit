@@ -1,0 +1,172 @@
+:root {
+    --color-nav: #2563EB;
+    --color-nav1: #F8FAFC;
+    --color-nav2: #E2E8F0;
+    --color-nav3: #CBD5E1;
+    --color-secundario: #22C55E;
+    --color-textos: #0D1117;
+    --Blanco-Suave: #FFF9F1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ||---------- NavBar ---------- */
+
+#nav {
+    background-color: var(--color-nav3) !important;
+    padding: 0 2rem;
+}
+
+#nav .container-fluid {
+    padding: 0;
+}
+
+#nav .navbar-brand {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+}
+
+#nav .navbar-brand img {
+    display: block;
+    margin-left: 50px;
+    height: 70px;
+    width: auto;
+}
+
+#nav .nav-link {
+    color: var(--color-textos) !important;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+#nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 0;
+    height: 3px;
+    background-color: black;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+#nav .nav-link:hover::after {
+    width: 100%;
+}
+
+.ingreso-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.ingreso-link i {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.ingreso-link span {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ||---------- Configuración general ---------- */
+
+body {
+    padding-top: 50px;
+}
+
+/* ||---------- Banner Sobre Nosotros ---------- */
+
+.banner-nosotros {
+    width: 100%;
+    min-height: 420px;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.55)
+        ),
+        url("../img/Banner.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.banner-nosotros-contenido {
+    width: 100%;
+    max-width: 800px;
+    color: white;
+}
+
+.banner-nosotros-contenido h1 {
+    margin: 0 0 16px;
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.banner-nosotros-contenido p {
+    margin: 0;
+    color: white;
+    font-size: 1.25rem;
+    line-height: 1.6;
+}
+
+/* ||---------- Iconos de Misión y Visión ---------- */
+
+.card-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* ||---------- Estilos originales ---------- */
+
+.navbarPropia img {
+    width: 150px;
+    height: 70px;
+}
+
+.hero-image {
+    max-width: 70%;
+    height: auto;
+}
+
+/* ||---------- Diseño adaptable ---------- */
+
+@media (max-width: 768px) {
+
+    .banner-nosotros {
+        min-height: 320px;
+        padding: 30px 20px;
+    }
+
+    .banner-nosotros-contenido h1 {
+        font-size: 2rem;
+    }
+
+    .banner-nosotros-contenido p {
+        font-size: 1rem;
+    }
+
+    .card-icon {
+        width: 80px;
+        height: 80px;
+    }
+}
