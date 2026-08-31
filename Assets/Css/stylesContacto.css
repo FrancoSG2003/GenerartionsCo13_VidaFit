@@ -58,6 +58,24 @@
     width: 100%;
 }
 
+.ingreso-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.ingreso-link i {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.ingreso-link span {
+    font-size: 14px;
+    line-height: 1;
+}
+
 
 /*||----------Banner----------*/
 

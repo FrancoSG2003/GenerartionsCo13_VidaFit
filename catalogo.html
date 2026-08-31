@@ -109,9 +109,9 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
+                                class="nav-link ingreso-link"
                                 href="index.html">
-
+                                <i class="bi bi-house-fill"></i>
                                 Inicio
                             </a>
                         </li>
@@ -119,10 +119,10 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link active"
+                                class="nav-link ingreso-link"
                                 aria-current="page"
                                 href="catalogo.html">
-
+                                <i class="bi bi-grid-fill"></i>
                                 Productos
                             </a>
                         </li>
@@ -130,9 +130,9 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
+                                class="nav-link ingreso-link"
                                 href="sobreNosotros.html">
-
+                                <i class="bi bi-people-fill"></i>
                                 Nosotros
                             </a>
                         </li>
@@ -140,21 +140,43 @@
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
+                                class="nav-link ingreso-link"
                                 href="contacto.html">
-
-                                Contacto
+                                <i class="bi bi-headset"></i>
+                                <span>Contacto</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
 
                             <a
-                                class="nav-link"
-                                href="index.html#equipo">
+                                class="nav-link ingreso-link"
+                                href="Login.html">
 
                                 <i class="bi bi-person-fill"></i>
+                                <span>Ingreso</span>
                             </a>
+                        </li>
+
+                        <li class="nav-item">
+
+                            <button
+                                id="btnAbrirCarrito"
+                                class="btn btn-outline-dark position-relative"
+                                type="button"
+                                aria-controls="carritoLateral"
+                                aria-expanded="false">
+
+                                <i class="bi bi-cart3"></i>
+                                <span>Carrito</span>
+
+                                <span
+                                    id="contadorCarrito"
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                                    0
+                                </span>
+                            </button>
                         </li>
 
                     </ul>
@@ -541,6 +563,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="1"
                     data-categoria="proteinas"
                     data-precio="159900"
                     data-marca="VidaFit"
@@ -593,7 +616,7 @@
                             $159.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -611,6 +634,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="2"
                     data-categoria="proteinas"
                     data-precio="249900"
                     data-marca="BiPro"
@@ -657,7 +681,7 @@
                             $249.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -675,6 +699,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="3"
                     data-categoria="creatinas"
                     data-precio="95900"
                     data-marca="VidaFit"
@@ -727,7 +752,7 @@
                             $95.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -745,6 +770,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="4"
                     data-categoria="creatinas"
                     data-precio="200000"
                     data-marca="Optimun Nutricion"
@@ -791,7 +817,7 @@
                             $200.000
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -809,6 +835,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="5"
                     data-categoria="pre-entreno"
                     data-precio="105900"
                     data-marca="C4"
@@ -855,7 +882,7 @@
                             $105.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -873,6 +900,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="6"
                     data-categoria="pre-entreno"
                     data-precio="82900"
                     data-marca="VidaFit"
@@ -919,7 +947,7 @@
                             $82.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -937,6 +965,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="7"
                     data-categoria="vitaminas"
                     data-precio="125900"
                     data-marca="Optimun Nutricion"
@@ -983,7 +1012,7 @@
                             $125.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -1001,6 +1030,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="8"
                     data-categoria="vitaminas"
                     data-precio="125900"
                     data-marca="Optimun Nutricion"
@@ -1047,7 +1077,7 @@
                             $125.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -1065,6 +1095,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="9"
                     data-categoria="snacks-saludables"
                     data-precio="49900"
                     data-marca="VidaFit"
@@ -1111,7 +1142,7 @@
                             $49.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -1129,6 +1160,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="10"
                     data-categoria="snacks-saludables"
                     data-precio="34900"
                     data-marca="VidaFit"
@@ -1175,7 +1207,7 @@
                             $34.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -1193,6 +1225,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="11"
                     data-categoria="accesorios"
                     data-precio="29900"
                     data-marca="VidaFit"
@@ -1239,7 +1272,7 @@
                             $29.900
                         </p>
 
-                        <button class="btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
                         </button>
@@ -1257,6 +1290,7 @@
 
                 <article
                     class="card h-100 shadow-sm border position-relative producto-card"
+                    data-id="12"
                     data-categoria="accesorios"
                     data-precio="39900"
                     data-marca="SportFitnesse"
@@ -1304,7 +1338,7 @@
                         </p>
 
                         <button
-                            class="btn btn-outline-dark btn-sm mt-auto w-100">
+                            class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
 
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
@@ -1320,13 +1354,219 @@
 
     </main>
 
+    <!-- Carrito lateral -->
+    <div
+        id="overlay"
+        class="overlay d-none position-fixed top-0 start-0 w-100 h-100">
+
+        <div
+            id="fondoCarrito"
+            class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
+        </div>
+
+        <aside
+            id="carritoLateral"
+            class="position-absolute top-0 end-0 h-100 bg-white shadow d-flex flex-column"
+            aria-labelledby="tituloCarrito"
+            aria-hidden="true">
+
+            <div class="d-flex justify-content-between align-items-center border-bottom p-3">
+
+                <h2
+                    id="tituloCarrito"
+                    class="h4 mb-0">
+
+                    Mi carrito
+                </h2>
+
+                <button
+                    id="btnCerrarCarrito"
+                    class="btn-close"
+                    type="button"
+                    aria-label="Cerrar carrito">
+                </button>
+            </div>
+
+            <div
+                id="carritoVacio"
+                class="text-center p-4">
+
+                <p class="text-secondary mb-3">
+                    Tu carrito está vacío.
+                </p>
+
+                <button
+                    id="btnContinuarComprando"
+                    class="btn btn-outline-primary"
+                    type="button">
+
+                    Continuar comprando
+                </button>
+            </div>
+
+            <div
+                id="contenedorProductosCarrito"
+                class="flex-grow-1 overflow-auto p-3"
+                aria-live="polite">
+            </div>
+
+            <div
+                id="resumenCarrito"
+                class="border-top bg-light p-3">
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Cantidad:</span>
+                    <span id="cantidadTotalProductos">0</span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Total:</strong>
+                    <strong id="precioTotalCarrito">$0</strong>
+                </div>
+                
+                <button
+                    id="btnVaciarCarrito"
+                    class="btn btn-outline-danger w-100 mb-2"
+                    type="button"
+                    disabled>
+
+                    Vaciar carrito
+                </button>
+    
+                <button
+                    id="btnFinalizarCompra"
+                    class="btn btn-primary w-100"
+                    type="button"
+                    disabled>
+
+                    Finalizar compra
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Plantilla de cada producto del carrito -->
+    <template id="plantillaProductoCarrito">
+
+        <article
+            class="producto-carrito border-bottom pb-3 mb-3"
+            data-id="">
+
+            <div class="row g-3">
+
+                <div class="col-4">
+                    <img
+                        class="producto-imagen-carrito img-fluid rounded"
+                        src=""
+                        alt="">
+                </div>
+
+                <div class="col-8">
+                    <h3 class="producto-nombre h6 mb-1"></h3>
+
+                    <p class="producto-precio text-secondary mb-2">
+                        $0
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center gap-2">
+
+                        <div
+                            class="btn-group btn-group-sm"
+                            role="group"
+                            aria-label="Modificar cantidad">
+
+                            <button
+                                class="btnDisminuirCantidad btn btn-outline-secondary"
+                                type="button"
+                                aria-label="Disminuir cantidad">
+
+                                −
+                            </button>
+
+                            <span class="producto-cantidad btn btn-outline-secondary disabled">
+                                1
+                            </span>
+
+                            <button
+                                class="btnAumentarCantidad btn btn-outline-secondary"
+                                type="button"
+                                aria-label="Aumentar cantidad">
+
+                                +
+                            </button>
+                        </div>
+
+                        <button
+                            class="btnEliminarProducto btn btn-sm btn-outline-danger"
+                            type="button">
+
+                            Eliminar
+                        </button>
+                    </div>
+
+                    <p class="mt-2 mb-0">
+                        Subtotal:
+                        <strong class="producto-subtotal">$0</strong>
+                    </p>
+                </div>
+            </div>
+        </article>
+    </template>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-5 bg-dark text-white">
+        <div class="container-fluid px-4">
+            <div class="row gy-4">
+                <div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
+                    <h2>VidaFit</h2>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
+                    <h5 class="fw-bold">Contacto</h5>
+                    <p class="mb-1">+57 3815469870</p>
+                    <p class="mb-0">vidafitproyect@gmail.com</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3 mb-lg-0">
+                    <h5 class="fw-bold">Horarios</h5>
+                    <p class="mb-1">Lunes-Viernes: 7AM - 8PM</p>
+                    <p class="mb-0">Sábados: 6AM - 3PM</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold mb-3">Síguenos</h5>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="https://www.facebook.com/profile.php?id=61593114950771" target="_blank" class="text-white text-decoration-none">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/vidafitproyect/" target="_blank" class="text-white text-decoration-none">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@vidafit6553" target="_blank" class="text-white text-decoration-none">
+                            <i class="bi bi-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="text-center">
+                <small>
+                    © 2026 VidaFit. Derechos reservados
+                </small>
+            </div>
+        </div>
+    </footer>
+
     <!-- Bootstrap JavaScript -->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
 
+    <!--Sweetalert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- ÚNICO archivo del catálogo -->
     <script src="Assets/Js/filtros-catalogo.js"></script>
+    <script src="Assets/Js/carrito-compra.js"></script>
 
 </body>
 
