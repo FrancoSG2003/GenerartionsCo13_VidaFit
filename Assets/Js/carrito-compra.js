@@ -200,11 +200,11 @@ function eliminarProducto(id) {
     renderizarCarrito();
 }
 
-
 function vaciarCarrito() { 
     if (carrito.length === 0) { 
         return; 
-    } 
+    }
+    
     const swalWithBootstrapButtons = Swal.mixin({ 
         customClass: { 
             confirmButton: "btn btn-success", 
