@@ -16,7 +16,7 @@ body {
 }
 
 #padre{
-    border: solid 2px black;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);  
     margin-top: 10px;
     width: 80%;
     background-color: #252C3D;
