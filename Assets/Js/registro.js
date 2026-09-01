@@ -15,13 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const nombreCompleto = document.getElementById("nombreCompleto").value.trim();
-        const telefono = document.getElementById("telefono").value.trim();
+        const nombre = document.getElementById("nombre").value.trim();
+        const apellido = document.getElementById("apellido").value.trim();
+        const telefono = document.getElementById("telefono").value.trim()
         const email = document.getElementById("email").value.trim();
         const contraseña = inputContraseña.value;
         const confirmarContraseña = document.getElementById("InputConfirmarContraseña").value;
 
-        if (!nombreCompleto || !telefono || !email || !contraseña || !confirmarContraseña) {
+        if (!nombre || !apellido || !telefono || !email || !contraseña || !confirmarContraseña) {
             alert("Error: Todos los campos son obligatorios.");
             return;
         }
@@ -43,8 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+
         const usuarioObjeto = {
-            nombreCompleto: nombreCompleto,
+            nombre: nombre,
+            apellido: apellido,
             telefono: telefono,
             email: email,
             contraseña: contraseña
@@ -54,17 +57,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const existe = usuariosGuardados.some(u => u.email === email);
         if (existe) {
+            console.log("8. Usuario ya existe");
             alert("Error: Este correo electrónico ya está registrado.");
             return;
         }
 
         usuariosGuardados.push(usuarioObjeto);
         localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
+        console.log("Usuarios guardados:", usuariosGuardados);
         localStorage.setItem("usuarioRegistrado", JSON.stringify(usuarioObjeto));
 
-        alert("¡Registro validado y guardado con éxito!");
 
-        form.reset();
-        window.location.href = "Login.html";
+        Swal.fire({
+        title: "¡Registro validado y guardado con éxito!",
+        icon: "success",
+        draggable: true
+        }).then(() => {
+            form.reset();
+            window.location.href = "Login.html";
+        });
     });
+
 });

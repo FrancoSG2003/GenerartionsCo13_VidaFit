@@ -12,55 +12,54 @@
     <link rel="stylesheet" href="Assets/Css/registro.css">
 </head>
 
-<body class="d-flex align-items-center justify-content-center min-vh-100 p-3 p-md-4">
+<body>
 
-    <div class="main-wrapper p-3">
-        <div class="row g-4">
+    <div class="main-wrapper" id="padre">
+        <div class="row h-100 g-0 ">
 
             <!-- Panel izquierdo-->
-            <div class="col-lg-5 d-flex flex-column justify-content-between p-4 image-panel text-white">
-                <div class="d-flex align-items-start w-100">
-                    <img src="Assets/img/imagen-registro.png" alt="Logo AMU" style="height: 32px;">
-                </div>
-
+            <div class="col-lg-5 d-flex flex-column justify-content-between p-4 image-panel text-white imagen-registro">
                 <!-- Texto informativo en la parte inferior -->
                 <div class="mt-auto w-100 text-center text-lg-start mb-2">
-                    <h2 class="fw-medium lh-base mb-2" style="max-width: 280px;">Capturing Moments, Creating Memories
+                    <h2 class="fw-medium lh-base mb-2" style="max-width: 280px;">Fuerza, Energia y Vitalidad
                     </h2>
                 </div>
             </div>
 
             <!-- COLUMNA DERECHA: FORMULARIO -->
-            <div class="col-lg-7 d-flex align-items-center justify-content-center px-3 px-sm-5 py-4">
+            <div class="col-lg-7 d-flex align-items-center justify-content-center px-3">
                 <div class="w-100" style="max-width: 460px;">
 
                     <!-- Encabezado -->
-                    <h1 class="fw-semibold mb-1">Registro</h1>
+                    <h1 class="fw-semibold text-white mb-1 py-2">Registro</h1>
                     <p class="text-secondary small mb-4">
                         Ya tienes una cuenta? <a href="Login.html">Log in</a>
                     </p>
 
                     <form id="registroForm">
                         <!-- Nombre completo -->
-                        <div class="mb-3">
-                            <input type="text" id="nombreCompleto" class="form-control form-control-lg fs-6"
+                        <div class="mb-2 nombre">
+                            <input type="text" id="nombre" class="form-control form-control-lg fs-6"
                                 placeholder="Nombre completo" required>
+
+                            <input type="text" id="apellido" class="form-control form-control-lg fs-6"
+                                placeholder="Apellido" required>
                         </div>
 
                         <!-- Número de teléfono -->
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <input type="tel" id="telefono" class="form-control form-control-lg fs-6"
                                 placeholder="Número de teléfono" required>
                         </div>
 
                         <!-- Email (nombre de usuario) -->
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <input type="email" id="email" class="form-control form-control-lg fs-6"
                                 placeholder="Email (nombre de usuario)" required>
                         </div>
 
                         <!-- Contraseña -->
-                        <div class="mb-3 position-relative">
+                        <div class="mb-2 position-relative">
                             <input type="password" id="Inputcontraseña" class="form-control form-control-lg fs-6 pe-5"
                                 placeholder="Contraseña" required>
                             <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3 text-secondary"
@@ -68,7 +67,7 @@
                         </div>
 
                         <!-- Confirmar Contraseña -->
-                        <div class="mb-3 position-relative">
+                        <div class="mb-2 position-relative">
                             <input type="password" id="InputConfirmarContraseña"
                                 class="form-control form-control-lg fs-6 pe-5" placeholder="Confirmar contraseña"
                                 required>
@@ -81,18 +80,18 @@
                             </label>
                         </div>
 
-                        <button type="submit" class="btn btn-purple btn-lg w-100 fs-6 fw-medium mb-4">Crear
+                        <button type="submit" id="btnRegistro" class="btn btn-purple btn-lg w-100 fs-6 fw-medium mb-4">Crear
                             cuenta</button>
 
                         <!-- Divisor -->
-                        <div class="flat-divider mb-4">
+                        <div class="flat-divider mb-4 text-white">
                             <h5>Registrate con:</h5>
                         </div>
 
                         <!-- Redes -->
                         <div class="d-flex justify-content-center gap-3 mb-4">
-                            <a href="#" class="btn btn-flat-social"><i class="bi bi-google"></i> Google</a>
-                            <a href="#" class="btn btn-flat-social"><i class="bi bi-facebook"></i> Facebook</a>
+                            <a href="#" class="btn btn-flat-social text-white"><i class="bi bi-google"></i> Google</a>
+                            <a href="#" class="btn btn-flat-social text-white"><i class="bi bi-facebook"></i> Facebook</a>
                         </div>
                     </form>
                 </div>
@@ -106,7 +105,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="Assets/Js/registro.js"></script>
 </body>
 
