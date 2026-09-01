@@ -28,6 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (usuarioEncontrado) {
+            if (!usuarioEncontrado.rol) {
+                usuarioEncontrado.rol = "cliente";
+            }
+
             Swal.fire({
                 icon: "success",
                 title: "¡Inicio de sesión exitoso!",
@@ -35,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 confirmButtonText: "Continuar"
             }).then(() => {
                 localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioEncontrado));
+                localStorage.setItem("userRole", usuarioEncontrado.rol);
                 window.location.href = "index.html";
             });
 
