@@ -8,6 +8,44 @@
     --Blanco-Suave: #FFF9F1; 
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #596579;
+}
+
+#padre{
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);  
+    margin-top: 10px;
+    width: 80%;
+    background-color: #252C3D;
+    border-radius: 10px;
+}
+
+.nombre{
+    display: flex;
+    gap: 10px;
+}
+
+/*IMagen dl formulario*/
+.imagen-registro{
+    background-image: url(../img/imagen-registro.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+}
+
+#btnRegistro {
+    background-color: #38B6FF;
+    transition: transform 0.2s ease;
+}
+
+#btnRegistro:hover{
+    transform: translateY(-5px);
+}
+
 /* Separador */
 .flat-divider {
     position: relative;
@@ -33,5 +71,5 @@
     margin: 0;
     padding: 0 15px;
 
-    background-color: var(--color-nav1);
+    background-color: #252C3D;
 }
