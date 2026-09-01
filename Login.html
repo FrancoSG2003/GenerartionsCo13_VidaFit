@@ -5,93 +5,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VidaFit - Iniciar Sesión</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Russo+One&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet" href="Assets/Css/auth-flat.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="Assets/Css/registro.css">
 </head>
 
-<body class="flat-body">
+<body>
 
-    <header class="w-100 py-3 px-4 bg-white border-bottom position-absolute top-0 start-0">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a href="index.html" class="d-flex align-items-center text-decoration-none">
-                <img src="Assets/img/VidaFit logo 1.png" alt="Logo VidaFit" height="40">
-            </a>
-            <a href="index.html" class="btn btn-flat-outline">
-                <i class="bi bi-arrow-left me-1"></i> Volver al Inicio
-            </a>
-        </div>
-    </header>
+    <div class="main-wrapper" id="padre">
+        <div class="row h-100 g-0">
 
-    <main class="container d-flex align-items-center justify-content-center min-vh-100 py-5">
-        <div class="flat-card text-center p-4 p-sm-5 mt-5">
-
-            <div class="flat-avatar mx-auto mb-3">
-                <i class="bi bi-person-fill"></i>
+            <div class="col-lg-5 d-flex flex-column justify-content-between p-4 image-panel text-white imagen-registro">
+                <div class="mt-auto w-100 text-center text-lg-start mb-2">
+                    <h2 class="fw-medium lh-base mb-2" style="max-width: 280px;">Fuerza, Energía y Vitalidad</h2>
+                </div>
             </div>
 
-            <span class="flat-badge-title mb-1">ACCESO A TU CUENTA</span>
-            <h2 class="flat-title mb-1">¡Bienvenido a VidaFit!</h2>
-            <p class="flat-subtitle mb-4">Ingresa tus datos para continuar tus compras</p>
+            <div class="col-lg-7 d-flex align-items-center justify-content-center px-3 py-4">
+                <div class="w-100" style="max-width: 460px;">
 
-            <form id="loginForm">
-                <div class="mb-3 text-start">
-                    <label for="email" class="flat-label">Correo Electrónico</label>
-                    <div class="flat-input-group">
-                        <i class="bi bi-envelope flat-input-icon"></i>
-                        <input type="email" id="email" class="flat-input" placeholder="ejemplo@correo.com" required>
-                    </div>
+                    <h1 class="fw-semibold text-white mb-1 py-2">Iniciar Sesión</h1>
+                    <p class="text-secondary small mb-4">
+                        ¿Aún no tienes una cuenta? <a href="registro.html">Regístrate</a>
+                    </p>
+
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <input type="email" id="email" class="form-control form-control-lg fs-6"
+                                placeholder="Email (nombre de usuario)" required>
+                        </div>
+
+                        <div class="mb-3 position-relative">
+                            <input type="password" id="password" class="form-control form-control-lg fs-6 pe-5"
+                                placeholder="Contraseña" required>
+                            <i class="bi bi-eye position-absolute top-50 end-0 translate-middle-y me-3 text-secondary"
+                                id="verContraseña" style="cursor: pointer;"></i>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember">
+                                <label class="form-check-label small text-secondary" for="remember">
+                                    Recordarme
+                                </label>
+                            </div>
+                            <a href="#" class="small text-secondary text-decoration-none">¿Olvidaste tu contraseña?</a>
+                        </div>
+
+                        <button type="submit" id="btnLogin" class="btn btn-principal btn-lg w-100 fs-6 fw-medium mb-4">
+                            Iniciar sesión
+                        </button>
+
+                        <div class="flat-divider mb-4 text-white">
+                            <h5>O ingresa con:</h5>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3 mb-4">
+                            <a href="#" class="btn btn-flat-social text-white"><i class="bi bi-google"></i> Google</a>
+                            <a href="#" class="btn btn-flat-social text-white"><i class="bi bi-facebook"></i> Facebook</a>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="mb-3 text-start">
-                    <label for="password" class="flat-label">Contraseña</label>
-                    <div class="flat-input-group">
-                        <i class="bi bi-lock flat-input-icon"></i>
-                        <input type="password" id="password" class="flat-input" placeholder="••••••••" required>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-4 flat-sm-text">
-                    <label class="d-flex align-items-center gap-2 cursor-pointer text-secondary">
-                        <input type="checkbox" class="flat-checkbox">
-                        <span>Recordarme</span>
-                    </label>
-                    <a href="#" class="flat-link">¿Olvidaste tu contraseña?</a>
-                </div>
-
-                <button type="submit" class="btn btn-flat-primary w-100 mb-4">
-                    INICIAR SESIÓN <i class="bi bi-box-arrow-in-right ms-1"></i>
-                </button>
-            </form>
-
-            <div class="flat-divider mb-4">
-                <span>O CONTINÚA CON</span>
             </div>
-
-            <div class="d-flex justify-content-center gap-3 mb-4">
-                <a href="#" class="btn btn-flat-social"><i class="bi bi-google"></i> Google</a>
-                <a href="#" class="btn btn-flat-social"><i class="bi bi-facebook"></i> Facebook</a>
-            </div>
-
-            <p class="flat-sm-text mb-0">
-                ¿Aún no tienes una cuenta? <a href="registro.html" class="flat-link-bold">Regístrate gratis</a>
-            </p>
 
         </div>
-    </main>
+    </div>
 
-    <!--Boostrap JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 
-    <!--Sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!--Js propios-->
     <script src="Assets/Js/login.js"></script>
+    <script src="Assets/Js/login-admin.js"></script>
 </body>
 
 </html>

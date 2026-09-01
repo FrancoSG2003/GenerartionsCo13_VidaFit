@@ -37,13 +37,16 @@ body {
     border-radius: 10px;
 }
 
-#btnRegistro {
+/* Reemplaza #btnRegistro por una clase .btn-principal */
+.btn-principal {
     background-color: #38B6FF;
     transition: transform 0.2s ease;
+    color: white;
 }
 
-#btnRegistro:hover{
+.btn-principal:hover {
     transform: translateY(-5px);
+    color: white;
 }
 
 /* Separador */
