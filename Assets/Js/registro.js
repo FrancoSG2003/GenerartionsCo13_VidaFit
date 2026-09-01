@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Usuarios guardados:", usuariosGuardados);
         localStorage.setItem("usuarioRegistrado", JSON.stringify(usuarioObjeto));
 
-
         Swal.fire({
         title: "¡Registro validado y guardado con éxito!",
         icon: "success",

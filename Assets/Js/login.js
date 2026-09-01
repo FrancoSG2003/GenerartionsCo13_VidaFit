@@ -28,11 +28,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (usuarioEncontrado) {
-            alert("¡Inicio de sesión exitoso! Bienvenido de nuevo, " + (usuarioEncontrado.nombreCompleto || "Usuario"));
-            localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioEncontrado));
-            window.location.href = "index.html";
+            Swal.fire({
+                icon: "success",
+                title: "¡Inicio de sesión exitoso!",
+                text: "Bienvenido de nuevo, " + usuarioEncontrado.nombre + " " + usuarioEncontrado.apellido,
+                confirmButtonText: "Continuar"
+            }).then(() => {
+                localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioEncontrado));
+                window.location.href = "index.html";
+            });
+
         } else {
-            alert("Error: Nombre de usuario (email) o contraseña inválidos.");
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Nombre de usuario (email) o contraseña inválidos.",
+                confirmButtonText: "Intentar nuevamente"
+            });
         }
     });
 });
