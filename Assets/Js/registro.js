@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("registroForm");
-
-
     const btnVerContraseña = document.getElementById("verContraseña");
     const inputContraseña = document.getElementById("Inputcontraseña");
 
@@ -14,17 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
     form.addEventListener("submit", (e) => {
-        e.preventDefault(); // Evita que se recargue la página por defecto
-
+        e.preventDefault();
 
         const nombreCompleto = document.getElementById("nombreCompleto").value.trim();
         const telefono = document.getElementById("telefono").value.trim();
         const email = document.getElementById("email").value.trim();
         const contraseña = inputContraseña.value;
         const confirmarContraseña = document.getElementById("InputConfirmarContraseña").value;
-
 
         if (!nombreCompleto || !telefono || !email || !contraseña || !confirmarContraseña) {
             alert("Error: Todos los campos son obligatorios.");
@@ -37,19 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const regexTelefono = /^[0-9]{7,15}$/;
         if (!regexTelefono.test(telefono)) {
             alert("Error: El número de teléfono no es válido (introduce solo números, entre 7 y 15 dígitos).");
             return;
         }
 
-
         if (contraseña !== confirmarContraseña) {
             alert("Error: Las contraseñas no coinciden.");
             return;
         }
-
 
         const usuarioObjeto = {
             nombreCompleto: nombreCompleto,
@@ -58,13 +50,21 @@ document.addEventListener("DOMContentLoaded", () => {
             contraseña: contraseña
         };
 
+        const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-        console.log("Objeto JSON del usuario creado con éxito:", usuarioObjeto);
-        console.log(JSON.stringify(usuarioObjeto, null, 2));
+        const existe = usuariosGuardados.some(u => u.email === email);
+        if (existe) {
+            alert("Error: Este correo electrónico ya está registrado.");
+            return;
+        }
 
-        alert("¡Registro validado con éxito!.");
+        usuariosGuardados.push(usuarioObjeto);
+        localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
+        localStorage.setItem("usuarioRegistrado", JSON.stringify(usuarioObjeto));
 
+        alert("¡Registro validado y guardado con éxito!");
 
         form.reset();
+        window.location.href = "Login.html";
     });
 });
