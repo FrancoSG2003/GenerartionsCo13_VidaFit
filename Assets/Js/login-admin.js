@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 timer: 1200,
                 showConfirmButton: false
             }).then(() => {
-                window.location.href = 'dashboardAdmin.html';
+                window.location.href = 'adminIndex.html';
             });
         }
     }, true);

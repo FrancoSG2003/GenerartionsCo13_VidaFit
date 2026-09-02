@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                     ${esAdmin ? `
                         <li>
-                            <a class="dropdown-item fw-bold text-primary" href="admin.html">
+                            <a class="dropdown-item fw-bold text-primary" href="adminIndex.html">
                                 <i class="bi bi-speedometer2 me-2"></i> Panel Admin
                             </a>
                         </li>
