@@ -4,26 +4,18 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Catálogo - VidaFit</title>
 
     <!-- Bootstrap -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- CSS existente -->
-    <link
-        rel="stylesheet"
-        href="Assets/Css/styles.css">
+    <link rel="stylesheet" href="Assets/Css/styles.css">
 
     <!-- Solo controla el cambio de cuadrícula a lista -->
     <style>
@@ -70,47 +62,28 @@
     <!-- NAVEGACIÓN -->
     <header>
 
-        <nav
-            id="nav"
-            class="navbar navbar-expand-lg bg-secondary px-4 py-2 fixed-top">
+        <nav id="nav" class="navbar navbar-expand-lg bg-secondary px-4 py-2 fixed-top">
 
             <div class="container-fluid">
 
-                <a
-                    class="navbar-brand"
-                    href="index.html">
+                <a class="navbar-brand" href="index.html">
 
-                    <img
-                        class="logo"
-                        src="Assets/img/VidaFit logo 1.png"
-                        alt="Logo VidaFit"
-                        width="100"
-                        height="auto">
+                    <img class="logo" src="Assets/img/VidaFit logo 1.png" alt="Logo VidaFit" width="100" height="auto">
                 </a>
 
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Abrir navegación">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir navegación">
 
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div
-                    class="collapse navbar-collapse"
-                    id="navbarNav">
+                <div class="collapse navbar-collapse" id="navbarNav">
 
                     <ul class="navbar-nav ms-auto align-items-center gap-3">
 
                         <li class="nav-item">
 
-                            <a
-                                class="nav-link ingreso-link"
-                                href="index.html">
+                            <a class="nav-link ingreso-link" href="index.html">
                                 <i class="bi bi-house-fill"></i>
                                 Inicio
                             </a>
@@ -118,10 +91,7 @@
 
                         <li class="nav-item">
 
-                            <a
-                                class="nav-link ingreso-link"
-                                aria-current="page"
-                                href="catalogo.html">
+                            <a class="nav-link ingreso-link" aria-current="page" href="catalogo.html">
                                 <i class="bi bi-grid-fill"></i>
                                 Productos
                             </a>
@@ -129,9 +99,7 @@
 
                         <li class="nav-item">
 
-                            <a
-                                class="nav-link ingreso-link"
-                                href="sobreNosotros.html">
+                            <a class="nav-link ingreso-link" href="sobreNosotros.html">
                                 <i class="bi bi-people-fill"></i>
                                 Nosotros
                             </a>
@@ -139,9 +107,7 @@
 
                         <li class="nav-item">
 
-                            <a
-                                class="nav-link ingreso-link"
-                                href="contacto.html">
+                            <a class="nav-link ingreso-link" href="contacto.html">
                                 <i class="bi bi-headset"></i>
                                 <span>Contacto</span>
                             </a>
@@ -149,9 +115,7 @@
 
                         <li class="nav-item" id="zonaUsuario">
 
-                            <a
-                                class="nav-link ingreso-link"
-                                href="Login.html">
+                            <a class="nav-link ingreso-link" href="Login.html">
 
                                 <i class="bi bi-person-fill"></i>
                                 <span>Ingreso</span>
@@ -160,18 +124,13 @@
 
                         <li class="nav-item">
 
-                            <button
-                                id="btnAbrirCarrito"
-                                class="btn btn-outline-dark position-relative"
-                                type="button"
-                                aria-controls="carritoLateral"
-                                aria-expanded="false">
+                            <button id="btnAbrirCarrito" class="btn btn-outline-dark position-relative" type="button"
+                                aria-controls="carritoLateral" aria-expanded="false">
 
                                 <i class="bi bi-cart3"></i>
                                 <span>Carrito</span>
 
-                                <span
-                                    id="contadorCarrito"
+                                <span id="contadorCarrito"
                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 
                                     0
@@ -210,14 +169,10 @@
 
                 </div>
 
-                <div
-                    class="col-md-5 d-flex flex-wrap justify-content-md-end align-items-center gap-2">
+                <div class="col-md-5 d-flex flex-wrap justify-content-md-end align-items-center gap-2">
 
                     <!-- ORDENAMIENTO -->
-                    <select
-                        class="form-select w-auto"
-                        id="orden-productos"
-                        aria-label="Ordenar productos">
+                    <select class="form-select w-auto" id="orden-productos" aria-label="Ordenar productos">
 
                         <option value="ventas" selected>
                             Ordenar por: Más vendidos
@@ -238,27 +193,16 @@
                     </select>
 
                     <!-- CAMBIO DE VISTA -->
-                    <div
-                        class="btn-group"
-                        role="group"
-                        aria-label="Cambiar vista del catálogo">
+                    <div class="btn-group" role="group" aria-label="Cambiar vista del catálogo">
 
-                        <button
-                            type="button"
-                            class="btn btn-outline-secondary active"
-                            id="boton-cuadricula"
-                            aria-label="Vista de cuadrícula"
-                            aria-pressed="true">
+                        <button type="button" class="btn btn-outline-secondary active" id="boton-cuadricula"
+                            aria-label="Vista de cuadrícula" aria-pressed="true">
 
                             <i class="bi bi-grid-3x3-gap-fill"></i>
                         </button>
 
-                        <button
-                            type="button"
-                            class="btn btn-outline-secondary"
-                            id="boton-lista"
-                            aria-label="Vista de lista"
-                            aria-pressed="false">
+                        <button type="button" class="btn btn-outline-secondary" id="boton-lista"
+                            aria-label="Vista de lista" aria-pressed="false">
 
                             <i class="bi bi-list-task"></i>
                         </button>
@@ -271,9 +215,7 @@
 
             <div class="mt-3">
 
-                <small
-                    class="text-muted"
-                    id="contador-catalogo">
+                <small class="text-muted" id="contador-catalogo">
 
                     Mostrando 12 de 12 productos
                 </small>
@@ -292,9 +234,7 @@
             <!-- PRECIO -->
             <div class="mb-3">
 
-                <label
-                    for="filtro-precio"
-                    class="form-label">
+                <label for="filtro-precio" class="form-label">
 
                     Precio máximo:
 
@@ -303,13 +243,7 @@
                     </span>
                 </label>
 
-                <input
-                    type="range"
-                    class="form-range"
-                    id="filtro-precio"
-                    min="0"
-                    max="250000"
-                    step="10000"
+                <input type="range" class="form-range" id="filtro-precio" min="0" max="250000" step="10000"
                     value="250000">
 
             </div>
@@ -324,90 +258,60 @@
                     </legend>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-categoria"
-                            type="checkbox"
-                            value="proteinas"
+                        <input class="form-check-input filtro-categoria" type="checkbox" value="proteinas"
                             id="categoria-proteinas">
 
-                        <label
-                            class="form-check-label"
-                            for="categoria-proteinas">
+                        <label class="form-check-label" for="categoria-proteinas">
 
                             Proteínas
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-categoria"
-                            type="checkbox"
-                            value="creatinas"
+                        <input class="form-check-input filtro-categoria" type="checkbox" value="creatinas"
                             id="categoria-creatinas">
 
-                        <label
-                            class="form-check-label"
-                            for="categoria-creatinas">
+                        <label class="form-check-label" for="categoria-creatinas">
 
                             Creatinas
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-categoria"
-                            type="checkbox"
-                            value="pre-entreno"
+                        <input class="form-check-input filtro-categoria" type="checkbox" value="pre-entreno"
                             id="categoria-pre-entreno">
 
-                        <label
-                            class="form-check-label"
-                            for="categoria-pre-entreno">
+                        <label class="form-check-label" for="categoria-pre-entreno">
 
                             Pre-entreno
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-categoria"
-                            type="checkbox"
-                            value="vitaminas"
+                        <input class="form-check-input filtro-categoria" type="checkbox" value="vitaminas"
                             id="categoria-vitaminas">
 
-                        <label
-                            class="form-check-label"
-                            for="categoria-vitaminas">
+                        <label class="form-check-label" for="categoria-vitaminas">
 
                             Vitaminas
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-categoria"
-                            type="checkbox"
-                            value="snacks-saludables"
+                        <input class="form-check-input filtro-categoria" type="checkbox" value="snacks-saludables"
                             id="categoria-snacks">
 
-                        <label
-                            class="form-check-label"
-                            for="categoria-snacks">
+                        <label class="form-check-label" for="categoria-snacks">
 
                             Snacks saludables
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-categoria"
-                            type="checkbox"
-                            value="accesorios"
+                        <input class="form-check-input filtro-categoria" type="checkbox" value="accesorios"
                             id="categoria-accesorios">
 
-                        <label
-                            class="form-check-label"
-                            for="categoria-accesorios">
+                        <label class="form-check-label" for="categoria-accesorios">
 
                             Accesorios
                         </label>
@@ -423,75 +327,47 @@
                     </legend>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-marca"
-                            type="checkbox"
-                            value="VidaFit"
-                            id="marca-vidafit">
+                        <input class="form-check-input filtro-marca" type="checkbox" value="VidaFit" id="marca-vidafit">
 
-                        <label
-                            class="form-check-label"
-                            for="marca-vidafit">
+                        <label class="form-check-label" for="marca-vidafit">
 
                             VidaFit
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-marca"
-                            type="checkbox"
-                            value="BiPro"
-                            id="marca-bipro">
+                        <input class="form-check-input filtro-marca" type="checkbox" value="BiPro" id="marca-bipro">
 
-                        <label
-                            class="form-check-label"
-                            for="marca-bipro">
+                        <label class="form-check-label" for="marca-bipro">
 
                             BiPro
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-marca"
-                            type="checkbox"
-                            value="Optimun Nutricion"
+                        <input class="form-check-input filtro-marca" type="checkbox" value="Optimun Nutricion"
                             id="marca-optimun">
 
-                        <label
-                            class="form-check-label"
-                            for="marca-optimun">
+                        <label class="form-check-label" for="marca-optimun">
 
                             Optimun Nutricion
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-marca"
-                            type="checkbox"
-                            value="C4"
-                            id="marca-c4">
+                        <input class="form-check-input filtro-marca" type="checkbox" value="C4" id="marca-c4">
 
-                        <label
-                            class="form-check-label"
-                            for="marca-c4">
+                        <label class="form-check-label" for="marca-c4">
 
                             C4
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-marca"
-                            type="checkbox"
-                            value="SportFitnesse"
+                        <input class="form-check-input filtro-marca" type="checkbox" value="SportFitnesse"
                             id="marca-sportfitnesse">
 
-                        <label
-                            class="form-check-label"
-                            for="marca-sportfitnesse">
+                        <label class="form-check-label" for="marca-sportfitnesse">
 
                             SportFitnesse
                         </label>
@@ -507,30 +383,20 @@
                     </legend>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-disponibilidad"
-                            type="checkbox"
-                            value="true"
+                        <input class="form-check-input filtro-disponibilidad" type="checkbox" value="true"
                             id="disponibilidad-stock">
 
-                        <label
-                            class="form-check-label"
-                            for="disponibilidad-stock">
+                        <label class="form-check-label" for="disponibilidad-stock">
 
                             En stock
                         </label>
                     </div>
 
                     <div class="form-check">
-                        <input
-                            class="form-check-input filtro-disponibilidad"
-                            type="checkbox"
-                            value="false"
+                        <input class="form-check-input filtro-disponibilidad" type="checkbox" value="false"
                             id="disponibilidad-agotado">
 
-                        <label
-                            class="form-check-label"
-                            for="disponibilidad-agotado">
+                        <label class="form-check-label" for="disponibilidad-agotado">
 
                             Agotado
                         </label>
@@ -543,55 +409,36 @@
         </section>
 
         <!-- MENSAJE SIN RESULTADOS -->
-        <div
-            class="alert alert-info text-center"
-            id="mensaje-sin-resultados"
-            role="status">
+        <div class="alert alert-info text-center" id="mensaje-sin-resultados" role="status">
 
             No hay productos que coincidan con los filtros seleccionados.
         </div>
 
         <!-- PRODUCTOS -->
-        <div
-            class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
-            id="contenedor-productos">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="contenedor-productos">
 
             <!-- PRODUCTO 1 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="1">
+            <div class="col producto-columna" data-posicion-original="1">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="1"
-                    data-categoria="proteinas"
-                    data-precio="159900"
-                    data-marca="VidaFit"
-                    data-stock="true"
-                    data-ventas="128"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="1"
+                    data-categoria="proteinas" data-precio="159900" data-marca="VidaFit" data-stock="true"
+                    data-ventas="128" data-valoracion="5">
 
-                    <span
-                        class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
+                    <span class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
 
                         Más vendido
                     </span>
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Proteína VidaFit a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Proteína VidaFit a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/proteina-bg.png"
-                            alt="Proteína VidaFit">
+                        <img src="Assets/img/proteina-bg.png" alt="Proteína VidaFit">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -628,35 +475,22 @@
             </div>
 
             <!-- PRODUCTO 2 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="2">
+            <div class="col producto-columna" data-posicion-original="2">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="2"
-                    data-categoria="proteinas"
-                    data-precio="249900"
-                    data-marca="BiPro"
-                    data-stock="true"
-                    data-ventas="94"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="2"
+                    data-categoria="proteinas" data-precio="249900" data-marca="BiPro" data-stock="true"
+                    data-ventas="94" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Proteína BiPro Classic a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Proteína BiPro Classic a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/proteina-bg.png"
-                            alt="Proteína BiPro Classic">
+                        <img src="Assets/img/proteina-bg.png" alt="Proteína BiPro Classic">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -693,41 +527,27 @@
             </div>
 
             <!-- PRODUCTO 3 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="3">
+            <div class="col producto-columna" data-posicion-original="3">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="3"
-                    data-categoria="creatinas"
-                    data-precio="95900"
-                    data-marca="VidaFit"
-                    data-stock="true"
-                    data-ventas="150"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="3"
+                    data-categoria="creatinas" data-precio="95900" data-marca="VidaFit" data-stock="true"
+                    data-ventas="150" data-valoracion="5">
 
-                    <span
-                        class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
+                    <span class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
 
                         Más vendido
                     </span>
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Creatina VidaFit a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Creatina VidaFit a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/creatina-bg.png"
-                            alt="Creatina Monohidratada VidaFit">
+                        <img src="Assets/img/creatina-bg.png" alt="Creatina Monohidratada VidaFit">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -764,35 +584,22 @@
             </div>
 
             <!-- PRODUCTO 4 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="4">
+            <div class="col producto-columna" data-posicion-original="4">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="4"
-                    data-categoria="creatinas"
-                    data-precio="200000"
-                    data-marca="Optimun Nutricion"
-                    data-stock="true"
-                    data-ventas="62"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="4"
+                    data-categoria="creatinas" data-precio="200000" data-marca="Optimun Nutricion" data-stock="true"
+                    data-ventas="62" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Creatina Optimun Nutricion a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Creatina Optimun Nutricion a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/creatina-bg.png"
-                            alt="Creatina Optimun Nutricion">
+                        <img src="Assets/img/creatina-bg.png" alt="Creatina Optimun Nutricion">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -829,35 +636,22 @@
             </div>
 
             <!-- PRODUCTO 5 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="5">
+            <div class="col producto-columna" data-posicion-original="5">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="5"
-                    data-categoria="pre-entreno"
-                    data-precio="105900"
-                    data-marca="C4"
-                    data-stock="true"
-                    data-ventas="64"
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="5"
+                    data-categoria="pre-entreno" data-precio="105900" data-marca="C4" data-stock="true" data-ventas="64"
                     data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Pre-Workout C4 a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Pre-Workout C4 a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/pre-Entreno-bg.png"
-                            alt="Pre-Workout C4">
+                        <img src="Assets/img/pre-Entreno-bg.png" alt="Pre-Workout C4">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -894,35 +688,22 @@
             </div>
 
             <!-- PRODUCTO 6 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="6">
+            <div class="col producto-columna" data-posicion-original="6">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="6"
-                    data-categoria="pre-entreno"
-                    data-precio="82900"
-                    data-marca="VidaFit"
-                    data-stock="true"
-                    data-ventas="51"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="6"
+                    data-categoria="pre-entreno" data-precio="82900" data-marca="VidaFit" data-stock="true"
+                    data-ventas="51" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Pre-Entreno VidaFit a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Pre-Entreno VidaFit a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/pre-Entreno-bg.png"
-                            alt="Pre-Entreno VidaFit Max">
+                        <img src="Assets/img/pre-Entreno-bg.png" alt="Pre-Entreno VidaFit Max">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -959,35 +740,22 @@
             </div>
 
             <!-- PRODUCTO 7 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="7">
+            <div class="col producto-columna" data-posicion-original="7">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="7"
-                    data-categoria="vitaminas"
-                    data-precio="125900"
-                    data-marca="Optimun Nutricion"
-                    data-stock="true"
-                    data-ventas="77"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="7"
+                    data-categoria="vitaminas" data-precio="125900" data-marca="Optimun Nutricion" data-stock="true"
+                    data-ventas="77" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Opti-Women a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Opti-Women a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/vitaminas-bg.png"
-                            alt="Opti-Women">
+                        <img src="Assets/img/vitaminas-bg.png" alt="Opti-Women">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -1024,35 +792,22 @@
             </div>
 
             <!-- PRODUCTO 8 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="8">
+            <div class="col producto-columna" data-posicion-original="8">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="8"
-                    data-categoria="vitaminas"
-                    data-precio="125900"
-                    data-marca="Optimun Nutricion"
-                    data-stock="true"
-                    data-ventas="86"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="8"
+                    data-categoria="vitaminas" data-precio="125900" data-marca="Optimun Nutricion" data-stock="true"
+                    data-ventas="86" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Opti-Men a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Opti-Men a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/vitaminas-bg.png"
-                            alt="Opti-Men">
+                        <img src="Assets/img/vitaminas-bg.png" alt="Opti-Men">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -1089,35 +844,22 @@
             </div>
 
             <!-- PRODUCTO 9 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="9">
+            <div class="col producto-columna" data-posicion-original="9">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="9"
-                    data-categoria="snacks-saludables"
-                    data-precio="49900"
-                    data-marca="VidaFit"
-                    data-stock="true"
-                    data-ventas="93"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="9"
+                    data-categoria="snacks-saludables" data-precio="49900" data-marca="VidaFit" data-stock="true"
+                    data-ventas="93" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Barra de Proteína a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Barra de Proteína a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/snacks-bg.png"
-                            alt="Barra de Proteína Chocolate">
+                        <img src="Assets/img/snacks-bg.png" alt="Barra de Proteína Chocolate">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -1154,35 +896,22 @@
             </div>
 
             <!-- PRODUCTO 10 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="10">
+            <div class="col producto-columna" data-posicion-original="10">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="10"
-                    data-categoria="snacks-saludables"
-                    data-precio="34900"
-                    data-marca="VidaFit"
-                    data-stock="true"
-                    data-ventas="44"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="10"
+                    data-categoria="snacks-saludables" data-precio="34900" data-marca="VidaFit" data-stock="true"
+                    data-ventas="44" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Crema de Almendras a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Crema de Almendras a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/snacks-bg.png"
-                            alt="Crema de Almendras Natural">
+                        <img src="Assets/img/snacks-bg.png" alt="Crema de Almendras Natural">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -1219,35 +948,22 @@
             </div>
 
             <!-- PRODUCTO 11 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="11">
+            <div class="col producto-columna" data-posicion-original="11">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="11"
-                    data-categoria="accesorios"
-                    data-precio="29900"
-                    data-marca="VidaFit"
-                    data-stock="true"
-                    data-ventas="95"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="11"
+                    data-categoria="accesorios" data-precio="29900" data-marca="VidaFit" data-stock="true"
+                    data-ventas="95" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Shaker VidaFit a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Shaker VidaFit a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/Accesorios-bg.png"
-                            alt="Shaker VidaFit">
+                        <img src="Assets/img/Accesorios-bg.png" alt="Shaker VidaFit">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -1284,35 +1000,22 @@
             </div>
 
             <!-- PRODUCTO 12 -->
-            <div
-                class="col producto-columna"
-                data-posicion-original="12">
+            <div class="col producto-columna" data-posicion-original="12">
 
-                <article
-                    class="card h-100 shadow-sm border position-relative producto-card"
-                    data-id="12"
-                    data-categoria="accesorios"
-                    data-precio="39900"
-                    data-marca="SportFitnesse"
-                    data-stock="false"
-                    data-ventas="110"
-                    data-valoracion="5">
+                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="12"
+                    data-categoria="accesorios" data-precio="39900" data-marca="SportFitnesse" data-stock="false"
+                    data-ventas="110" data-valoracion="5">
 
-                    <button
-                        type="button"
+                    <button type="button"
                         class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Bandas de Resistencia a favoritos"
-                        aria-pressed="false">
+                        aria-label="Agregar Bandas de Resistencia a favoritos" aria-pressed="false">
 
                         <i class="bi bi-heart fs-5"></i>
                     </button>
 
-                    <div
-                        class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <img
-                            src="Assets/img/Accesorios-bg.png"
-                            alt="Bandas de Resistencia">
+                        <img src="Assets/img/Accesorios-bg.png" alt="Bandas de Resistencia">
                     </div>
 
                     <div class="card-body d-flex flex-column text-start">
@@ -1337,8 +1040,7 @@
                             $39.900
                         </p>
 
-                        <button
-                            class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
 
                             Agregar al carrito
                             <i class="bi bi-cart"></i>
@@ -1355,64 +1057,41 @@
     </main>
 
     <!-- Carrito lateral -->
-    <div
-        id="overlay"
-        class="overlay d-none position-fixed top-0 start-0 w-100 h-100">
+    <div id="overlay" class="overlay d-none position-fixed top-0 start-0 w-100 h-100">
 
-        <div
-            id="fondoCarrito"
-            class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
+        <div id="fondoCarrito" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
         </div>
 
-        <aside
-            id="carritoLateral"
-            class="position-absolute top-0 end-0 h-100 bg-white shadow d-flex flex-column"
-            aria-labelledby="tituloCarrito"
-            aria-hidden="true">
+        <aside id="carritoLateral" class="position-absolute top-0 end-0 h-100 bg-white shadow d-flex flex-column"
+            aria-labelledby="tituloCarrito" aria-hidden="true">
 
             <div class="d-flex justify-content-between align-items-center border-bottom p-3">
 
-                <h2
-                    id="tituloCarrito"
-                    class="h4 mb-0">
+                <h2 id="tituloCarrito" class="h4 mb-0">
 
                     Mi carrito
                 </h2>
 
-                <button
-                    id="btnCerrarCarrito"
-                    class="btn-close"
-                    type="button"
-                    aria-label="Cerrar carrito">
+                <button id="btnCerrarCarrito" class="btn-close" type="button" aria-label="Cerrar carrito">
                 </button>
             </div>
 
-            <div
-                id="carritoVacio"
-                class="text-center p-4">
+            <div id="carritoVacio" class="text-center p-4">
 
                 <p class="text-secondary mb-3">
                     Tu carrito está vacío.
                 </p>
 
-                <button
-                    id="btnContinuarComprando"
-                    class="btn btn-outline-primary"
-                    type="button">
+                <button id="btnContinuarComprando" class="btn btn-outline-primary" type="button">
 
                     Continuar comprando
                 </button>
             </div>
 
-            <div
-                id="contenedorProductosCarrito"
-                class="flex-grow-1 overflow-auto p-3"
-                aria-live="polite">
+            <div id="contenedorProductosCarrito" class="flex-grow-1 overflow-auto p-3" aria-live="polite">
             </div>
 
-            <div
-                id="resumenCarrito"
-                class="border-top bg-light p-3">
+            <div id="resumenCarrito" class="border-top bg-light p-3">
 
                 <div class="d-flex justify-content-between mb-2">
                     <span>Cantidad:</span>
@@ -1423,21 +1102,13 @@
                     <strong>Total:</strong>
                     <strong id="precioTotalCarrito">$0</strong>
                 </div>
-                
-                <button
-                    id="btnVaciarCarrito"
-                    class="btn btn-outline-danger w-100 mb-2"
-                    type="button"
-                    disabled>
+
+                <button id="btnVaciarCarrito" class="btn btn-outline-danger w-100 mb-2" type="button" disabled>
 
                     Vaciar carrito
                 </button>
-    
-                <button
-                    id="btnFinalizarCompra"
-                    class="btn btn-primary w-100"
-                    type="button"
-                    disabled>
+
+                <button id="btnFinalizarCompra" class="btn btn-primary w-100" type="button" disabled>
 
                     Finalizar compra
                 </button>
@@ -1448,17 +1119,12 @@
     <!-- Plantilla de cada producto del carrito -->
     <template id="plantillaProductoCarrito">
 
-        <article
-            class="producto-carrito border-bottom pb-3 mb-3"
-            data-id="">
+        <article class="producto-carrito border-bottom pb-3 mb-3" data-id="">
 
             <div class="row g-3">
 
                 <div class="col-4">
-                    <img
-                        class="producto-imagen-carrito img-fluid rounded"
-                        src=""
-                        alt="">
+                    <img class="producto-imagen-carrito img-fluid rounded" src="" alt="">
                 </div>
 
                 <div class="col-8">
@@ -1470,14 +1136,9 @@
 
                     <div class="d-flex justify-content-between align-items-center gap-2">
 
-                        <div
-                            class="btn-group btn-group-sm"
-                            role="group"
-                            aria-label="Modificar cantidad">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Modificar cantidad">
 
-                            <button
-                                class="btnDisminuirCantidad btn btn-outline-secondary"
-                                type="button"
+                            <button class="btnDisminuirCantidad btn btn-outline-secondary" type="button"
                                 aria-label="Disminuir cantidad">
 
                                 −
@@ -1487,18 +1148,14 @@
                                 1
                             </span>
 
-                            <button
-                                class="btnAumentarCantidad btn btn-outline-secondary"
-                                type="button"
+                            <button class="btnAumentarCantidad btn btn-outline-secondary" type="button"
                                 aria-label="Aumentar cantidad">
 
                                 +
                             </button>
                         </div>
 
-                        <button
-                            class="btnEliminarProducto btn btn-sm btn-outline-danger"
-                            type="button">
+                        <button class="btnEliminarProducto btn btn-sm btn-outline-danger" type="button">
 
                             Eliminar
                         </button>
@@ -1533,13 +1190,16 @@
                 <div class="col-lg-3 col-md-6">
                     <h5 class="fw-bold mb-3">Síguenos</h5>
                     <div class="d-flex gap-3 fs-4">
-                        <a href="https://www.facebook.com/profile.php?id=61593114950771" target="_blank" class="text-white text-decoration-none">
+                        <a href="https://www.facebook.com/profile.php?id=61593114950771" target="_blank"
+                            class="text-white text-decoration-none">
                             <i class="bi bi-facebook"></i>
                         </a>
-                        <a href="https://www.instagram.com/vidafitproyect/" target="_blank" class="text-white text-decoration-none">
+                        <a href="https://www.instagram.com/vidafitproyect/" target="_blank"
+                            class="text-white text-decoration-none">
                             <i class="bi bi-instagram"></i>
                         </a>
-                        <a href="https://www.tiktok.com/@vidafit6553" target="_blank" class="text-white text-decoration-none">
+                        <a href="https://www.tiktok.com/@vidafit6553" target="_blank"
+                            class="text-white text-decoration-none">
                             <i class="bi bi-tiktok"></i>
                         </a>
                     </div>
@@ -1557,8 +1217,7 @@
     </footer>
 
     <!-- Bootstrap JavaScript -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
 
     <!--Sweetalert-->
