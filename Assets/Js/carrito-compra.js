@@ -30,7 +30,9 @@ botonesAgregarCarrito.forEach(function (boton) {
         return;
     }
 
-    if (tarjeta.dataset.stock === "false") {
+    const stockDisponible = Number(tarjeta.dataset.stock);
+
+    if (stockDisponible <= 0) {
         boton.disabled = true;
         boton.textContent = "Agotado";
         return;
@@ -58,6 +60,29 @@ function cerrarCarrito() {
 }
 
 
+function obtenerStockDisponible(id) {
+    const tarjeta = document.querySelector(
+        `.producto-card[data-id="${id}"]`
+    );
+
+    if (!tarjeta) {
+        return 0;
+    }
+
+    return Number(tarjeta.dataset.stock);
+}
+
+
+function mostrarLimiteStock(stockDisponible) {
+    Swal.fire({
+        icon: "info",
+        title: "Stock máximo alcanzado",
+        text: `Solo hay ${stockDisponible} unidades disponibles de este producto.`,
+        confirmButtonColor: "#212529"
+    });
+}
+
+
 function agregarProducto(event) {
     const boton = event.currentTarget;
     const tarjeta = boton.closest(".producto-card");
@@ -66,7 +91,9 @@ function agregarProducto(event) {
         return;
     }
 
-    if (tarjeta.dataset.stock === "false") {
+    const stockDisponible = Number(tarjeta.dataset.stock);
+
+    if (stockDisponible <= 0) {
         return;
     }
 
@@ -83,6 +110,11 @@ function agregarProducto(event) {
     });
 
     if (productoExistente) {
+        if (productoExistente.cantidad >= stockDisponible) {
+            mostrarLimiteStock(stockDisponible);
+            return;
+        }
+
         productoExistente.cantidad++;
     } else {
         carrito.push(producto);
@@ -157,6 +189,13 @@ function aumentarCantidad(id) {
     });
 
     if (!producto) {
+        return;
+    }
+
+    const stockDisponible = obtenerStockDisponible(id);
+
+    if (producto.cantidad >= stockDisponible) {
+        mostrarLimiteStock(stockDisponible);
         return;
     }
 
@@ -280,7 +319,20 @@ function cargarCarritoLocal() {
 
     const productosGuardados = JSON.parse(carritoGuardado);
 
-    carrito.push(...productosGuardados);
+    productosGuardados.forEach(function (producto) {
+        const stockDisponible = obtenerStockDisponible(producto.id);
+
+        if (stockDisponible <= 0) {
+            return;
+        }
+
+        producto.cantidad = Math.min(
+            producto.cantidad,
+            stockDisponible
+        );
+
+        carrito.push(producto);
+    });
 }
 
 
