@@ -22,6 +22,8 @@ btnCarrito.addEventListener("click", mostrarCarrito);
 btnCerrarCarrito.addEventListener("click", cerrarCarrito);
 btnContinuarComprando.addEventListener("click", cerrarCarrito);
 btnVaciarCarrito.addEventListener("click", vaciarCarrito);
+btnFinalizarCompra.addEventListener("click", finalizarCompra);
+
 
 botonesAgregarCarrito.forEach(function (boton) {
     const tarjeta = boton.closest(".producto-card");
@@ -79,6 +81,58 @@ function mostrarLimiteStock(stockDisponible) {
         title: "Stock máximo alcanzado",
         text: `Solo hay ${stockDisponible} unidades disponibles de este producto.`,
         confirmButtonColor: "#212529"
+    });
+}
+
+
+function guardarStockLocal() {
+    const stockProductos = {};
+
+    document.querySelectorAll(".producto-card").forEach(function (tarjeta) {
+        stockProductos[tarjeta.dataset.id] =
+            Number(tarjeta.dataset.stock);
+    });
+
+    localStorage.setItem(
+        "stockVidaFit",
+        JSON.stringify(stockProductos)
+    );
+}
+
+
+function cargarStockLocal() {
+    const stockGuardado = localStorage.getItem("stockVidaFit");
+
+    if (!stockGuardado) {
+        return;
+    }
+
+    const stockProductos = JSON.parse(stockGuardado);
+
+    document.querySelectorAll(".producto-card").forEach(function (tarjeta) {
+        const id = tarjeta.dataset.id;
+
+        if (stockProductos[id] !== undefined) {
+            tarjeta.dataset.stock = stockProductos[id];
+        }
+    });
+}
+
+
+function actualizarDisponibilidadProductos() {
+    botonesAgregarCarrito.forEach(function (boton) {
+        const tarjeta = boton.closest(".producto-card");
+
+        if (!tarjeta) {
+            return;
+        }
+
+        const stockDisponible = Number(tarjeta.dataset.stock);
+
+        if (stockDisponible <= 0) {
+            boton.disabled = true;
+            boton.textContent = "Agotado";
+        }
     });
 }
 
@@ -239,6 +293,7 @@ function eliminarProducto(id) {
     renderizarCarrito();
 }
 
+
 function vaciarCarrito() { 
     if (carrito.length === 0) { 
         return; 
@@ -282,6 +337,74 @@ function vaciarCarrito() {
         
         } 
     }); 
+}
+
+
+function finalizarCompra() {
+    if (carrito.length === 0) {
+        return;
+    }
+
+    const productoSinStock = carrito.find(function (producto) {
+        const stockDisponible = obtenerStockDisponible(producto.id);
+
+        return producto.cantidad > stockDisponible;
+    });
+
+    if (productoSinStock) {
+        Swal.fire({
+            icon: "warning",
+            title: "Stock insuficiente",
+            text: `No hay suficientes unidades de ${productoSinStock.nombre}.`,
+            confirmButtonColor: "#212529"
+        });
+
+        return;
+    }
+
+    Swal.fire({
+        title: "¿Finalizar compra?",
+        text: "Confirma que deseas realizar la compra.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, comprar",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#212529"
+    }).then(function (result) {
+        if (!result.isConfirmed) {
+            return;
+        }
+
+        carrito.forEach(function (producto) {
+            const tarjeta = document.querySelector(
+                `.producto-card[data-id="${producto.id}"]`
+            );
+
+            if (!tarjeta) {
+                return;
+            }
+
+            const stockActual = Number(tarjeta.dataset.stock);
+
+            tarjeta.dataset.stock =
+                stockActual - producto.cantidad;
+        });
+
+        guardarStockLocal();
+        actualizarDisponibilidadProductos();
+
+        carrito.length = 0;
+
+        guardarCarritoLocal();
+        renderizarCarrito();
+
+        Swal.fire({
+            icon: "success",
+            title: "¡Compra realizada!",
+            text: "Tu compra fue finalizada correctamente.",
+            confirmButtonColor: "#212529"
+        });
+    });
 }
 
 
@@ -336,5 +459,7 @@ function cargarCarritoLocal() {
 }
 
 
+cargarStockLocal();
 cargarCarritoLocal();
+actualizarDisponibilidadProductos();
 renderizarCarrito();
