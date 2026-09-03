@@ -18,10 +18,10 @@ const btnFinalizarCompra = document.getElementById("btnFinalizarCompra");
 const carrito = [];
 
 
-btnCarrito.addEventListener("click", mostrarCarrito);
-btnCerrarCarrito.addEventListener("click", cerrarCarrito);
-btnContinuarComprando.addEventListener("click", cerrarCarrito);
-btnVaciarCarrito.addEventListener("click", vaciarCarrito);
+if (btnCarrito) btnCarrito.addEventListener("click", mostrarCarrito);
+if (btnCerrarCarrito) btnCerrarCarrito.addEventListener("click", cerrarCarrito);
+if (btnContinuarComprando) btnContinuarComprando.addEventListener("click", cerrarCarrito);
+if (btnVaciarCarrito) btnVaciarCarrito.addEventListener("click", vaciarCarrito);
 
 botonesAgregarCarrito.forEach(function (boton) {
     const tarjeta = boton.closest(".producto-card");
@@ -200,49 +200,49 @@ function eliminarProducto(id) {
     renderizarCarrito();
 }
 
-function vaciarCarrito() { 
-    if (carrito.length === 0) { 
-        return; 
+function vaciarCarrito() {
+    if (carrito.length === 0) {
+        return;
     }
-    
-    const swalWithBootstrapButtons = Swal.mixin({ 
-        customClass: { 
-            confirmButton: "btn btn-success", 
-            cancelButton: "btn btn-danger" 
-        }, 
-        
-        buttonsStyling: false 
-    }); 
-    
-    swalWithBootstrapButtons.fire({ 
-        
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+
         title: "¿Vaciar carrito?",
-        text: "Se eliminarán todos los productos del carrito.", 
-        icon: "warning", 
-        showCancelButton: true, 
-        confirmButtonText: "Sí, vaciar carrito", 
-        cancelButtonText: "No, cancelar", 
+        text: "Se eliminarán todos los productos del carrito.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, vaciar carrito",
+        cancelButtonText: "No, cancelar",
         reverseButtons: true
-    }).then((result) => { 
-        
-        if (result.isConfirmed) { 
-            
-            carrito.length = 0; 
-            
-            guardarCarritoLocal(); 
-            
-            renderizarCarrito(); 
-            
-            
-            swalWithBootstrapButtons.fire({ 
-                
-                title: "¡Carrito vacío!", 
-                text: "Todos los productos fueron eliminados.", 
-                icon: "success" 
-            }); 
-        
-        } 
-    }); 
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            carrito.length = 0;
+
+            guardarCarritoLocal();
+
+            renderizarCarrito();
+
+
+            swalWithBootstrapButtons.fire({
+
+                title: "¡Carrito vacío!",
+                text: "Todos los productos fueron eliminados.",
+                icon: "success"
+            });
+
+        }
+    });
 }
 
 
@@ -285,4 +285,9 @@ function cargarCarritoLocal() {
 
 
 cargarCarritoLocal();
-renderizarCarrito();
+
+if (contenedorProductosCarrito) {
+    renderizarCarrito();
+} else {
+    actualizarResumenCarrito();
+}
