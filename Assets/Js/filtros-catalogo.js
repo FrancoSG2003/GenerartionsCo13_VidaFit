@@ -242,8 +242,15 @@ document.addEventListener(
                     const marca =
                         producto.dataset.marca;
 
+                    const stock =
+                        Number(
+                            producto.dataset.stock
+                        );
+
                     const disponibilidad =
-                        producto.dataset.stock;
+                        stock > 0
+                            ? 'true'
+                            : 'false';
 
                     const cumplePrecio =
                         precio <= precioMaximo;
