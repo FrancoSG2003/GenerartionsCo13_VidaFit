@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <li><hr class="dropdown-divider"></li>
                     ` : `
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="perfil.html">
                                 <i class="bi bi-person-circle me-2"></i> Mi perfil
                             </a>
                         </li>
