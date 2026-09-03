@@ -18,11 +18,11 @@ const btnFinalizarCompra = document.getElementById("btnFinalizarCompra");
 const carrito = [];
 
 
-btnCarrito.addEventListener("click", mostrarCarrito);
-btnCerrarCarrito.addEventListener("click", cerrarCarrito);
-btnContinuarComprando.addEventListener("click", cerrarCarrito);
-btnVaciarCarrito.addEventListener("click", vaciarCarrito);
-btnFinalizarCompra.addEventListener("click", finalizarCompra);
+if (btnCarrito) btnCarrito.addEventListener("click", mostrarCarrito);
+if (btnCerrarCarrito) btnCerrarCarrito.addEventListener("click", cerrarCarrito);
+if (btnContinuarComprando) btnContinuarComprando.addEventListener("click", cerrarCarrito);
+if (btnVaciarCarrito) btnVaciarCarrito.addEventListener("click", vaciarCarrito);
+if (btnFinalizarCompra) btnFinalizarCompra.addEventListener("click", finalizarCompra);
 
 
 botonesAgregarCarrito.forEach(function (boton) {
@@ -462,4 +462,7 @@ function cargarCarritoLocal() {
 cargarStockLocal();
 cargarCarritoLocal();
 actualizarDisponibilidadProductos();
-renderizarCarrito();
+
+if (contenedorProductosCarrito) {
+    renderizarCarrito();
+}

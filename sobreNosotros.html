@@ -7,103 +7,75 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="Assets/Css/stylesSobreNosotros.css">
+    <link rel="stylesheet" href="Assets/Css/styles.css">
     <title>Sobre Nosotros</title>
 </head>
 
 <body>
     <!-- NAVEGACIÓN -->
     <header>
-
-        <nav
-            id="nav"
-            class="navbar navbar-expand-lg bg-secondary px-4 py-2 fixed-top">
-
+        <nav id="nav" class="navbar navbar-expand-lg bg-white px-4 py-3 fixed-top navbar-borde">
             <div class="container-fluid">
-
-                <a
-                    class="navbar-brand"
-                    href="index.html">
-
-                    <img
-                        class="logo"
-                        src="Assets/img/VidaFit logo 1.png"
-                        alt="Logo VidaFit"
-                        width="100"
-                        height="auto">
+                <!-- Logo -->
+                <a class="navbar-brand py-0" href="index.html">
+                    <img class="logo" src="Assets/img/VidaFit logo 1.png" alt="Logo VidaFit" width="135" height="auto">
                 </a>
 
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                     aria-label="Abrir navegación">
-
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div
-                    class="collapse navbar-collapse"
-                    id="navbarNav">
-
-                    <ul class="navbar-nav ms-auto align-items-center gap-3">
-
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
                         <li class="nav-item">
-
-                            <a
-                                class="nav-link ingreso-link"
-                                href="index.html">
-                                <i class="bi bi-house-fill"></i>
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" href="index.html">
                                 Inicio
                             </a>
                         </li>
 
                         <li class="nav-item">
-
-                            <a
-                                class="nav-link ingreso-link"
-                                aria-current="page"
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" aria-current="page"
                                 href="catalogo.html">
-                                <i class="bi bi-grid-fill"></i>
                                 Productos
                             </a>
                         </li>
 
                         <li class="nav-item">
-
-                            <a
-                                class="nav-link ingreso-link"
-                                href="sobreNosotros.html">
-                                <i class="bi bi-people-fill"></i>
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" href="sobreNosotros.html">
                                 Nosotros
                             </a>
                         </li>
 
                         <li class="nav-item">
-
-                            <a
-                                class="nav-link ingreso-link"
-                                href="contacto.html">
-                                <i class="bi bi-headset"></i>
-                                <span>Contacto</span>
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" href="contacto.html">
+                                Contacto
                             </a>
                         </li>
 
-                        <li class="nav-item" id="zonaUsuario">
-
-                            <a
-                                class="nav-link ingreso-link"
-                                href="Login.html">
-
-                                <i class="bi bi-person-fill"></i>
-                                <span>Ingreso</span>
+                        <!-- Botón de Ingreso -->
+                        <li class="nav-item ms-lg-2" id="zonaUsuario">
+                            <a class="btn btn-dark px-4 py-2 rounded-pill shadow-sm btn-ingreso fs-5" href="Login.html">
+                                Ingreso
                             </a>
+                        </li>
+
+                        <!-- Botón del Carrito con IDs originales integrados -->
+                        <li class="nav-item ms-lg-2">
+                            <button id="btnAbrirCarrito"
+                                class="btn btn-outline-dark px-3 py-2 rounded-pill position-relative fs-5 d-flex align-items-center gap-2 btn-carrito"
+                                type="button" aria-controls="carritoLateral" aria-expanded="false">
+                                <i class="bi bi-cart3"></i>
+                                <span class="d-lg-none">Carrito</span>
+                                <span id="contadorCarrito"
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    0
+                                </span>
+                            </button>
                         </li>
                     </ul>
                 </div>
-
             </div>
         </nav>
     </header>
@@ -123,9 +95,7 @@
             </div>
         </section>
 
-        <section
-            class="container-fluid px-3 px-md-5 pt-5 pb-5"
-            id="primeraParte">
+        <section class="container-fluid px-3 px-md-5 pt-5 pb-5" id="primeraParte">
 
             <!-- Misión y visión -->
             <div class="row g-4 align-items-stretch">
@@ -145,7 +115,7 @@
                                     </h2>
 
                                     <p class="mb-0">
-                                        Ofrecer productos de suplementación deportiva que respondan a las necesidades 
+                                        Ofrecer productos de suplementación deportiva que respondan a las necesidades
                                         de nuestros clientes, brindando una experiencia de compra cómoda, confiable y
                                         accesible a través de nuestra página web.
                                     </p>
@@ -154,9 +124,7 @@
 
                                 <div class="col-4 col-sm-3 text-center">
 
-                                    <img
-                                        src="Assets/img/Mision_sin_fondo-removebg-preview.png"
-                                        alt="Misión"
+                                    <img src="Assets/img/Mision_sin_fondo-removebg-preview.png" alt="Misión"
                                         class="img-fluid card-icon">
 
                                 </div>
@@ -183,19 +151,18 @@
                                     </h2>
 
                                     <p class="mb-0">
-                                        Consolidarnos como una empresa reconocida en el sector de la suplementación 
-                                        deportiva en Colombia, destacándonos por la calidad de nuestros servicios, la confiabilidad 
-                                        de nuestros productos y una experiencia de compra cómoda, clara y accesible para nuestros clientes.
+                                        Consolidarnos como una empresa reconocida en el sector de la suplementación
+                                        deportiva en Colombia, destacándonos por la calidad de nuestros servicios, la
+                                        confiabilidad
+                                        de nuestros productos y una experiencia de compra cómoda, clara y accesible para
+                                        nuestros clientes.
                                     </p>
 
                                 </div>
 
                                 <div class="col-4 col-sm-3 text-center">
 
-                                    <img
-                                        src="Assets/img/Vision.png"
-                                        alt="Logo de visión"
-                                        class="img-fluid card-icon">
+                                    <img src="Assets/img/Vision.png" alt="Logo de visión" class="img-fluid card-icon">
 
                                 </div>
 
@@ -211,21 +178,23 @@
             <!-- Sobre nosotros y qué hacemos -->
             <div class="row g-0 my-5">
 
-                <div
-                    class="col-md-6 bg-secondary text-white p-4 p-md-5">
+                <div class="col-md-6 bg-secondary text-white p-4 p-md-5">
 
                     <h2>Sobre nosotros</h2>
 
                     <p>
-                        Somos un equipo comprometido con el bienestar y el rendimiento deportivo, enfocado en ofrecer 
-                        productos de suplementación de calidad y una experiencia de compra sencilla, confiable y accesible.
+                        Somos un equipo comprometido con el bienestar y el rendimiento deportivo, enfocado en ofrecer
+                        productos de suplementación de calidad y una experiencia de compra sencilla, confiable y
+                        accesible.
                     </p>
 
                     <h3>¿Qué hacemos?</h3>
 
                     <p>
-                        En VidaFit ofrecemos una variedad de productos de suplementación deportiva seleccionados para acompañar 
-                        los objetivos de nuestros clientes. A través de nuestra plataforma web, facilitamos la búsqueda de 
+                        En VidaFit ofrecemos una variedad de productos de suplementación deportiva seleccionados para
+                        acompañar
+                        los objetivos de nuestros clientes. A través de nuestra plataforma web, facilitamos la búsqueda
+                        de
                         productos, la consulta de información y la realización de pedidos de manera clara y sencilla.
                     </p>
 
@@ -233,21 +202,131 @@
 
                 <div class="col-md-6 bg-light p-0">
 
-                    <img
-                        src="Assets/img/suplementos-deportivos.jpg"
-                        alt="Equipo desarrollando la plataforma de VidaFit"
+                    <img src="Assets/img/suplementos-deportivos.jpg" alt="Equipo desarrollando la plataforma de VidaFit"
                         class="img-fluid w-100 h-100 object-fit-cover">
 
                 </div>
 
             </div>
 
+            <div id="overlay" class="overlay d-none position-fixed top-0 start-0 w-100 h-100">
+
+                <div id="fondoCarrito" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50">
+                </div>
+
+                <aside id="carritoLateral"
+                    class="position-absolute top-0 end-0 h-100 bg-white shadow d-flex flex-column"
+                    aria-labelledby="tituloCarrito" aria-hidden="true">
+
+                    <div class="d-flex justify-content-between align-items-center border-bottom p-3">
+
+                        <h2 id="tituloCarrito" class="h4 mb-0">
+
+                            Mi carrito
+                        </h2>
+
+                        <button id="btnCerrarCarrito" class="btn-close" type="button" aria-label="Cerrar carrito">
+                        </button>
+                    </div>
+
+                    <div id="carritoVacio" class="text-center p-4">
+
+                        <p class="text-secondary mb-3">
+                            Tu carrito está vacío.
+                        </p>
+
+                        <button id="btnContinuarComprando" class="btn btn-outline-primary" type="button">
+
+                            Continuar comprando
+                        </button>
+                    </div>
+
+                    <div id="contenedorProductosCarrito" class="flex-grow-1 overflow-auto p-3" aria-live="polite">
+                    </div>
+
+                    <div id="resumenCarrito" class="border-top bg-light p-3">
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Cantidad:</span>
+                            <span id="cantidadTotalProductos">0</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Total:</strong>
+                            <strong id="precioTotalCarrito">$0</strong>
+                        </div>
+
+                        <button id="btnVaciarCarrito" class="btn btn-outline-danger w-100 mb-2" type="button" disabled>
+
+                            Vaciar carrito
+                        </button>
+
+                        <button id="btnFinalizarCompra" class="btn btn-primary w-100" type="button" disabled>
+
+                            Finalizar compra
+                        </button>
+                    </div>
+                </aside>
+            </div>
+            <template id="plantillaProductoCarrito">
+
+                <article class="producto-carrito border-bottom pb-3 mb-3" data-id="">
+
+                    <div class="row g-3">
+
+                        <div class="col-4">
+                            <img class="producto-imagen-carrito img-fluid rounded" src="" alt="">
+                        </div>
+
+                        <div class="col-8">
+                            <h3 class="producto-nombre h6 mb-1"></h3>
+
+                            <p class="producto-precio text-secondary mb-2">
+                                $0
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center gap-2">
+
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Modificar cantidad">
+
+                                    <button class="btnDisminuirCantidad btn btn-outline-secondary" type="button"
+                                        aria-label="Disminuir cantidad">
+
+                                        −
+                                    </button>
+
+                                    <span class="producto-cantidad btn btn-outline-secondary disabled">
+                                        1
+                                    </span>
+
+                                    <button class="btnAumentarCantidad btn btn-outline-secondary" type="button"
+                                        aria-label="Aumentar cantidad">
+
+                                        +
+                                    </button>
+                                </div>
+
+                                <button class="btnEliminarProducto btn btn-sm btn-outline-danger" type="button">
+
+                                    Eliminar
+                                </button>
+                            </div>
+
+                            <p class="mt-2 mb-0">
+                                Subtotal:
+                                <strong class="producto-subtotal">$0</strong>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </template>
+
+
             <!-- Primer proyecto y propósito -->
             <div class="row g-0">
                 <div class="col-md-6 p-0">
-                    <img 
-                    src="Assets/img/nutricion-deportiva-1200x550-cc.jpg" 
-                    alt="Equipo desarrollando la plataforma de VidaFit"
+                    <img src="Assets/img/nutricion-deportiva-1200x550-cc.jpg"
+                        alt="Equipo desarrollando la plataforma de VidaFit"
                         class="img-fluid w-100 h-100 object-fit-cover">
 
                 </div>
@@ -255,17 +334,19 @@
                     <h3>Nuestro primer proyecto</h3>
 
                     <p>
-                        VidaFit Suplementos es una plataforma de comercio electrónico creada para facilitar el acceso 
-                        a productos de suplementación deportiva. Nuestro objetivo es integrar en un solo lugar un catálogo 
-                        organizado, información clara sobre los productos y un proceso de compra práctico para nuestros 
+                        VidaFit Suplementos es una plataforma de comercio electrónico creada para facilitar el acceso
+                        a productos de suplementación deportiva. Nuestro objetivo es integrar en un solo lugar un
+                        catálogo
+                        organizado, información clara sobre los productos y un proceso de compra práctico para nuestros
                         clientes.
                     </p>
 
                     <h3>Nuestro propósito</h3>
 
                     <p>
-                        Buscamos promover un estilo de vida saludable y activo, brindando a nuestros clientes productos 
-                        confiables y una experiencia digital que les permita encontrar de manera fácil y segura lo que necesitan 
+                        Buscamos promover un estilo de vida saludable y activo, brindando a nuestros clientes productos
+                        confiables y una experiencia digital que les permita encontrar de manera fácil y segura lo que
+                        necesitan
                         para acompañar sus objetivos deportivos.
                     </p>
 
@@ -327,25 +408,19 @@
 
                     <div class="d-flex gap-3 fs-4">
 
-                        <a
-                            href="https://www.facebook.com/profile.php?id=61593114950771"
-                            target="_blank"
+                        <a href="https://www.facebook.com/profile.php?id=61593114950771" target="_blank"
                             class="text-white text-decoration-none">
 
                             <i class="bi bi-facebook"></i>
                         </a>
 
-                        <a
-                            href="https://www.instagram.com/vidafitproyect/"
-                            target="_blank"
+                        <a href="https://www.instagram.com/vidafitproyect/" target="_blank"
                             class="text-white text-decoration-none">
 
                             <i class="bi bi-instagram"></i>
                         </a>
 
-                        <a
-                            href="https://www.tiktok.com/@vidafit6553"
-                            target="_blank"
+                        <a href="https://www.tiktok.com/@vidafit6553" target="_blank"
                             class="text-white text-decoration-none">
 
                             <i class="bi bi-tiktok"></i>
@@ -373,9 +448,10 @@
 
     <!--Sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="Assets/Js/carrito-compra.js"></script>
 
     <!--Js propios-->
     <script src="Assets/Js/navbar.js"></script>
 </body>
 
-</html> 
+</html>
