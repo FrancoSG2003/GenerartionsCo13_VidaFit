@@ -63,3 +63,27 @@ body {
 .btn-primary:active {
     transform: translateY(0);
 }
+
+
+/*AsideBar dashboardAdmin*/
+.style-sidebar {
+    width: 280px;
+    min-width: 280px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+
+    flex-shrink: 0;
+}
+
+#btnAdminAgregarProducto {
+    background-color: #1A325C;
+    border: solid 2px #1A325C;
+}
+
+#padreFormulario {
+    background: #fff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    box-shadow: 0 6px 18px rgba(26, 50, 92, 0.20) !important;
+}

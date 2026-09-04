@@ -19,16 +19,90 @@
 
     <!-- Solo controla el cambio de cuadrícula a lista -->
     <style>
+        :root {
+            --vf-primary: #2563eb;
+            --vf-primary-dark: #1d4ed8;
+            --vf-ink: #0f172a;
+            --vf-surface: #f8fafc;
+            --vf-border: #e2e8f0;
+        }
+
+        body {
+            background: var(--vf-surface);
+            color: var(--vf-ink);
+        }
+
+        .producto-card {
+            overflow: hidden;
+            border: 1px solid var(--vf-border) !important;
+            border-radius: 1rem;
+            background: #ffffff;
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                border-color .25s ease;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-6px);
+            border-color: #bfdbfe !important;
+            box-shadow: 0 18px 38px rgba(15, 23, 42, .12) !important;
+        }
+
         .producto-imagen {
             width: 100%;
-            height: 180px;
+            height: 230px;
             flex-shrink: 0;
+            padding: 1.25rem;
+            overflow: hidden;
+            background: linear-gradient(145deg, #ffffff, #eff6ff) !important;
         }
 
         .producto-imagen img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            object-position: center;
+            transition: transform .3s ease;
+        }
+
+        .producto-card:hover .producto-imagen img {
+            transform: scale(1.05);
+        }
+
+        .producto-card .card-body {
+            padding: 1.25rem;
+        }
+
+        .producto-card .card-title {
+            min-height: 2.5rem;
+            color: var(--vf-ink);
+            line-height: 1.25;
+        }
+
+        .producto-card .btn-primary {
+            border-radius: .75rem;
+            background: var(--vf-primary);
+            border-color: var(--vf-primary);
+            font-weight: 700;
+        }
+
+        .producto-card .btn-primary:hover {
+            background: var(--vf-primary-dark);
+            border-color: var(--vf-primary-dark);
+        }
+
+        .form-select,
+        .form-control {
+            border-color: #cbd5e1;
+            border-radius: .75rem;
+        }
+
+        .form-select:focus,
+        .form-control:focus,
+        .form-check-input:focus {
+            border-color: var(--vf-primary);
+            box-shadow: 0 0 0 .2rem rgba(37, 99, 235, .14);
         }
 
         .vista-lista .producto-imagen {
@@ -127,14 +201,322 @@
         </nav>
     </header>
 
-    <!-- CATÁLOGO -->
-    <main class="container my-5 pt-5">
 
-        <!-- ENCABEZADO Y CONTROLES -->
-        <section class="mb-4">
+    <!-- CATÁLOGO -->
+<main class="container my-5 pt-5">
+
+
+
+    <div class="row g-4">
+
+
+        <aside class="col-12 col-md-3 col-lg-2">
+
+
+            <div class="catalogo-filtros" id="filtroCategorias">
+
+            <div class="filtro-seccion">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <h6 class="fw-bold mb-0">
+                        CATEGORÍAS
+                    </h6>
+
+                    <i class="bi bi-dash"></i>
+
+                </div>
+
+
+                <div class="form-check">
+
+                    <input class="form-check-input filtro-categoria"
+                        type="checkbox"
+                        value="proteinas"
+                        id="categoria-proteinas">
+
+                    <label class="form-check-label"
+                        for="categoria-proteinas">
+                        Proteínas
+                    </label>
+
+                </div>
+
+
+                <div class="form-check">
+
+                    <input class="form-check-input filtro-categoria"
+                        type="checkbox"
+                        value="creatinas"
+                        id="categoria-creatinas">
+
+                    <label class="form-check-label"
+                        for="categoria-creatinas">
+                        Creatinas
+                    </label>
+
+                </div>
+
+
+                <div class="form-check">
+
+                    <input class="form-check-input filtro-categoria"
+                        type="checkbox"
+                        value="pre-entreno"
+                        id="categoria-pre-entreno">
+
+                    <label class="form-check-label"
+                        for="categoria-pre-entreno">
+                        Pre-entreno
+                    </label>
+
+                </div>
+
+
+                <div class="form-check">
+
+                    <input class="form-check-input filtro-categoria"
+                        type="checkbox"
+                        value="vitaminas"
+                        id="categoria-vitaminas">
+
+                    <label class="form-check-label"
+                        for="categoria-vitaminas">
+                        Vitaminas
+                    </label>
+
+                </div>
+
+
+                <div class="form-check">
+
+                    <input class="form-check-input filtro-categoria"
+                        type="checkbox"
+                        value="snacks-saludables"
+                        id="categoria-snacks">
+
+                    <label class="form-check-label"
+                        for="categoria-snacks">
+                        Snacks saludables
+                    </label>
+
+                </div>
+
+
+                <div class="form-check">
+
+                    <input class="form-check-input filtro-categoria"
+                        type="checkbox"
+                        value="accesorios"
+                        id="categoria-accesorios">
+
+                    <label class="form-check-label"
+                        for="categoria-accesorios">
+                        Accesorios
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="catalogo-filtros mt-4" id="filtrosProductos">
+
+            <div class="filtro-seccion">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <h6 class="fw-bold mb-0">
+                        FILTROS
+                    </h6>
+
+                    <i class="bi bi-dash"></i>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label for="filtro-precio"
+                        class="form-label fw-semibold">
+
+                        Precio máximo:
+
+                    </label>
+
+
+                    <div class="d-flex justify-content-between">
+
+                        <small>
+                            $0
+                        </small>
+
+                        <small id="precio-seleccionado">
+                            $250.000
+                        </small>
+
+                    </div>
+
+
+                    <input type="range"
+                        class="form-range"
+                        id="filtro-precio"
+                        min="0"
+                        max="250000"
+                        step="10000"
+                        value="250000">
+
+                </div>
+
+
+                <fieldset class="mb-4">
+
+                    <legend class="form-label fw-semibold mb-2">
+                        Marca
+                    </legend>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input filtro-marca"
+                            type="checkbox"
+                            value="VidaFit"
+                            id="marca-vidafit">
+
+                        <label class="form-check-label"
+                            for="marca-vidafit">
+                            VidaFit
+                        </label>
+
+                    </div>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input filtro-marca"
+                            type="checkbox"
+                            value="BiPro"
+                            id="marca-bipro">
+
+                        <label class="form-check-label"
+                            for="marca-bipro">
+                            BiPro
+                        </label>
+
+                    </div>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input filtro-marca"
+                            type="checkbox"
+                            value="Optimun Nutricion"
+                            id="marca-optimun">
+
+                        <label class="form-check-label"
+                            for="marca-optimun">
+                            Optimun Nutricion
+                        </label>
+
+                    </div>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input filtro-marca"
+                            type="checkbox"
+                            value="C4"
+                            id="marca-c4">
+
+                        <label class="form-check-label"
+                            for="marca-c4">
+                            C4
+                        </label>
+
+                    </div>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input filtro-marca"
+                            type="checkbox"
+                            value="SportFitnesse"
+                            id="marca-sportfitnesse">
+
+                        <label class="form-check-label"
+                            for="marca-sportfitnesse">
+                            SportFitnesse
+                        </label>
+
+                    </div>
+
+                </fieldset>
+
+                
+                <fieldset>
+
+                    <legend class="form-label fw-semibold mb-2">
+                        Disponibilidad
+                    </legend>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input filtro-disponibilidad"
+                            type="checkbox"
+                            value="true"
+                            id="disponibilidad-stock">
+
+                        <label class="form-check-label"
+                            for="disponibilidad-stock">
+                            En stock
+                        </label>
+
+                    </div>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input filtro-disponibilidad"
+                            type="checkbox"
+                            value="false"
+                            id="disponibilidad-agotado">
+
+                        <label class="form-check-label"
+                            for="disponibilidad-agotado">
+                            Agotado
+                        </label>
+
+                    </div>
+
+                </fieldset>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+        <section class="col-12 col-md-9 col-lg-10">
+
+
+            <!-- MENSAJE SIN RESULTADOS -->
+
+            <div class="alert alert-info text-center"
+                id="mensaje-sin-resultados"
+                role="status">
+
+                No hay productos que coincidan con los filtros seleccionados.
+
+            </div>
+
+            <section class="mb-4">
 
             <div class="row align-items-center gy-3">
 
+                <!-- TÍTULO -->
                 <div class="col-md-7">
 
                     <h1 class="fw-bold display-6">
@@ -148,10 +530,14 @@
 
                 </div>
 
+
+                <!-- CONTROLES -->
                 <div class="col-md-5 d-flex flex-wrap justify-content-md-end align-items-center gap-2">
 
                     <!-- ORDENAMIENTO -->
-                    <select class="form-select w-auto" id="orden-productos" aria-label="Ordenar productos">
+                    <select class="form-select w-auto"
+                        id="orden-productos"
+                        aria-label="Ordenar productos">
 
                         <option value="ventas" selected>
                             Ordenar por: Más vendidos
@@ -171,19 +557,30 @@
 
                     </select>
 
-                    <!-- CAMBIO DE VISTA -->
-                    <div class="btn-group" role="group" aria-label="Cambiar vista del catálogo">
 
-                        <button type="button" class="btn btn-outline-secondary active" id="boton-cuadricula"
-                            aria-label="Vista de cuadrícula" aria-pressed="true">
+                    <!-- CAMBIO DE VISTA -->
+                    <div class="btn-group"
+                        role="group"
+                        aria-label="Cambiar vista del catálogo">
+
+                        <button type="button"
+                            class="btn btn-outline-secondary active"
+                            id="boton-cuadricula"
+                            aria-label="Vista de cuadrícula"
+                            aria-pressed="true">
 
                             <i class="bi bi-grid-3x3-gap-fill"></i>
+
                         </button>
 
-                        <button type="button" class="btn btn-outline-secondary" id="boton-lista"
-                            aria-label="Vista de lista" aria-pressed="false">
+                        <button type="button"
+                            class="btn btn-outline-secondary"
+                            id="boton-lista"
+                            aria-label="Vista de lista"
+                            aria-pressed="false">
 
                             <i class="bi bi-list-task"></i>
+
                         </button>
 
                     </div>
@@ -192,10 +589,11 @@
 
             </div>
 
+
+            <!-- CONTADOR -->
             <div class="mt-3">
 
                 <small class="text-muted" id="contador-catalogo">
-
                     Mostrando 12 de 12 productos
                 </small>
 
@@ -203,837 +601,733 @@
 
         </section>
 
-        <!-- FILTROS -->
-        <section class="mb-4">
 
-            <h5 class="fw-bold">
-                Filtros
-            </h5>
 
-            <!-- PRECIO -->
-            <div class="mb-3">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
+                id="contenedor-productos">
 
-                <label for="filtro-precio" class="form-label">
 
-                    Precio máximo:
+                <!-- PRODUCTO 1 -->
+                <div class="col producto-columna" data-posicion-original="1">
 
-                    <span id="precio-seleccionado">
-                        $250.000
-                    </span>
-                </label>
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="1"
+                        data-categoria="proteinas" data-precio="159900" data-marca="VidaFit" data-stock="15"
+                        data-ventas="128" data-valoracion="5">
 
-                <input type="range" class="form-range" id="filtro-precio" min="0" max="250000" step="10000"
-                    value="250000">
+                        <span class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
 
-            </div>
+                            Más vendido
+                        </span>
 
-            <div class="row">
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Proteína VidaFit a favoritos" aria-pressed="false">
 
-                <!-- CATEGORÍAS -->
-                <fieldset class="col-12 col-md-4 mb-3">
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
 
-                    <legend class="form-label fw-semibold mb-2">
-                        Categoría
-                    </legend>
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-categoria" type="checkbox" value="proteinas"
-                            id="categoria-proteinas">
+                            <img
+                                src="Assets/img/proteina-bg.png"
+                                alt="Proteína VidaFit">
+                        </div>
 
-                        <label class="form-check-label" for="categoria-proteinas">
+                        <div class="card-body d-flex flex-column text-start">
 
-                            Proteínas
-                        </label>
-                    </div>
+                            <h6 class="card-title fw-bold mb-1">
+                                Whey Protein VidaFit 2lbs
+                            </h6>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-categoria" type="checkbox" value="creatinas"
-                            id="categoria-creatinas">
+                            <small class="text-muted">
+                                1.000 g
+                            </small>
 
-                        <label class="form-check-label" for="categoria-creatinas">
+                            <div class="my-2 text-warning small">
+                                ★★★★★
 
-                            Creatinas
-                        </label>
-                    </div>
+                                <span class="text-dark ms-1">
+                                    (128)
+                                </span>
+                            </div>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-categoria" type="checkbox" value="pre-entreno"
-                            id="categoria-pre-entreno">
+                            <p class="fw-bold mb-3">
+                                $149.990
+                            </p>
 
-                        <label class="form-check-label" for="categoria-pre-entreno">
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
 
-                            Pre-entreno
-                        </label>
-                    </div>
+                        </div>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-categoria" type="checkbox" value="vitaminas"
-                            id="categoria-vitaminas">
+                    </article>
 
-                        <label class="form-check-label" for="categoria-vitaminas">
+                </div>
 
-                            Vitaminas
-                        </label>
-                    </div>
+                <!-- PRODUCTO 2 -->
+                <div class="col producto-columna" data-posicion-original="2">
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-categoria" type="checkbox" value="snacks-saludables"
-                            id="categoria-snacks">
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="2"
+                        data-categoria="proteinas" data-precio="249900" data-marca="BiPro" data-stock="15"
+                        data-ventas="94" data-valoracion="5">
 
-                        <label class="form-check-label" for="categoria-snacks">
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Proteína BiPro Classic a favoritos" aria-pressed="false">
 
-                            Snacks saludables
-                        </label>
-                    </div>
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-categoria" type="checkbox" value="accesorios"
-                            id="categoria-accesorios">
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <label class="form-check-label" for="categoria-accesorios">
+                            <img
+                                src="Assets/img/catalogo-productos/02-proteina-bipro.png"
+                                alt="Proteína BiPro Classic">
+                        </div>
 
-                            Accesorios
-                        </label>
-                    </div>
+                        <div class="card-body d-flex flex-column text-start">
 
-                </fieldset>
+                            <h6 class="card-title fw-bold mb-1">
+                                Proteína BiPro Classic
+                            </h6>
 
-                <!-- MARCAS -->
-                <fieldset class="col-12 col-md-4 mb-3">
+                            <small class="text-muted">
+                                910 g
+                            </small>
 
-                    <legend class="form-label fw-semibold mb-2">
-                        Marca
-                    </legend>
+                            <div class="my-2 text-warning small">
+                                ★★★★★
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="VidaFit" id="marca-vidafit">
+                                <span class="text-dark ms-1">
+                                    (94)
+                                </span>
+                            </div>
 
-                        <label class="form-check-label" for="marca-vidafit">
+                            <p class="fw-bold mb-3">
+                                $249.900
+                            </p>
 
-                            VidaFit
-                        </label>
-                    </div>
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="BiPro" id="marca-bipro">
+                        </div>
 
-                        <label class="form-check-label" for="marca-bipro">
+                    </article>
 
-                            BiPro
-                        </label>
-                    </div>
+                </div>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Optimun Nutricion"
-                            id="marca-optimun">
+                <!-- PRODUCTO 3 -->
+                <div class="col producto-columna" data-posicion-original="3">
 
-                        <label class="form-check-label" for="marca-optimun">
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="3"
+                        data-categoria="creatinas" data-precio="95900" data-marca="VidaFit" data-stock="15"
+                        data-ventas="150" data-valoracion="5">
 
-                            Optimun Nutricion
-                        </label>
-                    </div>
+                        <span class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="C4" id="marca-c4">
+                            Más vendido
+                        </span>
 
-                        <label class="form-check-label" for="marca-c4">
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Creatina VidaFit a favoritos" aria-pressed="false">
 
-                            C4
-                        </label>
-                    </div>
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="SportFitnesse"
-                            id="marca-sportfitnesse">
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
 
-                        <label class="form-check-label" for="marca-sportfitnesse">
+                            <img
+                                src="Assets/img/creatina-bg.png"
+                                alt="Creatina Monohidratada VidaFit">
+                        </div>
 
-                            SportFitnesse
-                        </label>
-                    </div>
+                        <div class="card-body d-flex flex-column text-start">
 
-                </fieldset>
+                            <h6 class="card-title fw-bold mb-1">
+                                Creatina Monohidratada VidaFit
+                            </h6>
 
-                <!-- DISPONIBILIDAD -->
-                <fieldset class="col-12 col-md-4 mb-3">
+                            <small class="text-muted">
+                                300 g
+                            </small>
 
-                    <legend class="form-label fw-semibold mb-2">
-                        Disponibilidad
-                    </legend>
+                            <div class="my-2 text-warning small">
+                                ★★★★★
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-disponibilidad" type="checkbox" value="true"
-                            id="disponibilidad-stock">
+                                <span class="text-dark ms-1">
+                                    (150)
+                                </span>
+                            </div>
 
-                        <label class="form-check-label" for="disponibilidad-stock">
+                            <p class="fw-bold mb-3">
+                                $89.900
+                            </p>
 
-                            En stock
-                        </label>
-                    </div>
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
 
-                    <div class="form-check">
-                        <input class="form-check-input filtro-disponibilidad" type="checkbox" value="false"
-                            id="disponibilidad-agotado">
+                        </div>
 
-                        <label class="form-check-label" for="disponibilidad-agotado">
+                    </article>
 
-                            Agotado
-                        </label>
-                    </div>
+                </div>
 
-                </fieldset>
+                <!-- PRODUCTO 4 -->
+                <div class="col producto-columna" data-posicion-original="4">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="4"
+                        data-categoria="creatinas" data-precio="200000" data-marca="Optimun Nutricion" data-stock="15"
+                        data-ventas="62" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Creatina Optimun Nutricion a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/catalogo-productos/04-creatina-optimum.png"
+                                alt="Creatina Optimun Nutricion">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Creatina Optimun Nutricion
+                            </h6>
+
+                            <small class="text-muted">
+                                600 g
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (62)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $200.000
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 5 -->
+                <div class="col producto-columna" data-posicion-original="5">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="5"
+                        data-categoria="pre-entreno" data-precio="105900" data-marca="C4" data-stock="15" data-ventas="64"
+                        data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Pre-Workout C4 a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/catalogo-productos/05-preworkout-c4.jpg"
+                                alt="Pre-Workout C4">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Pre-Workout C4 30 servicios
+                            </h6>
+
+                            <small class="text-muted">
+                                180 g
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (64)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $105.900
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 6 -->
+                <div class="col producto-columna" data-posicion-original="6">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="6"
+                        data-categoria="pre-entreno" data-precio="82900" data-marca="VidaFit" data-stock="7"
+                        data-ventas="51" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Pre-Entreno VidaFit a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/pre-Entreno-bg.png"
+                                alt="Pre-Entreno VidaFit Max">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Pre-Entreno VidaFit(Max)
+                            </h6>
+
+                            <small class="text-muted">
+                                350 g
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (51)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $135.000
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 7 -->
+                <div class="col producto-columna" data-posicion-original="7">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="7"
+                        data-categoria="vitaminas" data-precio="125900" data-marca="Optimun Nutricion" data-stock="2"
+                        data-ventas="77" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Opti-Women a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/catalogo-productos/07-opti-women.jpg"
+                                alt="Opti-Women">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Opti-Women
+                            </h6>
+
+                            <small class="text-muted">
+                                120 tabletas
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (77)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $125.900
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 8 -->
+                <div class="col producto-columna" data-posicion-original="8">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="8"
+                        data-categoria="vitaminas" data-precio="125900" data-marca="Optimun Nutricion" data-stock="15"
+                        data-ventas="86" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Opti-Men a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/catalogo-productos/08-opti-men.jpg"
+                                alt="Opti-Men">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Opti-Men
+                            </h6>
+
+                            <small class="text-muted">
+                                120 cápsulas
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (86)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $125.900
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 9 -->
+                <div class="col producto-columna" data-posicion-original="9">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="9"
+                        data-categoria="snacks-saludables" data-precio="49900" data-marca="VidaFit" data-stock="15"
+                        data-ventas="93" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Barra de Proteína a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/snacks-bg.png"
+                                alt="Barra de Proteína Chocolate">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Barra de Proteína Chocolate (VidaFit)
+                            </h6>
+
+                            <small class="text-muted">
+                                Pack × 12 unidades
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (93)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $49.900
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 10 -->
+                <div class="col producto-columna" data-posicion-original="10">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="10"
+                        data-categoria="snacks-saludables" data-precio="34900" data-marca="VidaFit" data-stock="15"
+                        data-ventas="44" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Crema de Almendras a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/catalogo-productos/10-crema-almendras.jpg"
+                                alt="Crema de Almendras Natural">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Crema de Almendras Natural(VidaFit)
+                            </h6>
+
+                            <small class="text-muted">
+                                250 g
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (44)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $34.900
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 11 -->
+                <div class="col producto-columna" data-posicion-original="11">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="11"
+                        data-categoria="accesorios" data-precio="29900" data-marca="VidaFit" data-stock="15"
+                        data-ventas="95" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Shaker VidaFit a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/Accesorios-bg.png"
+                                alt="Shaker VidaFit">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Shaker VidaFit
+                            </h6>
+
+                            <small class="text-muted">
+                                700 ml
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (95)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $29.900
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- PRODUCTO 12 -->
+                <div class="col producto-columna" data-posicion-original="12">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="12"
+                        data-categoria="accesorios" data-precio="39900" data-marca="SportFitnesse" data-stock="0"
+                        data-ventas="110" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Bandas de Resistencia a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/catalogo-productos/12-bandas-resistencia.png"
+                                alt="Bandas de Resistencia">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Bandas de Resistencia (Set x5)
+                            </h6>
+
+                            <small class="text-muted">
+                                Diferentes niveles
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (110)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $39.900
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!--producto 13-->
+                <div class="col producto-columna" data-posicion-original="8">
+
+                    <article class="card h-100 shadow-sm border position-relative producto-card" data-id="8"
+                        data-categoria="vitaminas" data-precio="125900" data-marca="VidaFit" data-stock="15"
+                        data-ventas="86" data-valoracion="5">
+
+                        <button type="button"
+                            class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
+                            aria-label="Agregar Opti-Men a favoritos" aria-pressed="false">
+
+                            <i class="bi bi-heart fs-5"></i>
+                        </button>
+
+                        <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
+
+                            <img
+                                src="Assets/img/vitaminas-bg.png"
+                                alt="vitaminas-VidaFit">
+                        </div>
+
+                        <div class="card-body d-flex flex-column text-start">
+
+                            <h6 class="card-title fw-bold mb-1">
+                                Multivitaminico DailyFit
+                            </h6>
+
+                            <small class="text-muted">
+                                100 cápsulas
+                            </small>
+
+                            <div class="my-2 text-warning small">
+                                ★★★★★
+
+                                <span class="text-dark ms-1">
+                                    (86)
+                                </span>
+                            </div>
+
+                            <p class="fw-bold mb-3">
+                                $55.000
+                            </p>
+
+                            <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
+                                Agregar al carrito
+                                <i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
 
             </div>
 
         </section>
 
-        <!-- MENSAJE SIN RESULTADOS -->
-        <div class="alert alert-info text-center" id="mensaje-sin-resultados" role="status">
+    </div>
 
-            No hay productos que coincidan con los filtros seleccionados.
-        </div>
-
-        <!-- PRODUCTOS -->
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="contenedor-productos">
-
-            <!-- PRODUCTO 1 -->
-            <div class="col producto-columna" data-posicion-original="1">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="1"
-                    data-categoria="proteinas" data-precio="159900" data-marca="VidaFit" data-stock="15"
-                    data-ventas="128" data-valoracion="5">
-
-                    <span class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
-
-                        Más vendido
-                    </span>
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Proteína VidaFit a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/proteina-bg.png" alt="Proteína VidaFit">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Proteína VidaFit
-                        </h6>
-
-                        <small class="text-muted">
-                            1.000 g
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (128)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $159.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 2 -->
-            <div class="col producto-columna" data-posicion-original="2">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="2"
-                    data-categoria="proteinas" data-precio="249900" data-marca="BiPro" data-stock="15"
-                    data-ventas="94" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Proteína BiPro Classic a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/proteina-bg.png" alt="Proteína BiPro Classic">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Proteína BiPro Classic
-                        </h6>
-
-                        <small class="text-muted">
-                            910 g
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (94)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $249.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 3 -->
-            <div class="col producto-columna" data-posicion-original="3">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="3"
-                    data-categoria="creatinas" data-precio="95900" data-marca="VidaFit" data-stock="15"
-                    data-ventas="150" data-valoracion="5">
-
-                    <span class="badge bg-secondary position-absolute top-0 start-0 m-2 z-1">
-
-                        Más vendido
-                    </span>
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Creatina VidaFit a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/creatina-bg.png" alt="Creatina Monohidratada VidaFit">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Creatina Monohidratada VidaFit
-                        </h6>
-
-                        <small class="text-muted">
-                            300 g
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (150)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $95.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 4 -->
-            <div class="col producto-columna" data-posicion-original="4">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="4"
-                    data-categoria="creatinas" data-precio="200000" data-marca="Optimun Nutricion" data-stock="15"
-                    data-ventas="62" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Creatina Optimun Nutricion a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/creatina-bg.png" alt="Creatina Optimun Nutricion">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Creatina Optimun Nutricion
-                        </h6>
-
-                        <small class="text-muted">
-                            600 g
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (62)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $200.000
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 5 -->
-            <div class="col producto-columna" data-posicion-original="5">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="5"
-                    data-categoria="pre-entreno" data-precio="105900" data-marca="C4" data-stock="15" data-ventas="64"
-                    data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Pre-Workout C4 a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/pre-Entreno-bg.png" alt="Pre-Workout C4">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Pre-Workout C4 30 servicios
-                        </h6>
-
-                        <small class="text-muted">
-                            180 g
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (64)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $105.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 6 -->
-            <div class="col producto-columna" data-posicion-original="6">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="6"
-                    data-categoria="pre-entreno" data-precio="82900" data-marca="VidaFit" data-stock="7"
-                    data-ventas="51" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Pre-Entreno VidaFit a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/pre-Entreno-bg.png" alt="Pre-Entreno VidaFit Max">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Pre-Entreno VidaFit(Max)
-                        </h6>
-
-                        <small class="text-muted">
-                            350 g
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (51)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $82.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 7 -->
-            <div class="col producto-columna" data-posicion-original="7">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="7"
-                    data-categoria="vitaminas" data-precio="125900" data-marca="Optimun Nutricion" data-stock="2"
-                    data-ventas="77" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Opti-Women a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/vitaminas-bg.png" alt="Opti-Women">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Opti-Women
-                        </h6>
-
-                        <small class="text-muted">
-                            120 tabletas
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (77)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $125.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 8 -->
-            <div class="col producto-columna" data-posicion-original="8">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="8"
-                    data-categoria="vitaminas" data-precio="125900" data-marca="Optimun Nutricion" data-stock="15"
-                    data-ventas="86" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Opti-Men a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/vitaminas-bg.png" alt="Opti-Men">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Opti-Men
-                        </h6>
-
-                        <small class="text-muted">
-                            120 cápsulas
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (86)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $125.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 9 -->
-            <div class="col producto-columna" data-posicion-original="9">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="9"
-                    data-categoria="snacks-saludables" data-precio="49900" data-marca="VidaFit" data-stock="15"
-                    data-ventas="93" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Barra de Proteína a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/snacks-bg.png" alt="Barra de Proteína Chocolate">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Barra de Proteína Chocolate (VidaFit)
-                        </h6>
-
-                        <small class="text-muted">
-                            Pack × 12 unidades
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (93)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $49.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 10 -->
-            <div class="col producto-columna" data-posicion-original="10">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="10"
-                    data-categoria="snacks-saludables" data-precio="34900" data-marca="VidaFit" data-stock="15"
-                    data-ventas="44" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Crema de Almendras a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/snacks-bg.png" alt="Crema de Almendras Natural">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Crema de Almendras Natural(VidaFit)
-                        </h6>
-
-                        <small class="text-muted">
-                            250 g
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (44)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $34.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 11 -->
-            <div class="col producto-columna" data-posicion-original="11">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="11"
-                    data-categoria="accesorios" data-precio="29900" data-marca="VidaFit" data-stock="15"
-                    data-ventas="95" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Shaker VidaFit a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/Accesorios-bg.png" alt="Shaker VidaFit">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Shaker VidaFit
-                        </h6>
-
-                        <small class="text-muted">
-                            700 ml
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (95)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $29.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-            <!-- PRODUCTO 12 -->
-            <div class="col producto-columna" data-posicion-original="12">
-
-                <article class="card h-100 shadow-sm border position-relative producto-card" data-id="12"
-                    data-categoria="accesorios" data-precio="39900" data-marca="SportFitnesse" data-stock="0"
-                    data-ventas="110" data-valoracion="5">
-
-                    <button type="button"
-                        class="btn btn-link text-dark position-absolute top-0 end-0 m-2 p-0 z-1 boton-favorito"
-                        aria-label="Agregar Bandas de Resistencia a favoritos" aria-pressed="false">
-
-                        <i class="bi bi-heart fs-5"></i>
-                    </button>
-
-                    <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-
-                        <img src="Assets/img/Accesorios-bg.png" alt="Bandas de Resistencia">
-                    </div>
-
-                    <div class="card-body d-flex flex-column text-start">
-
-                        <h6 class="card-title fw-bold mb-1">
-                            Bandas de Resistencia (Set x5)
-                        </h6>
-
-                        <small class="text-muted">
-                            Diferentes niveles
-                        </small>
-
-                        <div class="my-2 text-warning small">
-                            ★★★★★
-
-                            <span class="text-dark ms-1">
-                                (110)
-                            </span>
-                        </div>
-
-                        <p class="fw-bold mb-3">
-                            $39.900
-                        </p>
-
-                        <button class="btn-agregar-carrito btn btn-outline-dark btn-sm mt-auto w-100">
-
-                            Agregar al carrito
-                            <i class="bi bi-cart"></i>
-                        </button>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </main>
+</main>
 
     <!-- Carrito lateral -->
     <div id="overlay" class="overlay d-none position-fixed top-0 start-0 w-100 h-100">
