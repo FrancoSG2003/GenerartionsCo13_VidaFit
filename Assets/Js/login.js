@@ -1,4 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+
+    const verContraseña = document.getElementById("verContraseña");
+    const passwordInput = document.getElementById("password");
+
+    if (verContraseña && passwordInput) {
+        verContraseña.addEventListener("click", () => {
+            const isPassword = passwordInput.getAttribute("type") === "password";
+            passwordInput.setAttribute("type", isPassword ? "text" : "password");
+
+            verContraseña.classList.toggle("bi-eye");
+            verContraseña.classList.toggle("bi-eye-slash");
+        });
+    }
+    
     const loginForm = document.getElementById("loginForm");
 
     loginForm.addEventListener("submit", (e) => {
