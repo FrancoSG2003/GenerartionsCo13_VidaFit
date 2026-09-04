@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - VidaFit</title>
+    <link rel="icon" type="image/png" href="Assets/img/VidaFit_Logo_head-removebg-preview.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="Assets/css/styles.css">
+</head>
+<body class="bg-light pt-5 mt-4">
+
+    <!-- Header / Navbar -->
+    <header>
+        <nav id="nav" class="navbar navbar-expand-lg bg-white px-4 py-3 fixed-top navbar-borde">
+            <div class="container-fluid">
+                <a class="navbar-brand py-0" href="index.html">
+                    <img class="logo" src="Assets/img/VidaFit logo 1.png" alt="Logo VidaFit" width="135" height="auto">
+                </a>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" href="catalogo.html">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" href="sobreNosotros.html">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 py-2 rounded-pill nav-hover fs-5" href="contacto.html">Contacto</a>
+                        </li>
+                        <li class="nav-item ms-lg-2" id="zonaUsuario">
+                            <a class="btn btn-dark px-4 py-2 rounded-pill shadow-sm btn-ingreso fs-5" href="Login.html">Ingreso</a>
+                        </li>
+                        <li class="nav-item ms-lg-2">
+                            <button id="btnAbrirCarrito" class="btn btn-outline-dark px-3 py-2 rounded-pill position-relative fs-5 d-flex align-items-center gap-2 btn-carrito" type="button">
+                                <i class="bi bi-cart3"></i>
+                                <span class="d-lg-none">Carrito</span>
+                                <span id="contadorCarrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- UI Mi Perfil -->
+    <main class="container my-5 py-3">
+        <div class="row">
+            <!-- Menú Lateral -->
+            <div class="col-lg-3 mb-4">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="p-4 text-center bg-white border-bottom">
+                        <i class="bi bi-person-circle fs-1 text-secondary"></i>
+                        <h5 class="fw-bold mt-2 mb-0" id="profileSidebarNombre">Cargando...</h5>
+                        <small class="text-muted" id="profileSidebarEmail">...</small>
+                    </div>
+                    <div class="list-group list-group-flush" id="profile-tabs" role="tablist">
+                        <button class="list-group-item list-group-item-action p-3 fw-medium active border-0" data-bs-toggle="list" data-bs-target="#tab-datos" type="button">
+                            <i class="bi bi-person me-2"></i> Mis Datos
+                        </button>
+                        <button class="list-group-item list-group-item-action p-3 fw-medium border-0" data-bs-toggle="list" data-bs-target="#tab-direccion" type="button">
+                            <i class="bi bi-geo-alt me-2"></i> Dirección de Envío
+                        </button>
+                        <button class="list-group-item list-group-item-action p-3 fw-medium border-0" data-bs-toggle="list" data-bs-target="#tab-pedidos" type="button">
+                            <i class="bi bi-bag-check me-2"></i> Mis Pedidos
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido Principal -->
+            <div class="col-lg-9">
+                <div class="tab-content card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                    
+                    <!-- Pestaña 1: Datos Personales -->
+                    <div class="tab-pane fade show active" id="tab-datos" role="tabpanel">
+                        <h3 class="fw-bold mb-4">Información Personal</h3>
+                        <form id="perfilDatosForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="perfilNombre" class="form-label font-weight-medium">Nombre</label>
+                                    <input type="text" class="form-control rounded-3" id="perfilNombre" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="perfilApellido" class="form-label font-weight-medium">Apellido</label>
+                                    <input type="text" class="form-control rounded-3" id="perfilApellido" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="perfilEmail" class="form-label font-weight-medium">Correo Electrónico</label>
+                                    <input type="email" class="form-control rounded-3 bg-light" id="perfilEmail" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="perfilTelefono" class="form-label font-weight-medium">Teléfono</label>
+                                    <input type="tel" class="form-control rounded-3" id="perfilTelefono" placeholder="+57 3123456789">
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <h5 class="fw-bold mb-3">Cambiar Contraseña (Opcional)</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="perfilPassword" class="form-label font-weight-medium">Nueva Contraseña</label>
+                                    <input type="password" class="form-control rounded-3" id="perfilPassword" placeholder="Dejar en blanco para no cambiar">
+                                </div>
+                            </div>
+                            <div class="mt-4 text-end">
+                                <button type="submit" class="btn btn-dark rounded-pill px-4 py-2">
+                                    Guardar Datos
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Pestaña 2: Dirección -->
+                    <div class="tab-pane fade" id="tab-direccion" role="tabpanel">
+                        <h3 class="fw-bold mb-4">Dirección Predeterminada de Envío</h3>
+                        <form id="perfilDireccionForm">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="direccionCalle" class="form-label font-weight-medium">Dirección (Calle y Número)</label>
+                                    <input type="text" class="form-control rounded-3" id="direccionCalle" placeholder="Ej: Calle 13 # 29" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="direccionCiudad" class="form-label font-weight-medium">Ciudad / Comuna</label>
+                                    <input type="text" class="form-control rounded-3" id="direccionCiudad" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="direccionCodigoPostal" class="form-label font-weight-medium">Código Postal</label>
+                                    <input type="text" class="form-control rounded-3" id="direccionCodigoPostal">
+                                </div>
+                                <div class="col-12">
+                                    <label for="direccionNotas" class="form-label font-weight-medium">Notas adicionales de entrega</label>
+                                    <textarea class="form-control rounded-3" id="direccionNotas" rows="3" placeholder="Ej: Dejar en porteria / Cerca de : ..."></textarea>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-end">
+                                <button type="submit" class="btn btn-dark rounded-pill px-4 py-2">
+                                    Guardar Dirección
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Pestaña 3: Historial de Pedidos -->
+                    <div class="tab-pane fade" id="tab-pedidos" role="tabpanel">
+                        <h3 class="fw-bold mb-4">Historial de Compras</h3>
+                        <div id="contenedorHistorialPedidos">
+                            <!-- El JS insertará la lista o un mensaje de vacíos -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts Bootstrap, SweetAlert2, Navbar y Lógica de Perfil -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="Assets/Js/navbar.js"></script>
+    <script src="Assets/Js/perfil.js"></script>
+</body>
+</html>
