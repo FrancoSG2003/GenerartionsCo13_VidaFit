@@ -75,3 +75,15 @@ body {
 
     flex-shrink: 0;
 }
+
+#form-producto {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(26, 50, 92, 0.18);
+}
+
+#btnAdminAgregarProducto {
+    background-color: #1A325C;
+    border: solid 2px #1A325C;
+}
