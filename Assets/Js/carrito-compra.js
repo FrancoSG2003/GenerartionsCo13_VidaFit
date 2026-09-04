@@ -17,23 +17,17 @@ const btnFinalizarCompra = document.getElementById("btnFinalizarCompra");
 
 const carrito = [];
 
-
 if (btnCarrito) btnCarrito.addEventListener("click", mostrarCarrito);
 if (btnCerrarCarrito) btnCerrarCarrito.addEventListener("click", cerrarCarrito);
 if (btnContinuarComprando) btnContinuarComprando.addEventListener("click", cerrarCarrito);
 if (btnVaciarCarrito) btnVaciarCarrito.addEventListener("click", vaciarCarrito);
 if (btnFinalizarCompra) btnFinalizarCompra.addEventListener("click", finalizarCompra);
 
-
 botonesAgregarCarrito.forEach(function (boton) {
     const tarjeta = boton.closest(".producto-card");
-
-    if (!tarjeta) {
-        return;
-    }
+    if (!tarjeta) return;
 
     const stockDisponible = Number(tarjeta.dataset.stock);
-
     if (stockDisponible <= 0) {
         boton.disabled = true;
         boton.textContent = "Agotado";
@@ -43,37 +37,29 @@ botonesAgregarCarrito.forEach(function (boton) {
     boton.addEventListener("click", agregarProducto);
 });
 
-
 function mostrarCarrito() {
+    if (!overlay) return;
     overlay.classList.remove("d-none");
-
     setTimeout(function () {
         overlay.classList.add("carrito-abierto");
     }, 10);
 }
 
-
 function cerrarCarrito() {
+    if (!overlay) return;
     overlay.classList.remove("carrito-abierto");
-
     setTimeout(function () {
         overlay.classList.add("d-none");
     }, 400);
 }
 
-
 function obtenerStockDisponible(id) {
-    const tarjeta = document.querySelector(
-        `.producto-card[data-id="${id}"]`
-    );
-
+    const tarjeta = document.querySelector(`.producto-card[data-id="${id}"]`);
     if (!tarjeta) {
-        return 0;
+        return null; // Retorna null si la tarjeta no está presente en esta página específica
     }
-
     return Number(tarjeta.dataset.stock);
 }
-
 
 function mostrarLimiteStock(stockDisponible) {
     Swal.fire({
@@ -84,51 +70,33 @@ function mostrarLimiteStock(stockDisponible) {
     });
 }
 
-
 function guardarStockLocal() {
     const stockProductos = {};
-
     document.querySelectorAll(".producto-card").forEach(function (tarjeta) {
-        stockProductos[tarjeta.dataset.id] =
-            Number(tarjeta.dataset.stock);
+        stockProductos[tarjeta.dataset.id] = Number(tarjeta.dataset.stock);
     });
-
-    localStorage.setItem(
-        "stockVidaFit",
-        JSON.stringify(stockProductos)
-    );
+    localStorage.setItem("stockVidaFit", JSON.stringify(stockProductos));
 }
-
 
 function cargarStockLocal() {
     const stockGuardado = localStorage.getItem("stockVidaFit");
-
-    if (!stockGuardado) {
-        return;
-    }
+    if (!stockGuardado) return;
 
     const stockProductos = JSON.parse(stockGuardado);
-
     document.querySelectorAll(".producto-card").forEach(function (tarjeta) {
         const id = tarjeta.dataset.id;
-
         if (stockProductos[id] !== undefined) {
             tarjeta.dataset.stock = stockProductos[id];
         }
     });
 }
 
-
 function actualizarDisponibilidadProductos() {
     botonesAgregarCarrito.forEach(function (boton) {
         const tarjeta = boton.closest(".producto-card");
-
-        if (!tarjeta) {
-            return;
-        }
+        if (!tarjeta) return;
 
         const stockDisponible = Number(tarjeta.dataset.stock);
-
         if (stockDisponible <= 0) {
             boton.disabled = true;
             boton.textContent = "Agotado";
@@ -136,20 +104,13 @@ function actualizarDisponibilidadProductos() {
     });
 }
 
-
 function agregarProducto(event) {
     const boton = event.currentTarget;
     const tarjeta = boton.closest(".producto-card");
-
-    if (!tarjeta) {
-        return;
-    }
+    if (!tarjeta) return;
 
     const stockDisponible = Number(tarjeta.dataset.stock);
-
-    if (stockDisponible <= 0) {
-        return;
-    }
+    if (stockDisponible <= 0) return;
 
     const producto = {
         id: Number(tarjeta.dataset.id),
@@ -168,7 +129,6 @@ function agregarProducto(event) {
             mostrarLimiteStock(stockDisponible);
             return;
         }
-
         productoExistente.cantidad++;
     } else {
         carrito.push(producto);
@@ -178,18 +138,19 @@ function agregarProducto(event) {
     renderizarCarrito();
 }
 
-
 function renderizarCarrito() {
+    if (!contenedorProductosCarrito || !plantillaProductoCarrito) return;
+
     contenedorProductosCarrito.innerHTML = "";
 
     if (carrito.length === 0) {
-        carritoVacio.classList.remove("d-none");
-        btnVaciarCarrito.disabled = true;
-        btnFinalizarCompra.disabled = true;
+        if (carritoVacio) carritoVacio.classList.remove("d-none");
+        if (btnVaciarCarrito) btnVaciarCarrito.disabled = true;
+        if (btnFinalizarCompra) btnFinalizarCompra.disabled = true;
     } else {
-        carritoVacio.classList.add("d-none");
-        btnVaciarCarrito.disabled = false;
-        btnFinalizarCompra.disabled = false;
+        if (carritoVacio) carritoVacio.classList.add("d-none");
+        if (btnVaciarCarrito) btnVaciarCarrito.disabled = false;
+        if (btnFinalizarCompra) btnFinalizarCompra.disabled = false;
     }
 
     carrito.forEach(function (producto) {
@@ -207,7 +168,6 @@ function renderizarCarrito() {
         const btnEliminarProducto = productoCarrito.querySelector(".btnEliminarProducto");
 
         tarjetaProducto.dataset.id = producto.id;
-
         imagenProducto.src = producto.imagen;
         imagenProducto.alt = producto.nombre;
 
@@ -236,38 +196,28 @@ function renderizarCarrito() {
     actualizarResumenCarrito();
 }
 
-
 function aumentarCantidad(id) {
     const producto = carrito.find(function (item) {
         return item.id === id;
     });
-
-    if (!producto) {
-        return;
-    }
+    if (!producto) return;
 
     const stockDisponible = obtenerStockDisponible(id);
-
-    if (producto.cantidad >= stockDisponible) {
+    if (stockDisponible !== null && producto.cantidad >= stockDisponible) {
         mostrarLimiteStock(stockDisponible);
         return;
     }
 
     producto.cantidad++;
-
     guardarCarritoLocal();
     renderizarCarrito();
 }
-
 
 function disminuirCantidad(id) {
     const producto = carrito.find(function (item) {
         return item.id === id;
     });
-
-    if (!producto) {
-        return;
-    }
+    if (!producto) return;
 
     if (producto.cantidad > 1) {
         producto.cantidad--;
@@ -277,78 +227,57 @@ function disminuirCantidad(id) {
     renderizarCarrito();
 }
 
-
 function eliminarProducto(id) {
     const posicionProducto = carrito.findIndex(function (item) {
         return item.id === id;
     });
-
-    if (posicionProducto === -1) {
-        return;
-    }
+    if (posicionProducto === -1) return;
 
     carrito.splice(posicionProducto, 1);
-
     guardarCarritoLocal();
     renderizarCarrito();
 }
 
+function vaciarCarrito() {
+    if (carrito.length === 0) return;
 
-function vaciarCarrito() { 
-    if (carrito.length === 0) { 
-        return; 
-    }
-    
-    const swalWithBootstrapButtons = Swal.mixin({ 
-        customClass: { 
-            confirmButton: "btn btn-success", 
-            cancelButton: "btn btn-danger" 
-        }, 
-        
-        buttonsStyling: false 
-    }); 
-    
-    swalWithBootstrapButtons.fire({ 
-        
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
         title: "¿Vaciar carrito?",
-        text: "Se eliminarán todos los productos del carrito.", 
-        icon: "warning", 
-        showCancelButton: true, 
-        confirmButtonText: "Sí, vaciar carrito", 
-        cancelButtonText: "No, cancelar", 
+        text: "Se eliminarán todos los productos del carrito.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sí, vaciar carrito",
+        cancelButtonText: "No, cancelar",
         reverseButtons: true
-    }).then((result) => { 
-        
-        if (result.isConfirmed) { 
-            
-            carrito.length = 0; 
-            
-            guardarCarritoLocal(); 
-            
-            renderizarCarrito(); 
-            
-            
-            swalWithBootstrapButtons.fire({ 
-                
-                title: "¡Carrito vacío!", 
-                text: "Todos los productos fueron eliminados.", 
-                icon: "success" 
-            }); 
-        
-        } 
-    }); 
+    }).then((result) => {
+        if (result.isConfirmed) {
+            carrito.length = 0;
+            guardarCarritoLocal();
+            renderizarCarrito();
+
+            swalWithBootstrapButtons.fire({
+                title: "¡Carrito vacío!",
+                text: "Todos los productos fueron eliminados.",
+                icon: "success"
+            });
+        }
+    });
 }
 
-
 function finalizarCompra() {
-    if (carrito.length === 0) {
-        return;
-    }
+    if (carrito.length === 0) return;
 
     const productoSinStock = carrito.find(function (producto) {
         const stockDisponible = obtenerStockDisponible(producto.id);
-
-        return producto.cantidad > stockDisponible;
+        return stockDisponible !== null && producto.cantidad > stockDisponible;
     });
 
     if (productoSinStock) {
@@ -358,7 +287,6 @@ function finalizarCompra() {
             text: `No hay suficientes unidades de ${productoSinStock.nombre}.`,
             confirmButtonColor: "#212529"
         });
-
         return;
     }
 
@@ -371,30 +299,20 @@ function finalizarCompra() {
         cancelButtonText: "Cancelar",
         confirmButtonColor: "#212529"
     }).then(function (result) {
-        if (!result.isConfirmed) {
-            return;
-        }
+        if (!result.isConfirmed) return;
 
         carrito.forEach(function (producto) {
-            const tarjeta = document.querySelector(
-                `.producto-card[data-id="${producto.id}"]`
-            );
-
-            if (!tarjeta) {
-                return;
-            }
+            const tarjeta = document.querySelector(`.producto-card[data-id="${producto.id}"]`);
+            if (!tarjeta) return;
 
             const stockActual = Number(tarjeta.dataset.stock);
-
-            tarjeta.dataset.stock =
-                stockActual - producto.cantidad;
+            tarjeta.dataset.stock = stockActual - producto.cantidad;
         });
 
         guardarStockLocal();
         actualizarDisponibilidadProductos();
 
         carrito.length = 0;
-
         guardarCarritoLocal();
         renderizarCarrito();
 
@@ -407,7 +325,6 @@ function finalizarCompra() {
     });
 }
 
-
 function actualizarResumenCarrito() {
     let cantidadTotal = 0;
     let precioTotal = 0;
@@ -417,52 +334,41 @@ function actualizarResumenCarrito() {
         precioTotal += producto.precio * producto.cantidad;
     });
 
-    contadorCarrito.textContent = cantidadTotal;
-    cantidadTotalProductos.textContent = cantidadTotal;
-    precioTotalCarrito.textContent = formatearPrecio(precioTotal);
+    if (contadorCarrito) contadorCarrito.textContent = cantidadTotal;
+    if (cantidadTotalProductos) cantidadTotalProductos.textContent = cantidadTotal;
+    if (precioTotalCarrito) precioTotalCarrito.textContent = formatearPrecio(precioTotal);
 }
-
 
 function formatearPrecio(precio) {
     return "$" + precio.toLocaleString("es-CO");
 }
 
-
 function guardarCarritoLocal() {
     localStorage.setItem("carritoVidaFit", JSON.stringify(carrito));
 }
 
-
 function cargarCarritoLocal() {
     const carritoGuardado = localStorage.getItem("carritoVidaFit");
-
-    if (!carritoGuardado) {
-        return;
-    }
+    if (!carritoGuardado) return;
 
     const productosGuardados = JSON.parse(carritoGuardado);
 
     productosGuardados.forEach(function (producto) {
         const stockDisponible = obtenerStockDisponible(producto.id);
 
-        if (stockDisponible <= 0) {
-            return;
+        if (stockDisponible !== null) {
+            if (stockDisponible > 0) {
+                producto.cantidad = Math.min(producto.cantidad, stockDisponible);
+                carrito.push(producto);
+            }
+        } else {
+
+            carrito.push(producto);
         }
-
-        producto.cantidad = Math.min(
-            producto.cantidad,
-            stockDisponible
-        );
-
-        carrito.push(producto);
     });
 }
-
 
 cargarStockLocal();
 cargarCarritoLocal();
 actualizarDisponibilidadProductos();
-
-if (contenedorProductosCarrito) {
-    renderizarCarrito();
-}
+renderizarCarrito();
