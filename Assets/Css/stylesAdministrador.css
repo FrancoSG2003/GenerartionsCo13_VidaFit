@@ -63,3 +63,15 @@ body {
 .btn-primary:active {
     transform: translateY(0);
 }
+
+
+/*AsideBar dashboardAdmin*/
+.style-sidebar {
+    width: 280px;
+    min-width: 280px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+
+    flex-shrink: 0;
+}

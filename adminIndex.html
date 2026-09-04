@@ -31,7 +31,7 @@
                 <!-- Navigation Links -->
                 <ul class="nav nav-pills flex-column mb-auto gap-2">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link active text-white" aria-current="page">
+                        <a href="adminIndex.html" class="nav-link active text-white" aria-current="page">
                             <i class="bi bi-speedometer2 me-2"></i> Dashboard
                         </a>
                     </li>
@@ -175,26 +175,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Script de lógica de Administrador -->
-    <script>
-        document.getElementById('btnCerrarSesionAdmin')?.addEventListener('click', () => {
-            Swal.fire({
-                title: '¿Cerrar sesión de administrador?',
-                text: 'Serás redirigido a la página principal.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Sí, cerrar sesión',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    localStorage.removeItem('usuarioSesionActiva');
-                    localStorage.removeItem('userRole');
-                    window.location.href = 'index.html';
-                }
-            });
-        });
-    </script>
+    <script src="Assets/Js/adminCerrarSesion.js"></script>
 </body>
 
 </html>
