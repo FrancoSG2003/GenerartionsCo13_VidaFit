@@ -134,6 +134,17 @@ function agregarProducto(event) {
         carrito.push(producto);
     }
 
+    // Alerta de SweetAlert agregada
+    Swal.fire({
+        icon: 'success',
+        title: '¡Agregado al carrito!',
+        text: `${producto.nombre} se añadió correctamente.`,
+        timer: 1500,
+        showConfirmButton: false,
+        position: 'bottom-end',
+        toast: true
+    });
+
     guardarCarritoLocal();
     renderizarCarrito();
 }
@@ -362,7 +373,6 @@ function cargarCarritoLocal() {
                 carrito.push(producto);
             }
         } else {
-
             carrito.push(producto);
         }
     });
