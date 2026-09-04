@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Validar sesión activa (Si no hay sesión, expulsa al Login)
-    const usuarioSesionActiva = JSON.parse(localStorage.getItem("usuarioSesionActiva"));
+    // 1. Obtener la sesión activa
+    const usuarioSesion = JSON.parse(localStorage.getItem("usuarioSesionActiva"));
 
-    if (!usuarioSesionActiva) {
+    // Redirigir si no hay sesión activa
+    if (!usuarioSesion) {
         window.location.href = "Login.html";
         return;
     }
@@ -11,75 +12,94 @@ document.addEventListener("DOMContentLoaded", () => {
     const sidebarNombre = document.getElementById("profileSidebarNombre");
     const sidebarEmail = document.getElementById("profileSidebarEmail");
 
-    const perfilDatosForm = document.getElementById("perfilDatosForm");
     const inputNombre = document.getElementById("perfilNombre");
     const inputApellido = document.getElementById("perfilApellido");
     const inputEmail = document.getElementById("perfilEmail");
     const inputTelefono = document.getElementById("perfilTelefono");
     const inputPassword = document.getElementById("perfilPassword");
 
-    // 3. Cargar los datos del usuario en la vista
-    function cargarDatos() {
-        // Nombre del sidebar
-        if (sidebarNombre) {
-            sidebarNombre.textContent = `${usuarioSesionActiva.nombre || ''} ${usuarioSesionActiva.apellido || ''}`.trim() || "Usuario";
-        }
-        
-        // Email del sidebar
-        if (sidebarEmail) {
-            sidebarEmail.textContent = usuarioSesionActiva.email || "";
-        }
+    const inputCalle = document.getElementById("direccionCalle");
+    const inputCiudad = document.getElementById("direccionCiudad");
+    const inputCodigoPostal = document.getElementById("direccionCodigoPostal");
+    const inputNotas = document.getElementById("direccionNotas");
 
-        // Formulario de datos personales
-        if (inputNombre) inputNombre.value = usuarioSesionActiva.nombre || "";
-        if (inputApellido) inputApellido.value = usuarioSesionActiva.apellido || "";
-        if (inputEmail) inputEmail.value = usuarioSesionActiva.email || "";
-        if (inputTelefono) inputTelefono.value = usuarioSesionActiva.telefono || "";
+    // 3. Cargar datos guardados en la interfaz
+    function cargarDatosPerfil() {
+        sidebarNombre.textContent = `${usuarioSesion.nombre || ''} ${usuarioSesion.apellido || ''}`.trim() || "Usuario";
+        sidebarEmail.textContent = usuarioSesion.email || "";
+
+        inputNombre.value = usuarioSesion.nombre || "";
+        inputApellido.value = usuarioSesion.apellido || "";
+        inputEmail.value = usuarioSesion.email || "";
+        inputTelefono.value = usuarioSesion.telefono || "";
+
+        // Cargar Dirección si existe
+        if (usuarioSesion.direccion) {
+            inputCalle.value = usuarioSesion.direccion.calle || "";
+            inputCiudad.value = usuarioSesion.direccion.ciudad || "";
+            inputCodigoPostal.value = usuarioSesion.direccion.codigoPostal || "";
+            inputNotas.value = usuarioSesion.direccion.notas || "";
+        }
     }
 
-    // 4. Guardar cambios del formulario de Información Personal
-    if (perfilDatosForm) {
-        perfilDatosForm.addEventListener("submit", (e) => {
-            e.preventDefault();
+    // 4. Función centralizada para guardar y sincronizar con localStorage
+    function guardarEnStorage(usuarioActualizado) {
+        // Actualizar sesión activa
+        localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioActualizado));
 
-            // Actualizar el objeto en memoria
-            usuarioSesionActiva.nombre = inputNombre.value.trim();
-            usuarioSesionActiva.apellido = inputApellido.value.trim();
-            usuarioSesionActiva.telefono = inputTelefono.value.trim();
+        // Sincronizar en la lista general de usuarios
+        const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+        const index = listaUsuarios.findIndex(u => u.email === usuarioActualizado.email);
 
-            if (inputPassword && inputPassword.value.trim() !== "") {
-                usuarioSesionActiva.password = inputPassword.value.trim();
-            }
+        if (index !== -1) {
+            listaUsuarios[index] = { ...listaUsuarios[index], ...usuarioActualizado };
+            localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
+        }
+    }
 
-            // Guardar cambios en el localStorage de la sesión
-            localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioSesionActiva));
+    // 5. Guardar Información Personal
+    document.getElementById("perfilDatosForm")?.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-            // Actualizar también en la lista global de usuarios registrados
-            const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
-            const index = usuariosGuardados.findIndex(u => u.email === usuarioSesionActiva.email);
+        usuarioSesion.nombre = inputNombre.value.trim();
+        usuarioSesion.apellido = inputApellido.value.trim();
+        usuarioSesion.telefono = inputTelefono.value.trim();
 
-            if (index !== -1) {
-                usuariosGuardados[index] = { ...usuariosGuardados[index], ...usuarioSesionActiva };
-                localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
-            }
+        if (inputPassword.value.trim() !== "") {
+            usuarioSesion.password = inputPassword.value.trim();
+        }
 
-            // Notificación al usuario
-            if (typeof Swal !== "undefined") {
-                Swal.fire({
-                    title: "¡Datos actualizados!",
-                    text: "Tu información personal se ha guardado correctamente.",
-                    icon: "success",
-                    confirmButtonColor: "#22C55E"
-                }).then(() => {
-                    window.location.reload(); // Recarga para refrescar el menú lateral y la Navbar
-                });
-            } else {
-                alert("Datos actualizados correctamente.");
-                window.location.reload();
-            }
+        guardarEnStorage(usuarioSesion);
+
+        Swal.fire({
+            icon: 'success',
+            title: '¡Datos actualizados!',
+            text: 'Tu información personal se ha guardado correctamente.',
+            confirmButtonColor: '#22C55E'
+        }).then(() => location.reload());
+    });
+
+    // 6. Guardar Dirección de Envío
+    document.getElementById("perfilDireccionForm")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        usuarioSesion.direccion = {
+            calle: inputCalle.value.trim(),
+            ciudad: inputCiudad.value.trim(),
+            codigoPostal: inputCodigoPostal.value.trim(),
+            notas: inputNotas.value.trim()
+        };
+
+        guardarEnStorage(usuarioSesion);
+
+        Swal.fire({
+            icon: 'success',
+            title: '¡Dirección guardada!',
+            text: 'Tu dirección de envío se ha actualizado.',
+            confirmButtonColor: '#22C55E'
         });
-    }
+    });
 
-    // Ejecutar la carga de datos
-    cargarDatos();
+    // Inicializar
+    cargarDatosPerfil();
 });
