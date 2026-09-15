@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputTelefono = document.getElementById("perfilTelefono");
     const inputPassword = document.getElementById("perfilPassword");
 
-    // Elementos DOM - Formulario Dirección (Sincronizados con el DTO/Modelo)
+    // Elementos DOM - Formulario Dirección
     const formDireccion = document.getElementById("perfilDireccionForm");
     const inputId = document.getElementById("direccionId");
     const inputDireccionExacta = document.getElementById("direccionExacta");
@@ -151,10 +151,13 @@ document.addEventListener("DOMContentLoaded", () => {
     formDireccion?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const id = inputId?.value ? Number(inputId.value) : null;
+        // 1. Validar ID de forma estricta (Evita enviar PUT innecesarios)
+        const rawId = inputId?.value ? inputId.value.trim() : "";
+        const id = (rawId && !isNaN(rawId) && Number(rawId) > 0) ? Number(rawId) : null;
 
+        // 2. Coincidencia exacta con DireccionRequestDTO.java (userId)
         const payload = {
-            usuarioId: usuarioSesion.id,
+            userId: usuarioSesion.id,
             direccionExacta: inputDireccionExacta?.value ? inputDireccionExacta.value.trim() : "",
             barrio: inputBarrio?.value ? inputBarrio.value.trim() : "",
             comuna: inputComuna?.value ? inputComuna.value.trim() : "",
