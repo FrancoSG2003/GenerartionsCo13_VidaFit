@@ -125,39 +125,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     btnNuevaDireccion?.addEventListener("click", () => {
-        formDireccion.reset();
-        inputId.value = "";
-        document.getElementById("modalDireccionLabel").textContent = "Agregar Dirección";
-        modalDireccion.show();
+        formDireccion?.reset();
+        if (inputId) inputId.value = "";
+        const labelModal = document.getElementById("modalDireccionLabel");
+        if (labelModal) labelModal.textContent = "Agregar Dirección";
+        modalDireccion?.show();
     });
 
     function abrirModalEditar(id) {
         const dir = direccionesUsuario.find(d => d.id === id);
         if (!dir) return;
 
-        inputId.value = dir.id;
-        inputDireccionExacta.value = dir.direccionExacta || "";
-        inputBarrio.value = dir.barrio || "";
-        inputComuna.value = dir.comuna || "";
-        inputCiudad.value = dir.ciudad || "";
-        inputDepartamento.value = dir.departamento || "";
+        if (inputId) inputId.value = dir.id;
+        if (inputDireccionExacta) inputDireccionExacta.value = dir.direccionExacta || "";
+        if (inputBarrio) inputBarrio.value = dir.barrio || "";
+        if (inputComuna) inputComuna.value = dir.comuna || "";
+        if (inputCiudad) inputCiudad.value = dir.ciudad || "";
+        if (inputDepartamento) inputDepartamento.value = dir.departamento || "";
 
-        document.getElementById("modalDireccionLabel").textContent = "Editar Dirección";
-        modalDireccion.show();
+        const labelModal = document.getElementById("modalDireccionLabel");
+        if (labelModal) labelModal.textContent = "Editar Dirección";
+        modalDireccion?.show();
     }
 
     formDireccion?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const id = inputId.value ? Number(inputId.value) : null;
+        const id = inputId?.value ? Number(inputId.value) : null;
 
         const payload = {
             usuarioId: usuarioSesion.id,
-            direccionExacta: inputDireccionExacta.value.trim(),
-            barrio: inputBarrio.value.trim(),
-            comuna: inputComuna.value.trim(),
-            ciudad: inputCiudad.value.trim(),
-            departamento: inputDepartamento.value.trim()
+            direccionExacta: inputDireccionExacta?.value ? inputDireccionExacta.value.trim() : "",
+            barrio: inputBarrio?.value ? inputBarrio.value.trim() : "",
+            comuna: inputComuna?.value ? inputComuna.value.trim() : "",
+            ciudad: inputCiudad?.value ? inputCiudad.value.trim() : "",
+            departamento: inputDepartamento?.value ? inputDepartamento.value.trim() : ""
         };
 
         const url = id ? ENDPOINTS.DIRECCION_POR_ID(id) : ENDPOINTS.DIRECCIONES;
@@ -172,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) throw new Error("Error al procesar la solicitud.");
 
-            modalDireccion.hide();
+            modalDireccion?.hide();
             await obtenerDireccionesBackend();
 
             Swal.fire({
@@ -218,12 +220,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("perfilDatosForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const nombreCompleto = `${inputNombre.value.trim()} ${inputApellido.value.trim()}`.trim();
+        const nombreVal = inputNombre?.value ? inputNombre.value.trim() : "";
+        const apellidoVal = inputApellido?.value ? inputApellido.value.trim() : "";
+        const emailVal = inputEmail?.value ? inputEmail.value.trim() : "";
+        const passwordVal = inputPassword?.value ? inputPassword.value.trim() : "";
+
+        const nombreCompleto = `${nombreVal} ${apellidoVal}`.trim();
 
         const payloadUsuario = {
             nombre: nombreCompleto,
-            correo: inputEmail.value.trim(),
-            contrasena: inputPassword.value.trim() !== "" ? inputPassword.value.trim() : null
+            correo: emailVal,
+            contrasena: passwordVal !== "" ? passwordVal : null
         };
 
         try {
@@ -237,8 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const usuarioActualizado = await response.json();
 
-            usuarioSesion.nombre = inputNombre.value.trim();
-            usuarioSesion.apellido = inputApellido.value.trim();
+            usuarioSesion.nombre = nombreVal;
+            usuarioSesion.apellido = apellidoVal;
             usuarioSesion.email = usuarioActualizado.correo || usuarioSesion.email;
             localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioSesion));
 
