@@ -53,3 +53,10 @@ El proyecto busca integrar una interfaz moderna, intuitiva y responsive con func
  - [Simon Franco Guisado](https://www.linkedin.com/in/simon-franco-guisado/)
 
 
+ # 🚀 Despliegue VidaFit Backend
+
+ El backend de **VidaFit** está desarrollado en **Java Spring Boot** y desplegado en **Render**.
+
+- **URL Base en Despliegue:** `https://backend-vidafit.onrender.com/api`
+
+
