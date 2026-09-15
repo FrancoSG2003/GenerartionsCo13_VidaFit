@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Configuración de endpoints mapeados a DireccionController y UsuarioController
     const BASE_URL = "https://backend-vidafit.onrender.com/api";
     const ENDPOINTS = {
         DIRECCIONES_USUARIO: (usuarioId) => `${BASE_URL}/direcciones/usuario/${usuarioId}`,
@@ -8,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
         USUARIO_POR_ID: (id) => `${BASE_URL}/usuarios/${id}`
     };
 
-    // Obtención de la sesión del usuario en LocalStorage (Solo para identificación)
     const usuarioSesion = JSON.parse(localStorage.getItem("usuarioSesionActiva"));
 
     if (!usuarioSesion || !usuarioSesion.id) {
@@ -16,11 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // Modal Instance
     const modalElement = document.getElementById("modalDireccion");
     const modalDireccion = modalElement ? new bootstrap.Modal(modalElement) : null;
 
-    // Elementos DOM - Usuario
+    // Elementos DOM - Datos Usuario
     const sidebarNombre = document.getElementById("profileSidebarNombre");
     const sidebarEmail = document.getElementById("profileSidebarEmail");
     const inputNombre = document.getElementById("perfilNombre");
@@ -29,34 +26,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputTelefono = document.getElementById("perfilTelefono");
     const inputPassword = document.getElementById("perfilPassword");
 
-    // Elementos DOM - Formulario Dirección Modal
+    // Elementos DOM - Formulario Dirección (Sincronizados con el DTO/Modelo)
     const formDireccion = document.getElementById("perfilDireccionForm");
     const inputId = document.getElementById("direccionId");
-    const inputDireccionExacta = document.getElementById("direccionCalle");
-    const inputBarrio = document.getElementById("direccionEtiqueta");
-    const inputComuna = document.getElementById("direccionNotas");
-    const inputCiudad = document.getElementById("direccionCiudad");
-    const inputDepartamento = document.getElementById("direccionCodigoPostal");
+    const inputDireccionExacta = document.getElementById("direccionExacta");
+    const inputBarrio = document.getElementById("barrio");
+    const inputComuna = document.getElementById("comuna");
+    const inputCiudad = document.getElementById("ciudad");
+    const inputDepartamento = document.getElementById("departamento");
 
     const btnNuevaDireccion = document.getElementById("btnNuevaDireccion");
     const contenedorDirecciones = document.getElementById("listaDirecciones");
 
-    // Arreglo local en memoria sólo para pintado dinámico de UI
     let direccionesUsuario = [];
 
     function cargarDatosPerfil() {
-        sidebarNombre.textContent = `${usuarioSesion.nombre || ''} ${usuarioSesion.apellido || ''}`.trim() || "Usuario";
-        sidebarEmail.textContent = usuarioSesion.email || "";
+        if (sidebarNombre) sidebarNombre.textContent = `${usuarioSesion.nombre || ''} ${usuarioSesion.apellido || ''}`.trim() || "Usuario";
+        if (sidebarEmail) sidebarEmail.textContent = usuarioSesion.email || "";
 
-        inputNombre.value = usuarioSesion.nombre || "";
-        inputApellido.value = usuarioSesion.apellido || "";
-        inputEmail.value = usuarioSesion.email || "";
-        inputTelefono.value = usuarioSesion.telefono || "";
+        if (inputNombre) inputNombre.value = usuarioSesion.nombre || "";
+        if (inputApellido) inputApellido.value = usuarioSesion.apellido || "";
+        if (inputEmail) inputEmail.value = usuarioSesion.email || "";
+        if (inputTelefono) inputTelefono.value = usuarioSesion.telefono || "";
 
         obtenerDireccionesBackend();
     }
 
-    // Consume @GetMapping("/usuario/{usuarioId}")
     async function obtenerDireccionesBackend() {
         try {
             const response = await fetch(ENDPOINTS.DIRECCIONES_USUARIO(usuarioSesion.id));
@@ -83,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
             contenedorDirecciones.innerHTML = `
                 <div class="col-12 text-center py-5">
                     <i class="bi bi-geo-alt text-muted fs-1"></i>
-                    <p class="text-muted mt-2 mb-0">No tienes direcciones guardadas en la base de datos.</p>
+                    <p class="text-muted mt-2 mb-0">No tienes direcciones guardadas en tu cuenta.</p>
                 </div>`;
             return;
         }
@@ -108,9 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                     <p class="fw-bold mb-1">${dir.direccionExacta || ''}</p>
                     <p class="text-muted small mb-1">
-                        <i class="bi bi-building me-1"></i>${dir.ciudad || ''} ${dir.departamento ? '- ' + dir.departamento : ''}
+                        <i class="bi bi-building me-1"></i>${dir.ciudad || ''}${dir.departamento ? ', ' + dir.departamento : ''}
                     </p>
-                    ${dir.comuna ? `<p class="text-muted small mb-0"><i class="bi bi-geo me-1"></i>Comuna/Sector: ${dir.comuna}</p>` : ''}
+                    ${dir.comuna ? `<p class="text-muted small mb-0"><i class="bi bi-geo me-1"></i>Sector/Comuna: ${dir.comuna}</p>` : ''}
                 </div>
             `;
             contenedorDirecciones.appendChild(col);
@@ -151,14 +146,13 @@ document.addEventListener("DOMContentLoaded", () => {
         modalDireccion.show();
     }
 
-    // Consume @PostMapping y @PutMapping("/{id}")
     formDireccion?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const id = inputId.value ? Number(inputId.value) : null;
 
         const payload = {
-            userId: usuarioSesion.id,
+            usuarioId: usuarioSesion.id,
             direccionExacta: inputDireccionExacta.value.trim(),
             barrio: inputBarrio.value.trim(),
             comuna: inputComuna.value.trim(),
@@ -176,25 +170,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(payload)
             });
 
-            if (!response.ok) throw new Error("Error al guardar en el servidor.");
+            if (!response.ok) throw new Error("Error al procesar la solicitud.");
 
             modalDireccion.hide();
             await obtenerDireccionesBackend();
 
             Swal.fire({
                 icon: 'success',
-                title: id ? '¡Dirección actualizada!' : '¡Dirección guardada!',
+                title: id ? '¡Dirección actualizada!' : '¡Dirección registrada!',
                 timer: 1500,
                 showConfirmButton: false
             });
 
         } catch (error) {
             console.error("Error al guardar la dirección:", error);
-            Swal.fire("Error", "No se pudo persitir la dirección en la base de datos.", "error");
+            Swal.fire("Error", "No se pudo guardar la dirección en el servidor.", "error");
         }
     });
 
-    // Consume @DeleteMapping("/{id}")
     function eliminarDireccionBackend(id) {
         Swal.fire({
             title: '¿Eliminar dirección?',
@@ -207,26 +200,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await fetch(ENDPOINTS.DIRECCION_POR_ID(id), {
-                        method: "DELETE"
-                    });
+                    const response = await fetch(ENDPOINTS.DIRECCION_POR_ID(id), { method: "DELETE" });
 
-                    if (!response.ok) {
-                        throw new Error("No se puede eliminar la dirección porque está asociada a un pedido activo.");
-                    }
+                    if (!response.ok) throw new Error("No se pudo eliminar la dirección.");
 
                     await obtenerDireccionesBackend();
                     Swal.fire('Eliminada', 'La dirección fue eliminada con éxito.', 'success');
 
                 } catch (error) {
                     console.error("Error al eliminar la dirección:", error);
-                    Swal.fire("Error", error.message || "No se pudo eliminar la dirección.", "error");
+                    Swal.fire("Error", "No se pudo eliminar la dirección del servidor.", "error");
                 }
             }
         });
     }
 
-    // Actualizar datos del usuario
     document.getElementById("perfilDatosForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -245,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(payloadUsuario)
             });
 
-            if (!response.ok) throw new Error("Error al actualizar la información personal.");
+            if (!response.ok) throw new Error("Error al actualizar información personal.");
 
             const usuarioActualizado = await response.json();
 
@@ -257,13 +245,13 @@ document.addEventListener("DOMContentLoaded", () => {
             Swal.fire({
                 icon: 'success',
                 title: '¡Datos actualizados!',
-                text: 'La información del usuario se actualizó correctamente.',
+                text: 'Información del usuario actualizada con éxito.',
                 confirmButtonColor: '#22C55E'
             }).then(() => location.reload());
 
         } catch (error) {
             console.error("Error al actualizar datos personales:", error);
-            Swal.fire("Error", "No se pudieron actualizar los datos del usuario.", "error");
+            Swal.fire("Error", "No se pudieron actualizar los datos personales.", "error");
         }
     });
 
