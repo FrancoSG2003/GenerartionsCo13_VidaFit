@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-
     const verContraseña = document.getElementById("verContraseña");
     const passwordInput = document.getElementById("password");
 
@@ -13,56 +11,68 @@ document.addEventListener("DOMContentLoaded", () => {
             verContraseña.classList.toggle("bi-eye-slash");
         });
     }
-    
+
     const loginForm = document.getElementById("loginForm");
 
-    loginForm.addEventListener("submit", (e) => {
+    loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const emailInput = document.getElementById("email").value.trim();
-        const passwordInput = document.getElementById("password").value;
+        const passwordValue = passwordInput.value;
 
-        if (!emailInput || !passwordInput) {
-            alert("Error: Por favor, complete todos los campos.");
+        if (!emailInput || !passwordValue) {
+            Swal.fire("Error", "Por favor, complete todos los campos.", "error");
             return;
         }
 
-        const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
-        const usuarioUnico = JSON.parse(localStorage.getItem("usuarioRegistrado"));
+        // Mapeo adaptado a LoginDTO (correo, contrasena)
+        const datosLogin = {
+            correo: emailInput,
+            contrasena: passwordValue
+        };
 
-        let usuarioEncontrado = null;
+        try {
+            const response = await fetch("https://backend-vidafit.onrender.com/api/usuarios/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datosLogin)
+            });
 
-        if (usuariosGuardados.length > 0) {
-            usuarioEncontrado = usuariosGuardados.find(
-                u => u.email === emailInput && u.contraseña === passwordInput
-            );
-        } else if (usuarioUnico) {
-            if (usuarioUnico.email === emailInput && usuarioUnico.contraseña === passwordInput) {
-                usuarioEncontrado = usuarioUnico;
+            if (response.status === 401) {
+                throw new Error("Nombre de usuario (email) o contraseña inválidos.");
             }
-        }
 
-        if (usuarioEncontrado) {
-            if (!usuarioEncontrado.rol) {
-                usuarioEncontrado.rol = "cliente";
+            if (!response.ok) {
+                throw new Error("Error al conectar con el servidor de autenticación.");
             }
+
+            const usuarioEncontrado = await response.json(); // Devuelve UsuarioResponseDTO
+
+            // Extraer el primer rol del arreglo o asignar un rol por defecto
+            const rolPrincipal = usuarioEncontrado.roles && usuarioEncontrado.roles.length > 0
+                ? usuarioEncontrado.roles[0]
+                : "USER";
 
             Swal.fire({
                 icon: "success",
                 title: "¡Inicio de sesión exitoso!",
-                text: "Bienvenido de nuevo, " + usuarioEncontrado.nombre + " " + usuarioEncontrado.apellido,
+                text: "Bienvenido de nuevo, " + usuarioEncontrado.nombre,
                 confirmButtonText: "Continuar"
             }).then(() => {
+                // Guardar la información devuelta por la API para mantener la sesión activa
                 localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioEncontrado));
-                localStorage.setItem("userRole", usuarioEncontrado.rol);
+                localStorage.setItem("userRole", rolPrincipal);
                 window.location.href = "index.html";
             });
 
-        } else {
+        } catch (error) {
+            console.error("Error en la petición de login:", error);
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Nombre de usuario (email) o contraseña inválidos.",
+                text: error.message || "No se pudo autenticar con el servidor.",
                 confirmButtonText: "Intentar nuevamente"
             });
         }

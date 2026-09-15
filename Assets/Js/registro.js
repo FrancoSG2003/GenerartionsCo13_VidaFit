@@ -12,69 +12,75 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const nombre = document.getElementById("nombre").value.trim();
         const apellido = document.getElementById("apellido").value.trim();
-        const telefono = document.getElementById("telefono").value.trim()
+        const telefono = document.getElementById("telefono").value.trim();
         const email = document.getElementById("email").value.trim();
         const contraseña = inputContraseña.value;
         const confirmarContraseña = document.getElementById("InputConfirmarContraseña").value;
 
         if (!nombre || !apellido || !telefono || !email || !contraseña || !confirmarContraseña) {
-            alert("Error: Todos los campos son obligatorios.");
+            Swal.fire("Error", "Todos los campos son obligatorios.", "error");
             return;
         }
 
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!regexEmail.test(email)) {
-            alert("Error: Por favor, introduce un correo electrónico válido.");
+            Swal.fire("Error", "Por favor, introduce un correo electrónico válido.", "error");
             return;
         }
 
         const regexTelefono = /^[0-9]{7,15}$/;
         if (!regexTelefono.test(telefono)) {
-            alert("Error: El número de teléfono no es válido (introduce solo números, entre 7 y 15 dígitos).");
+            Swal.fire("Error", "El número de teléfono no es válido (introduce solo números, entre 7 y 15 dígitos).", "error");
             return;
         }
 
         if (contraseña !== confirmarContraseña) {
-            alert("Error: Las contraseñas no coinciden.");
+            Swal.fire("Error", "Las contraseñas no coinciden.", "error");
             return;
         }
 
-
+        // Mapeo adaptado a UsuarioRequestDTO (nombre, correo, contrasena)
         const usuarioObjeto = {
-            nombre: nombre,
-            apellido: apellido,
-            telefono: telefono,
-            email: email,
-            contraseña: contraseña
+            nombre: `${nombre} ${apellido}`,
+            correo: email,
+            contrasena: contraseña
         };
 
-        const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
+        try {
+            const response = await fetch("https://backend-vidafit.onrender.com/api/usuarios", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(usuarioObjeto)
+            });
 
-        const existe = usuariosGuardados.some(u => u.email === email);
-        if (existe) {
-            console.log("8. Usuario ya existe");
-            alert("Error: Este correo electrónico ya está registrado.");
-            return;
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => null);
+                const mensajeError = errorData?.message || "Ocurrió un error al registrar el usuario en el servidor.";
+                throw new Error(mensajeError);
+            }
+
+            const usuarioCreado = await response.json();
+
+            Swal.fire({
+                title: "¡Registro exitoso!",
+                text: `Bienvenido/a ${usuarioCreado.nombre}`,
+                icon: "success",
+                draggable: true
+            }).then(() => {
+                form.reset();
+                window.location.href = "Login.html";
+            });
+
+        } catch (error) {
+            console.error("Error en la petición de registro:", error);
+            Swal.fire("Error", error.message || "No se pudo conectar con el servidor.", "error");
         }
-
-        usuariosGuardados.push(usuarioObjeto);
-        localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
-        console.log("Usuarios guardados:", usuariosGuardados);
-        localStorage.setItem("usuarioRegistrado", JSON.stringify(usuarioObjeto));
-
-        Swal.fire({
-        title: "¡Registro validado y guardado con éxito!",
-        icon: "success",
-        draggable: true
-        }).then(() => {
-            form.reset();
-            window.location.href = "Login.html";
-        });
     });
-
 });

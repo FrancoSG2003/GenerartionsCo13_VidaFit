@@ -1,0 +1,124 @@
+CREATE TABLE usuarios(
+	id SERIAL PRIMARY KEY,
+	nombre VARCHAR(100) NOT NULL,
+	correo VARCHAR(100) NOT NULL UNIQUE,
+	password_hash VARCHAR(255) NOT  NULL,
+	rol VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE categorias(
+	id SERIAL PRIMARY KEY,
+	nombre VARCHAR(100) NOT NULL,
+	descripcion TEXT
+)
+
+
+CREATE TABLE PRODUCTOS(
+	id SERIAL PRIMARY KEY,
+	nombre VARCHAR(100) NOT NULL,
+	precio DECIMAL(10,2) NOT NULL,
+	stock INT NOT NULL,
+	categoria_id INT, FOREIGN KEY (categoria_id) REFERENCES categorias(id)	
+)
+
+DROP TABLE IF EXISTS direcciones CASCADE;
+
+CREATE TABLE direcciones (
+    id SERIAL PRIMARY KEY,
+    user_id INT,
+    direccion_exacta VARCHAR(255) NOT NULL,
+    barrio VARCHAR(100) NOT NULL,
+    comuna VARCHAR(100),
+    ciudad VARCHAR(100) NOT NULL,
+    departamento VARCHAR(100) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+);
+
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT,
+    direccion_id INT,
+    fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado VARCHAR(50) NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (direccion_id) REFERENCES direcciones(id)
+);
+
+
+CREATE TABLE detalles_pedidos (
+    id SERIAL PRIMARY KEY,
+    pedido_id INT,
+    producto_id INT,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+
+INSERT INTO usuarios (nombre, correo, password_hash, rol) 
+VALUES ('Carlos Pérez', 'carlos@vidafit.com', '$2a$10$abc123xyz...', 'CLIENTE');
+
+
+
+INSERT INTO direcciones (user_id, direccion_exacta, barrio, comuna, ciudad, departamento) 
+VALUES (1, 'Calle 50 # 70-30', 'La América', 'Comuna 12', 'Medellín', 'Antioquia');
+
+
+
+INSERT INTO categorias (nombre, descripcion) 
+VALUES ('Proteínas', 'Suplementos para desarrollo muscular');
+
+INSERT INTO productos (nombre, precio, stock, categoria_id) 
+VALUES ('Whey Protein 2lbs', 185000.00, 15, 1);
+
+
+
+
+SELECT p.nombre AS producto, c.nombre AS categoria, p.precio, p.stock
+FROM productos p
+JOIN categorias c ON p.categoria_id = c.id;
+
+
+SELECT u.nombre AS cliente, u.correo, d.direccion_exacta, d.barrio, d.ciudad, d.departamento
+FROM usuarios u
+JOIN direcciones d ON u.id = d.user_id;
+
+
+INSERT INTO pedidos (usuario_id, direccion_id, total, estado) 
+VALUES (1, 1, 185000.00, 'PENDIENTE');
+
+INSERT INTO detalles_pedidos (pedido_id, producto_id, cantidad, precio_unitario) 
+VALUES (1, 1, 2, 185000.00);
+
+SELECT 
+    p.id AS numero_pedido, 
+    u.nombre AS cliente, 
+    pr.nombre AS producto_comprado, 
+    dp.cantidad, 
+    dp.precio_unitario, 
+    p.total, 
+    p.estado
+FROM pedidos p
+JOIN usuarios u ON p.usuario_id = u.id
+JOIN direcciones d ON p.direccion_id = d.id
+JOIN detalles_pedidos dp ON p.id = dp.pedido_id
+JOIN productos pr ON dp.producto_id = pr.id;
+
+
+
+SELECT 
+    p.id AS pedido_id,
+    u.nombre AS cliente,
+    d.direccion_exacta,
+    d.ciudad,
+    pr.nombre AS producto,
+    dp.cantidad,
+    dp.precio_unitario,
+    p.total AS total_pedido,
+    p.estado
+FROM pedidos p
+JOIN usuarios u ON p.usuario_id = u.id
+JOIN direcciones d ON p.direccion_id = d.id
+JOIN detalles_pedidos dp ON p.id = dp.pedido_id
+JOIN productos pr ON dp.producto_id = pr.id;
