@@ -4,6 +4,12 @@ const formProducto = document.getElementById('form-producto');
 const contenedorProductos = document.getElementById('contenedor-productos');
 const contadorProductos = document.getElementById('contador-productos');
 
+const tituloFormularioProducto = document.getElementById('tituloFormularioProducto');
+const descripcionFormularioProducto = document.getElementById('descripcionFormularioProducto');
+const btnAdminAgregarProducto = document.getElementById('btnAdminAgregarProducto');
+const btnCancelarEdicion = document.getElementById('btnCancelarEdicion');
+
+let productoEnEdicionId = null;
 
 const IMAGEN_FALLBACK = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23e9ecef%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%236c757d%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%3ESin%20Imagen%3C%2Ftext%3E%3C%2Fsvg%3E';
 
@@ -34,8 +40,10 @@ formProducto.addEventListener('submit', function (event) {
         return;
     }
 
+    const esEdicion = productoEnEdicionId !== null;
+
     const nuevoProducto = {
-        id: Date.now(),
+        id: esEdicion ? productoEnEdicionId : Date.now(),
         nombre: nombre,
         categoria: categoria,
         precio: precio,
@@ -44,17 +52,79 @@ formProducto.addEventListener('submit', function (event) {
         descripcion: descripcion
     };
 
-    listaProductos.push(nuevoProducto);
+    if (esEdicion) {
+        const indiceProducto = listaProductos.findIndex(
+            producto => producto.id === productoEnEdicionId
+        );
+
+        if (indiceProducto === -1) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Producto no encontrado',
+                text: 'El producto que intentas editar ya no está disponible.',
+                confirmButtonColor: '#212529'
+            });
+            restablecerFormulario();
+            return;
+        }
+
+        // Conserva las propiedades existentes y actualiza los campos del formulario.
+        listaProductos[indiceProducto] = {
+            ...listaProductos[indiceProducto],
+            ...nuevoProducto
+        };
+    } else {
+        listaProductos.push(nuevoProducto);
+    }
+
     guardarProducto();
     actualizarInterfaz();
-    formProducto.reset();
+    restablecerFormulario();
+
     Swal.fire({
         icon: 'success',
-        title: 'Producto agregado',
-        text: 'El producto ha sido agregado exitosamente.',
+        title: esEdicion ? 'Producto actualizado' : 'Producto agregado',
+        text: esEdicion
+            ? 'Los cambios del producto se han guardado exitosamente.'
+            : 'El producto ha sido agregado exitosamente.',
         confirmButtonColor: '#212529'
     });
 });
+
+function restablecerFormulario() {
+    productoEnEdicionId = null;
+    formProducto.reset();
+    tituloFormularioProducto.textContent = 'Crear nuevo producto';
+    descripcionFormularioProducto.textContent = 'Ingresa la información del producto para agregarlo al catálogo.';
+    btnAdminAgregarProducto.textContent = '+ Agregar producto';
+    btnCancelarEdicion.hidden = true;
+}
+
+btnCancelarEdicion.addEventListener('click', restablecerFormulario);
+
+window.editarProducto = function (id) {
+    const producto = listaProductos.find(producto => producto.id === id);
+
+    if (!producto) {
+        return;
+    }
+
+    productoEnEdicionId = producto.id;
+
+    document.getElementById('nombre').value = producto.nombre;
+    document.getElementById('categoria').value = producto.categoria;
+    document.getElementById('precio').value = producto.precio;
+    document.getElementById('stock').value = producto.stock;
+    document.getElementById('imagen').value = producto.imagen;
+    document.getElementById('descripcion').value = producto.descripcion;
+
+    tituloFormularioProducto.textContent = 'Editar producto';
+    descripcionFormularioProducto.textContent = 'Modifica la información del producto y guarda los cambios.';
+    btnAdminAgregarProducto.textContent = 'Guardar cambios';
+    btnCancelarEdicion.hidden = false;
+
+    document.getElementById('nombre').focus();
+};
 
 function actualizarInterfaz() {
     renderizarProductos();
@@ -93,6 +163,9 @@ function renderizarProductos() {
                         <span class="fs-5 fw-bold text-primary">$${producto.precio.toLocaleString()}</span>
                         <span class="small text-muted">Stock: ${producto.stock}</span>
                     </div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2" onclick="editarProducto(${producto.id})">
+                        <i class="bi bi-pencil"></i> Editar
+                    </button>
                     <button type="button" class="btn btn-outline-danger btn-sm w-100 mt-auto" onclick="eliminarProducto(${producto.id})">
                         <i class="bi bi-trash"></i> Eliminar
                     </button>
@@ -111,6 +184,11 @@ function actualizarContador() {
 
 window.eliminarProducto = function (id) {
     listaProductos = listaProductos.filter(producto => producto.id !== id);
+
+    if (productoEnEdicionId === id) {
+        restablecerFormulario();
+    }
+
     guardarProducto();
     actualizarInterfaz();
 };

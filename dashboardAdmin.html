@@ -91,10 +91,10 @@
             <div class="card-body p-4 p-lg-5">
 
                 <div class="mb-4">
-                    <h2 class="h4 fw-bold mb-1">
+                    <h2 class="h4 fw-bold mb-1" id="tituloFormularioProducto">
                         Crear nuevo producto
                     </h2>
-                    <p class="text-secondary mb-0">
+                    <p class="text-secondary mb-0" id="descripcionFormularioProducto">
                         Ingresa la información del producto para agregarlo al catálogo.
                     </p>
                 </div>
@@ -162,6 +162,9 @@
                     </div>
 
                     <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-outline-secondary me-2" id="btnCancelarEdicion" hidden>
+                            Cancelar edición
+                        </button>
                         <button type="submit" class="btn btn-primary px-4" id="btnAdminAgregarProducto">
                             + Agregar producto
                         </button>
