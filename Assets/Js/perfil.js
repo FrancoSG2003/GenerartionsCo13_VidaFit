@@ -1,29 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Obtener la sesión activa
+    // Configuración de endpoints mapeados a DireccionController y UsuarioController
+    const BASE_URL = "https://backend-vidafit.onrender.com/api";
+    const ENDPOINTS = {
+        DIRECCIONES_USUARIO: (usuarioId) => `${BASE_URL}/direcciones/usuario/${usuarioId}`,
+        DIRECCIONES: `${BASE_URL}/direcciones`,
+        DIRECCION_POR_ID: (id) => `${BASE_URL}/direcciones/${id}`,
+        USUARIO_POR_ID: (id) => `${BASE_URL}/usuarios/${id}`
+    };
+
+    // Obtención de la sesión del usuario en LocalStorage (Solo para identificación)
     const usuarioSesion = JSON.parse(localStorage.getItem("usuarioSesionActiva"));
 
-    // Redirigir si no hay sesión activa
-    if (!usuarioSesion) {
+    if (!usuarioSesion || !usuarioSesion.id) {
         window.location.href = "Login.html";
         return;
-    }
-
-    // Inicializar array de direcciones si no existe en la sesión
-    if (!usuarioSesion.direcciones) {
-        usuarioSesion.direcciones = [];
-        // Si tenía una dirección en el formato antiguo, se migra al nuevo formato
-        if (usuarioSesion.direccion && usuarioSesion.direccion.calle) {
-            usuarioSesion.direcciones.push({
-                id: Date.now(),
-                etiqueta: "Principal",
-                calle: usuarioSesion.direccion.calle,
-                ciudad: usuarioSesion.direccion.ciudad,
-                codigoPostal: usuarioSesion.direccion.codigoPostal,
-                notas: usuarioSesion.direccion.notas,
-                predeterminada: true
-            });
-            delete usuarioSesion.direccion;
-        }
     }
 
     // Modal Instance
@@ -42,16 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Elementos DOM - Formulario Dirección Modal
     const formDireccion = document.getElementById("perfilDireccionForm");
     const inputId = document.getElementById("direccionId");
-    const inputEtiqueta = document.getElementById("direccionEtiqueta");
-    const inputCalle = document.getElementById("direccionCalle");
+    const inputDireccionExacta = document.getElementById("direccionCalle");
+    const inputBarrio = document.getElementById("direccionEtiqueta");
+    const inputComuna = document.getElementById("direccionNotas");
     const inputCiudad = document.getElementById("direccionCiudad");
-    const inputCodigoPostal = document.getElementById("direccionCodigoPostal");
-    const inputNotas = document.getElementById("direccionNotas");
-    const checkPredeterminada = document.getElementById("direccionPredeterminada");
+    const inputDepartamento = document.getElementById("direccionCodigoPostal");
+
     const btnNuevaDireccion = document.getElementById("btnNuevaDireccion");
     const contenedorDirecciones = document.getElementById("listaDirecciones");
 
-    // Cargar datos en el perfil
+    // Arreglo local en memoria sólo para pintado dinámico de UI
+    let direccionesUsuario = [];
+
     function cargarDatosPerfil() {
         sidebarNombre.textContent = `${usuarioSesion.nombre || ''} ${usuarioSesion.apellido || ''}`.trim() || "Usuario";
         sidebarEmail.textContent = usuarioSesion.email || "";
@@ -61,44 +53,49 @@ document.addEventListener("DOMContentLoaded", () => {
         inputEmail.value = usuarioSesion.email || "";
         inputTelefono.value = usuarioSesion.telefono || "";
 
-        renderizarDirecciones();
+        obtenerDireccionesBackend();
     }
 
-    // Guardar en LocalStorage y Sincronizar
-    function guardarEnStorage(usuarioActualizado) {
-        localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioActualizado));
+    // Consume @GetMapping("/usuario/{usuarioId}")
+    async function obtenerDireccionesBackend() {
+        try {
+            const response = await fetch(ENDPOINTS.DIRECCIONES_USUARIO(usuarioSesion.id));
+            if (!response.ok) throw new Error("Error al obtener las direcciones.");
 
-        const listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-        const index = listaUsuarios.findIndex(u => u.email === usuarioActualizado.email);
-
-        if (index !== -1) {
-            listaUsuarios[index] = { ...listaUsuarios[index], ...usuarioActualizado };
-            localStorage.setItem("usuarios", JSON.stringify(listaUsuarios));
+            direccionesUsuario = await response.json();
+            renderizarDirecciones();
+        } catch (error) {
+            console.error("Error al obtener direcciones:", error);
+            if (contenedorDirecciones) {
+                contenedorDirecciones.innerHTML = `
+                    <div class="col-12 text-center py-4">
+                        <p class="text-danger">No se pudieron cargar las direcciones desde el servidor.</p>
+                    </div>`;
+            }
         }
     }
 
-    // Renderizar tarjetas de direcciones en la UI
     function renderizarDirecciones() {
         if (!contenedorDirecciones) return;
         contenedorDirecciones.innerHTML = "";
 
-        if (usuarioSesion.direcciones.length === 0) {
+        if (direccionesUsuario.length === 0) {
             contenedorDirecciones.innerHTML = `
                 <div class="col-12 text-center py-5">
                     <i class="bi bi-geo-alt text-muted fs-1"></i>
-                    <p class="text-muted mt-2 mb-0">No tienes direcciones guardadas.</p>
+                    <p class="text-muted mt-2 mb-0">No tienes direcciones guardadas en la base de datos.</p>
                 </div>`;
             return;
         }
 
-        usuarioSesion.direcciones.forEach(dir => {
+        direccionesUsuario.forEach(dir => {
             const col = document.createElement("div");
             col.className = "col-md-6";
             col.innerHTML = `
-                <div class="card h-100 border rounded-4 p-3 shadow-sm position-relative ${dir.predeterminada ? 'border-dark bg-light' : ''}">
+                <div class="card h-100 border rounded-4 p-3 shadow-sm position-relative">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="badge ${dir.predeterminada ? 'bg-dark' : 'bg-secondary'} rounded-pill">
-                            ${dir.etiqueta || 'Dirección'} ${dir.predeterminada ? '(Predeterminada)' : ''}
+                        <span class="badge bg-dark rounded-pill">
+                            ${dir.barrio ? 'Barrio: ' + dir.barrio : 'Dirección'}
                         </span>
                         <div>
                             <button class="btn btn-sm btn-link text-dark p-0 me-2 btn-editar" data-id="${dir.id}">
@@ -109,15 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             </button>
                         </div>
                     </div>
-                    <p class="fw-bold mb-1">${dir.calle}</p>
-                    <p class="text-muted small mb-1"><i class="bi bi-building me-1"></i>${dir.ciudad} ${dir.codigoPostal ? '- ' + dir.codigoPostal : ''}</p>
-                    ${dir.notas ? `<p class="text-muted small mb-2"><i class="bi bi-info-circle me-1"></i>${dir.notas}</p>` : ''}
-                    
-                    ${!dir.predeterminada ? `
-                        <button class="btn btn-sm btn-outline-dark rounded-pill mt-auto align-self-start btn-marcar-predeterminada" data-id="${dir.id}">
-                            Marcar como predeterminada
-                        </button>
-                    ` : ''}
+                    <p class="fw-bold mb-1">${dir.direccionExacta || ''}</p>
+                    <p class="text-muted small mb-1">
+                        <i class="bi bi-building me-1"></i>${dir.ciudad || ''} ${dir.departamento ? '- ' + dir.departamento : ''}
+                    </p>
+                    ${dir.comuna ? `<p class="text-muted small mb-0"><i class="bi bi-geo me-1"></i>Comuna/Sector: ${dir.comuna}</p>` : ''}
                 </div>
             `;
             contenedorDirecciones.appendChild(col);
@@ -126,145 +119,153 @@ document.addEventListener("DOMContentLoaded", () => {
         asignarEventosDirecciones();
     }
 
-    // Eventos Editar, Eliminar y Seleccionar Predeterminada
     function asignarEventosDirecciones() {
         document.querySelectorAll(".btn-editar").forEach(btn => {
             btn.addEventListener("click", () => abrirModalEditar(Number(btn.dataset.id)));
         });
 
         document.querySelectorAll(".btn-eliminar").forEach(btn => {
-            btn.addEventListener("click", () => eliminarDireccion(Number(btn.dataset.id)));
-        });
-
-        document.querySelectorAll(".btn-marcar-predeterminada").forEach(btn => {
-            btn.addEventListener("click", () => marcarPredeterminada(Number(btn.dataset.id)));
+            btn.addEventListener("click", () => eliminarDireccionBackend(Number(btn.dataset.id)));
         });
     }
 
-    // Limpiar modal y abrir
     btnNuevaDireccion?.addEventListener("click", () => {
         formDireccion.reset();
         inputId.value = "";
         document.getElementById("modalDireccionLabel").textContent = "Agregar Dirección";
-        checkPredeterminada.checked = usuarioSesion.direcciones.length === 0;
         modalDireccion.show();
     });
 
-    // Abrir Modal con datos para editar
     function abrirModalEditar(id) {
-        const dir = usuarioSesion.direcciones.find(d => d.id === id);
+        const dir = direccionesUsuario.find(d => d.id === id);
         if (!dir) return;
 
         inputId.value = dir.id;
-        inputEtiqueta.value = dir.etiqueta || "";
-        inputCalle.value = dir.calle || "";
+        inputDireccionExacta.value = dir.direccionExacta || "";
+        inputBarrio.value = dir.barrio || "";
+        inputComuna.value = dir.comuna || "";
         inputCiudad.value = dir.ciudad || "";
-        inputCodigoPostal.value = dir.codigoPostal || "";
-        inputNotas.value = dir.notas || "";
-        checkPredeterminada.checked = !!dir.predeterminada;
+        inputDepartamento.value = dir.departamento || "";
 
         document.getElementById("modalDireccionLabel").textContent = "Editar Dirección";
         modalDireccion.show();
     }
 
-    // Guardar (Agregar / Editar) Dirección desde Modal
-    formDireccion?.addEventListener("submit", (e) => {
+    // Consume @PostMapping y @PutMapping("/{id}")
+    formDireccion?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const id = inputId.value ? Number(inputId.value) : Date.now();
-        const esPredeterminada = checkPredeterminada.checked;
+        const id = inputId.value ? Number(inputId.value) : null;
 
-        if (esPredeterminada) {
-            usuarioSesion.direcciones.forEach(d => d.predeterminada = false);
-        }
-
-        const nuevaDireccion = {
-            id: id,
-            etiqueta: inputEtiqueta.value.trim(),
-            calle: inputCalle.value.trim(),
+        const payload = {
+            userId: usuarioSesion.id,
+            direccionExacta: inputDireccionExacta.value.trim(),
+            barrio: inputBarrio.value.trim(),
+            comuna: inputComuna.value.trim(),
             ciudad: inputCiudad.value.trim(),
-            codigoPostal: inputCodigoPostal.value.trim(),
-            notas: inputNotas.value.trim(),
-            predeterminada: esPredeterminada || usuarioSesion.direcciones.length === 0
+            departamento: inputDepartamento.value.trim()
         };
 
-        const index = usuarioSesion.direcciones.findIndex(d => d.id === id);
-        if (index !== -1) {
-            usuarioSesion.direcciones[index] = nuevaDireccion;
-        } else {
-            usuarioSesion.direcciones.push(nuevaDireccion);
+        const url = id ? ENDPOINTS.DIRECCION_POR_ID(id) : ENDPOINTS.DIRECCIONES;
+        const method = id ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error("Error al guardar en el servidor.");
+
+            modalDireccion.hide();
+            await obtenerDireccionesBackend();
+
+            Swal.fire({
+                icon: 'success',
+                title: id ? '¡Dirección actualizada!' : '¡Dirección guardada!',
+                timer: 1500,
+                showConfirmButton: false
+            });
+
+        } catch (error) {
+            console.error("Error al guardar la dirección:", error);
+            Swal.fire("Error", "No se pudo persitir la dirección en la base de datos.", "error");
         }
-
-        guardarEnStorage(usuarioSesion);
-        modalDireccion.hide();
-        renderizarDirecciones();
-
-        Swal.fire({
-            icon: 'success',
-            title: '¡Dirección guardada!',
-            timer: 1500,
-            showConfirmButton: false
-        });
     });
 
-    // Marcar como predeterminada
-    function marcarPredeterminada(id) {
-        usuarioSesion.direcciones.forEach(d => {
-            d.predeterminada = (d.id === id);
-        });
-        guardarEnStorage(usuarioSesion);
-        renderizarDirecciones();
-    }
-
-    // Eliminar Dirección
-    function eliminarDireccion(id) {
+    // Consume @DeleteMapping("/{id}")
+    function eliminarDireccionBackend(id) {
         Swal.fire({
             title: '¿Eliminar dirección?',
-            text: 'Esta acción no se puede deshacer',
+            text: 'Esta acción borrará el registro de la base de datos.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar',
             confirmButtonColor: '#d33'
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                usuarioSesion.direcciones = usuarioSesion.direcciones.filter(d => d.id !== id);
+                try {
+                    const response = await fetch(ENDPOINTS.DIRECCION_POR_ID(id), {
+                        method: "DELETE"
+                    });
 
-                // Si se eliminó la predeterminada y quedan direcciones, hacer la primera la predeterminada
-                if (usuarioSesion.direcciones.length > 0 && !usuarioSesion.direcciones.some(d => d.predeterminada)) {
-                    usuarioSesion.direcciones[0].predeterminada = true;
+                    if (!response.ok) {
+                        throw new Error("No se puede eliminar la dirección porque está asociada a un pedido activo.");
+                    }
+
+                    await obtenerDireccionesBackend();
+                    Swal.fire('Eliminada', 'La dirección fue eliminada con éxito.', 'success');
+
+                } catch (error) {
+                    console.error("Error al eliminar la dirección:", error);
+                    Swal.fire("Error", error.message || "No se pudo eliminar la dirección.", "error");
                 }
-
-                guardarEnStorage(usuarioSesion);
-                renderizarDirecciones();
-
-                Swal.fire('Eliminada', 'La dirección ha sido eliminada.', 'success');
             }
         });
     }
 
-    // Guardar Información Personal
-    document.getElementById("perfilDatosForm")?.addEventListener("submit", (e) => {
+    // Actualizar datos del usuario
+    document.getElementById("perfilDatosForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        usuarioSesion.nombre = inputNombre.value.trim();
-        usuarioSesion.apellido = inputApellido.value.trim();
-        usuarioSesion.telefono = inputTelefono.value.trim();
+        const nombreCompleto = `${inputNombre.value.trim()} ${inputApellido.value.trim()}`.trim();
 
-        if (inputPassword.value.trim() !== "") {
-            usuarioSesion.password = inputPassword.value.trim();
+        const payloadUsuario = {
+            nombre: nombreCompleto,
+            correo: inputEmail.value.trim(),
+            contrasena: inputPassword.value.trim() !== "" ? inputPassword.value.trim() : null
+        };
+
+        try {
+            const response = await fetch(ENDPOINTS.USUARIO_POR_ID(usuarioSesion.id), {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payloadUsuario)
+            });
+
+            if (!response.ok) throw new Error("Error al actualizar la información personal.");
+
+            const usuarioActualizado = await response.json();
+
+            usuarioSesion.nombre = inputNombre.value.trim();
+            usuarioSesion.apellido = inputApellido.value.trim();
+            usuarioSesion.email = usuarioActualizado.correo || usuarioSesion.email;
+            localStorage.setItem("usuarioSesionActiva", JSON.stringify(usuarioSesion));
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Datos actualizados!',
+                text: 'La información del usuario se actualizó correctamente.',
+                confirmButtonColor: '#22C55E'
+            }).then(() => location.reload());
+
+        } catch (error) {
+            console.error("Error al actualizar datos personales:", error);
+            Swal.fire("Error", "No se pudieron actualizar los datos del usuario.", "error");
         }
-
-        guardarEnStorage(usuarioSesion);
-
-        Swal.fire({
-            icon: 'success',
-            title: '¡Datos actualizados!',
-            text: 'Tu información personal se ha guardado correctamente.',
-            confirmButtonColor: '#22C55E'
-        }).then(() => location.reload());
     });
 
-    // Inicializar
     cargarDatosPerfil();
 });
