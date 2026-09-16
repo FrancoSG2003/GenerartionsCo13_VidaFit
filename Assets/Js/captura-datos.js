@@ -1,4 +1,8 @@
-let listaProductos = JSON.parse(localStorage.getItem("productos")) || [];
+let listaProductos = [];
+let listaCategorias = [];
+
+const API_PRODUCTOS = 'https://backend-vidafit.onrender.com/api/productos';
+const API_CATEGORIAS = 'https://backend-vidafit.onrender.com/api/categorias';
 
 const formProducto = document.getElementById('form-producto');
 const contenedorProductos = document.getElementById('contenedor-productos');
@@ -19,18 +23,67 @@ window.handleImageError = function (img) {
     img.src = IMAGEN_FALLBACK;
 };
 
-formProducto.addEventListener('submit', function (event) {
+
+async function cargarCategorias() {
+    try {
+        const respuesta = await fetch(API_CATEGORIAS);
+
+        if (!respuesta.ok) {
+            throw new Error('Error al obtener las categorías');
+        }
+
+        listaCategorias = await respuesta.json();
+        console.log('Categorías cargadas:', listaCategorias);
+
+        const selectCategoria = document.getElementById('categoria');
+
+        listaCategorias.forEach(categoria => {
+            const opcion = document.createElement('option');
+
+            opcion.value = categoria.id;
+            opcion.textContent = categoria.nombre;
+
+            selectCategoria.appendChild(opcion);
+        });
+
+    } catch (error) {
+        console.error('Error al cargar categorías:', error);
+    }
+}
+
+
+async function cargarProductos() {
+    try {
+        const respuesta = await fetch(API_PRODUCTOS);
+
+        if (!respuesta.ok) {
+            throw new Error('Error al obtener los productos');
+        }
+
+        listaProductos = await respuesta.json();
+
+        console.log('Productos cargados:', listaProductos);
+
+        actualizarInterfaz();
+
+    } catch (error) {
+        console.error('Error al cargar productos:', error);
+    }
+}
+
+
+formProducto.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const nombre = document.getElementById('nombre').value.trim();
-    const categoria = document.getElementById('categoria').value.trim();
+    const categoriaId = parseInt(document.getElementById('categoria').value, 10);
     const precio = parseFloat(document.getElementById('precio').value.trim());
     const stock = parseInt(document.getElementById('stock').value.trim(), 10);
     const imagen = document.getElementById('imagen').value.trim();
     const descripcion = document.getElementById('descripcion').value.trim();
 
 
-    if (!nombre || !categoria || !descripcion || !imagen || isNaN(precio) || isNaN(stock) || precio <= 0 || stock <= 0) {
+    if (!nombre || isNaN(categoriaId) || !descripcion || !imagen || isNaN(precio) || isNaN(stock) || precio <= 0 || stock <= 0) {
         Swal.fire({
             icon: 'warning',
             title: 'Datos inválidos',
@@ -43,9 +96,8 @@ formProducto.addEventListener('submit', function (event) {
     const esEdicion = productoEnEdicionId !== null;
 
     const nuevoProducto = {
-        id: esEdicion ? productoEnEdicionId : Date.now(),
         nombre: nombre,
-        categoria: categoria,
+        categoriaId: categoriaId,
         precio: precio,
         stock: stock,
         imagen: imagen,
@@ -53,31 +105,72 @@ formProducto.addEventListener('submit', function (event) {
     };
 
     if (esEdicion) {
+
+        const respuesta = await fetch(`${API_PRODUCTOS}/${productoEnEdicionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevoProducto)
+        });
+
+        if (!respuesta.ok) {
+            console.error('Error al actualizar producto:', respuesta.status);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo actualizar el producto.',
+                confirmButtonColor: '#212529'
+            });
+
+            return;
+        }
+
+        const productoActualizado = await respuesta.json();
+
+        console.log('Producto actualizado:', productoActualizado);
+
         const indiceProducto = listaProductos.findIndex(
             producto => producto.id === productoEnEdicionId
         );
 
-        if (indiceProducto === -1) {
+        if (indiceProducto !== -1) {
+            listaProductos[indiceProducto] = productoActualizado;
+        }
+    }   else {
+
+        console.log("Producto que voy a enviar:", nuevoProducto);
+
+         // CREAR PRODUCTO EN EL BACKEND
+        const respuesta = await fetch(API_PRODUCTOS, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevoProducto)
+        });
+
+        if (!respuesta.ok) {
+            console.error('Error al crear producto:', respuesta.status);
+
             Swal.fire({
-                icon: 'warning',
-                title: 'Producto no encontrado',
-                text: 'El producto que intentas editar ya no está disponible.',
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo crear el producto en la base de datos.',
                 confirmButtonColor: '#212529'
             });
-            restablecerFormulario();
+
             return;
         }
 
-        // Conserva las propiedades existentes y actualiza los campos del formulario.
-        listaProductos[indiceProducto] = {
-            ...listaProductos[indiceProducto],
-            ...nuevoProducto
-        };
-    } else {
-        listaProductos.push(nuevoProducto);
+        const productoCreado = await respuesta.json();
+
+        console.log('Producto creado:', productoCreado);
+
+        listaProductos.push(productoCreado);
     }
 
-    guardarProducto();
     actualizarInterfaz();
     restablecerFormulario();
 
@@ -112,7 +205,7 @@ window.editarProducto = function (id) {
     productoEnEdicionId = producto.id;
 
     document.getElementById('nombre').value = producto.nombre;
-    document.getElementById('categoria').value = producto.categoria;
+    document.getElementById('categoria').value = producto.categoriaId;
     document.getElementById('precio').value = producto.precio;
     document.getElementById('stock').value = producto.stock;
     document.getElementById('imagen').value = producto.imagen;
@@ -132,9 +225,6 @@ function actualizarInterfaz() {
     imprimirJsonConsola();
 }
 
-function guardarProducto() {
-    localStorage.setItem("productos", JSON.stringify(listaProductos))
-}
 
 function renderizarProductos() {
     contenedorProductos.innerHTML = '';
@@ -156,7 +246,9 @@ function renderizarProductos() {
             <div class="card h-100 border-0 shadow-sm">
                 <img src="${producto.imagen}" class="card-img-top object-fit-cover" alt="${producto.nombre}" style="height: 200px;" onerror="handleImageError(this)">
                 <div class="card-body d-flex flex-column">
-                    <span class="badge text-bg-secondary w-auto align-self-start mb-2">${producto.categoria}</span>
+                    <span class="badge text-bg-secondary w-auto align-self-start mb-2">
+                        ${listaCategorias.find(categoria => categoria.id === producto.categoriaId)?.nombre || 'Sin categoría'}
+                    </span>
                     <h5 class="card-title fw-bold">${producto.nombre}</h5>
                     <p class="card-text text-secondary small flex-grow-1">${producto.descripcion}</p>
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -182,15 +274,80 @@ function actualizarContador() {
     contadorProductos.textContent = `${total} Producto${total === 1 ? '' : 's'}`;
 }
 
-window.eliminarProducto = function (id) {
-    listaProductos = listaProductos.filter(producto => producto.id !== id);
+window.eliminarProducto = async function (id) {
 
-    if (productoEnEdicionId === id) {
-        restablecerFormulario();
+    const producto = listaProductos.find(producto => producto.id === id);
+
+    if (!producto) {
+        return;
     }
 
-    guardarProducto();
-    actualizarInterfaz();
+    const confirmacion = await Swal.fire({
+        icon: 'warning',
+        title: '¿Eliminar producto?',
+        text: `¿Estás seguro de eliminar "${producto.nombre}"?`,
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#212529'
+    });
+
+    if (!confirmacion.isConfirmed) {
+        return;
+    }
+
+    try {
+
+        const respuesta = await fetch(`${API_PRODUCTOS}/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (!respuesta.ok) {
+
+            if (respuesta.status === 409) {
+                throw new Error(
+                    'No se puede eliminar el producto porque está asociado a pedidos existentes.'
+                );
+            }
+
+            if (respuesta.status === 404) {
+                throw new Error(
+                    'El producto no existe o ya fue eliminado.'
+                );
+            }
+
+            throw new Error('No se pudo eliminar el producto.');
+        }
+
+        listaProductos = listaProductos.filter(
+            producto => producto.id !== id
+        );
+
+        if (productoEnEdicionId === id) {
+            restablecerFormulario();
+        }
+
+        actualizarInterfaz();
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Producto eliminado',
+            text: 'El producto ha sido eliminado exitosamente.',
+            confirmButtonColor: '#212529'
+        });
+
+    } catch (error) {
+
+        console.error('Error al eliminar producto:', error);
+
+        Swal.fire({
+            icon: 'error',
+            title: 'No se pudo eliminar',
+            text: error.message,
+            confirmButtonColor: '#212529'
+        });
+    }
 };
 
 function imprimirJsonConsola() {
@@ -199,3 +356,5 @@ function imprimirJsonConsola() {
 }
 
 actualizarInterfaz();
+cargarCategorias();
+cargarProductos();

@@ -41,12 +41,13 @@ document.addEventListener(
                 'boton-lista'
             );
 
-        const columnasProductos =
-            Array.from(
-                document.querySelectorAll(
-                    '.producto-columna'
-                )
+        let columnasProductos = [];
+
+        function cargarColumnasProductos() {
+            columnasProductos = Array.from(
+                document.querySelectorAll('.producto-columna')
             );
+        }
 
         const filtrosCategoria =
             Array.from(
@@ -494,6 +495,14 @@ document.addEventListener(
             }
         );
 
-        actualizarCatalogo();
+        document.addEventListener(
+            'productosCatalogoCargados',
+            function () {
+
+                cargarColumnasProductos();
+
+                actualizarCatalogo();
+            }
+        );
     }
 );
