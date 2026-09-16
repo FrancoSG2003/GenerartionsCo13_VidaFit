@@ -4,179 +4,762 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Panel de Administración | VidaFit</title>
-    <link rel="icon" type="image/png" href="Assets/img/VidaFit_Logo_head-removebg-preview.png">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Estilos de Administración -->
-    <link rel="stylesheet" href="../Assets/Css/Admin.css">
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="Assets/img/VidaFit_Logo_head-removebg-preview.png"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Reconoce el rol del login existente y el rol ADMIN del backend. -->
+    <script>
+        (() => {
+            let usuario = {};
+
+            try {
+                usuario = JSON.parse(
+                    localStorage.getItem("usuarioSesionActiva") || "{}"
+                ) || {};
+            } catch {
+                usuario = {};
+            }
+
+            const roles = [
+                localStorage.getItem("userRole"),
+                usuario.rol,
+                ...(Array.isArray(usuario.roles) ? usuario.roles : [])
+            ];
+
+            window.VidaFitEsAdmin = roles.some(rol => {
+                const nombre = typeof rol === "string"
+                    ? rol
+                    : rol?.nombre || rol?.authority || "";
+
+                return ["ADMIN", "ROLE_ADMIN"].includes(
+                    String(nombre).trim().toUpperCase()
+                );
+            });
+
+            if (!window.VidaFitEsAdmin) {
+                window.location.replace("Login.html");
+            }
+        })();
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            color: #172338;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .vf-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .vf-sidebar {
+            width: 240px;
+            min-width: 240px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .vf-main {
+            flex: 1;
+            min-width: 0;
+            padding: 28px;
+        }
+
+        .vf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dfe5ee;
+        }
+
+        .vf-header h1 {
+            margin: 0 0 5px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .vf-header p,
+        .vf-description {
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        .vf-filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 14px;
+            padding: 20px;
+            margin-bottom: 14px;
+            border: 1px solid #e1e7ef;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .vf-filter {
+            min-width: 0;
+        }
+
+        .vf-filter label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .vf-period {
+            margin-bottom: 20px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .vf-cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .vf-cards-secondary {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .vf-card,
+        .vf-panel {
+            padding: 20px;
+            border: 1px solid #e1e7ef;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 16px rgba(32, 53, 85, 0.03);
+        }
+
+        .vf-card-label {
+            display: block;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .vf-value {
+            display: block;
+            margin: 8px 0;
+            font-size: clamp(19px, 1.8vw, 27px);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .vf-card small {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .vf-panel {
+            min-width: 0;
+            margin-bottom: 20px;
+        }
+
+        .vf-panel h2 {
+            margin-bottom: 6px;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .vf-description {
+            margin-bottom: 18px;
+            font-size: 13px;
+        }
+
+        .vf-columns {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 20px;
+        }
+
+        .vf-ranking-row {
+            display: grid;
+            grid-template-columns: 24px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 0;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .vf-ranking-row:last-child {
+            border-bottom: 0;
+        }
+
+        .vf-ranking-row strong,
+        .vf-ranking-income {
+            font-size: 13px;
+        }
+
+        .vf-ranking-row small,
+        .vf-position {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .vf-ranking-income {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .vf-bar-track {
+            height: 7px;
+            margin-top: 8px;
+            border-radius: 8px;
+            background: #edf2fa;
+            overflow: hidden;
+        }
+
+        .vf-bar {
+            height: 100%;
+            border-radius: 8px;
+            background: #2563eb;
+        }
+
+        .vf-donut {
+            display: grid;
+            place-items: center;
+            width: 180px;
+            height: 180px;
+            margin: 20px auto;
+            border-radius: 50%;
+        }
+
+        .vf-donut-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 132px;
+            height: 132px;
+            border-radius: 50%;
+            background: white;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .vf-donut-center strong {
+            color: #172338;
+            font-size: 23px;
+        }
+
+        .vf-category {
+            display: grid;
+            grid-template-columns: 10px minmax(0, 1fr) auto auto;
+            align-items: center;
+            gap: 8px;
+            margin: 13px 0;
+            font-size: 12px;
+        }
+
+        .vf-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        .vf-chart-container {
+            overflow-x: auto;
+        }
+
+        .vf-chart {
+            display: block;
+            width: 100%;
+            min-width: 500px;
+            height: auto;
+        }
+
+        .vf-chart text {
+            fill: #64748b;
+            font-size: 12px;
+            font-family: system-ui, sans-serif;
+        }
+
+        .vf-empty {
+            padding: 25px 10px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .vf-note {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .vf-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 5px;
+            background: #edf2f7;
+            font-size: 11px;
+        }
+
+        .vf-status.ENTREGADO {
+            background: #e6f7ee;
+            color: #187446;
+        }
+
+        .vf-status.CREADO,
+        .vf-status.RECIBIDO,
+        .vf-status.EN_PROCESO,
+        .vf-status.EN_CAMINO {
+            background: #fff4d9;
+            color: #805d09;
+        }
+
+        th,
+        td {
+            padding: 12px !important;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        summary {
+            margin-top: 15px;
+            color: #2563eb;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 1100px) {
+            .vf-cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .vf-cards-secondary {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .vf-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .vf-layout {
+                flex-direction: column;
+            }
+
+            .vf-sidebar {
+                position: static;
+                width: 100%;
+                min-width: 0;
+                height: auto;
+            }
+
+            .vf-sidebar .nav {
+                flex-direction: row !important;
+                flex-wrap: wrap;
+            }
+
+            .vf-sidebar .nav-link {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .vf-logout {
+                margin-top: 16px;
+            }
+
+            .vf-main {
+                padding: 16px;
+            }
+
+            .vf-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .vf-header h1 {
+                font-size: 25px;
+            }
+
+            .vf-cards,
+            .vf-cards-secondary {
+                grid-template-columns: 1fr;
+            }
+
+            .vf-filter {
+                flex: 1 1 140px;
+            }
+
+            .vf-filter input,
+            .vf-filter select {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .vf-panel {
+                padding: 16px;
+            }
+
+            .vf-category {
+                gap: 6px;
+                font-size: 11px;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
+    <div class="vf-layout">
 
-    <div class="d-flex min-vh-100">
-        <!-- Sidebar Navigation -->
-        <aside class="bg-dark text-white p-3 d-flex flex-column justify-content-between style-sidebar" style="width: 280px; min-height: 100vh;">
+        <aside
+            class="vf-sidebar bg-dark text-white p-3
+                   d-flex flex-column justify-content-between"
+        >
             <div>
-                <!-- Brand / User Info -->
-                <div class="d-flex align-items-center gap-3 pb-3 mb-3 border-bottom border-secondary">
+                <div
+                    class="d-flex align-items-center gap-3
+                           pb-3 mb-3 border-bottom border-secondary"
+                >
                     <i class="bi bi-person-circle fs-2 text-primary"></i>
+
                     <div>
                         <h6 class="mb-0 fw-bold">Panel Admin</h6>
-                        <small class="text-white-50" id="lblUsuarioRol">Administrador</small>
+                        <small id="lblUsuarioRol" class="text-white-50">
+                            Administrador
+                        </small>
                     </div>
                 </div>
 
-                <!-- Navigation Links -->
-                <ul class="nav nav-pills flex-column mb-auto gap-2">
-                    <li class="nav-item">
-                        <a href="adminIndex.html" class="nav-link active text-white" aria-current="page">
-                            <i class="bi bi-speedometer2 me-2"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="dashboardAdmin.html" class="nav-link text-white-50">
-                            <i class="bi bi-box-seam me-2"></i> Productos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="categorias.html" class="nav-link text-white-50">
-                            <i class="bi bi-tags me-2"></i> Categorías
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pedidos.html" class="nav-link text-white-50">
-                            <i class="bi bi-cart-check me-2"></i> Pedidos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="usuarios.html" class="nav-link text-white-50">
-                            <i class="bi bi-people me-2"></i> Usuarios
-                        </a>
-                    </li>
-                </ul>
+                <nav aria-label="Menú de administración">
+                    <ul class="nav nav-pills flex-column gap-2">
+                        <li class="nav-item">
+                            <a
+                                href="adminIndex.html"
+                                class="nav-link active text-white"
+                                aria-current="page"
+                            >
+                                <i class="bi bi-speedometer2 me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="dashboardAdmin.html" class="nav-link text-white-50">
+                                <i class="bi bi-box-seam me-2"></i>
+                                Productos
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="categorias.html" class="nav-link text-white-50">
+                                <i class="bi bi-tags me-2"></i>
+                                Categorías
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="pedidos.html" class="nav-link text-white-50">
+                                <i class="bi bi-cart-check me-2"></i>
+                                Pedidos
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="usuarios.html" class="nav-link text-white-50">
+                                <i class="bi bi-people me-2"></i>
+                                Usuarios
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
-            <!-- Logout Section -->
-            <div class="pt-3 border-top border-secondary">
-                <button type="button" class="btn btn-outline-danger w-100 text-start" id="btnCerrarSesionAdmin">
-                    <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+            <div class="vf-logout pt-3 border-top border-secondary">
+                <button
+                    type="button"
+                    id="btnCerrarSesionAdmin"
+                    class="btn btn-outline-danger w-100 text-start"
+                >
+                    <i class="bi bi-box-arrow-right me-2"></i>
+                    Cerrar sesión
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="flex-grow-1 p-4">
-            <header class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <main class="vf-main">
+            <header class="vf-header">
                 <div>
-                    <h1 class="h3 fw-bold mb-0">Resumen de Métricas</h1>
-                    <p class="text-muted mb-0">Bienvenido al panel de control de VidaFit.</p>
+                    <h1>Resumen de Métricas</h1>
+                    <p>Bienvenido al panel de control de VidaFit.</p>
                 </div>
-                <a href="index.html" class="btn btn-outline-secondary btn-sm" target="_blank">
-                    <i class="bi bi-shop me-1"></i> Ver Tienda
+
+                <a
+                    href="index.html"
+                    class="btn btn-outline-secondary btn-sm"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <i class="bi bi-shop me-1"></i>
+                    Ver Tienda
                 </a>
             </header>
 
-            <!-- Metric Cards Row -->
-            <div class="row g-4 mb-4">
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card border-0 shadow-sm p-3">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <span class="text-muted small fw-semibold">Ventas Totales</span>
-                                <h3 class="fw-bold my-1">$0.00</h3>
-                                <span class="text-success small"><i class="bi bi-graph-up"></i> +0% este mes</span>
-                            </div>
-                            <div class="bg-primary-subtle text-primary p-3 rounded">
-                                <i class="bi bi-currency-dollar fs-3"></i>
-                            </div>
-                        </div>
-                    </div>
+            <p id="estadoConexion" class="vf-note" aria-live="polite">
+                Conectando con el backend de VidaFit…
+            </p>
+
+            <p id="mensajeCarga" role="status">
+                Consultando pedidos, productos y categorías…
+            </p>
+
+            <p
+                id="mensajeError"
+                class="alert alert-danger"
+                role="alert"
+                hidden
+            ></p>
+
+            <form id="formularioFiltros" class="vf-filters">
+                <div class="vf-filter">
+                    <label for="selectorPeriodo">Período</label>
+                    <select id="selectorPeriodo" class="form-select" disabled>
+                        <option value="30">Últimos 30 días</option>
+                        <option value="7">Últimos 7 días</option>
+                        <option value="90">Últimos 90 días</option>
+                        <option value="todo">Todo el historial</option>
+                        <option value="personalizado">Personalizado</option>
+                    </select>
                 </div>
 
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card border-0 shadow-sm p-3">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <span class="text-muted small fw-semibold">Pedidos Nuevos</span>
-                                <h3 class="fw-bold my-1">0</h3>
-                                <span class="text-muted small">Pendientes por procesar</span>
-                            </div>
-                            <div class="bg-warning-subtle text-warning p-3 rounded">
-                                <i class="bi bi-bag-check fs-3"></i>
-                            </div>
-                        </div>
-                    </div>
+                <div class="vf-filter">
+                    <label for="fechaDesde">Desde</label>
+                    <input
+                        id="fechaDesde"
+                        type="date"
+                        class="form-control"
+                        required
+                        disabled
+                    >
                 </div>
 
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card border-0 shadow-sm p-3">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <span class="text-muted small fw-semibold">Productos Activos</span>
-                                <h3 class="fw-bold my-1">0</h3>
-                                <span class="text-muted small">En catálogo</span>
-                            </div>
-                            <div class="bg-info-subtle text-info p-3 rounded">
-                                <i class="bi bi-box-seam fs-3"></i>
-                            </div>
-                        </div>
-                    </div>
+                <div class="vf-filter">
+                    <label for="fechaHasta">Hasta</label>
+                    <input
+                        id="fechaHasta"
+                        type="date"
+                        class="form-control"
+                        required
+                        disabled
+                    >
                 </div>
 
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card border-0 shadow-sm p-3">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <span class="text-muted small fw-semibold">Clientes Registrados</span>
-                                <h3 class="fw-bold my-1">0</h3>
-                                <span class="text-muted small">Usuarios activos</span>
-                            </div>
-                            <div class="bg-success-subtle text-success p-3 rounded">
-                                <i class="bi bi-people fs-3"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <button type="submit" class="btn btn-primary" disabled>
+                    Aplicar filtro
+                </button>
 
-            <!-- Recent Activity Table Placeholder -->
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white py-3">
-                    <h5 class="card-title fw-bold mb-0">Últimos Pedidos</h5>
+                <button
+                    id="btnReporte"
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    disabled
+                >
+                    <i class="bi bi-download me-1"></i>
+                    Descargar reporte
+                </button>
+            </form>
+
+            <div id="resultados" hidden>
+                <p
+                    id="periodoActual"
+                    class="vf-period"
+                    aria-live="polite"
+                ></p>
+
+                <section class="vf-cards" aria-label="Resumen general">
+                    <article class="vf-card">
+                        <span class="vf-card-label">
+                            <i class="bi bi-currency-dollar me-1"></i>
+                            Ingresos por pedidos entregados
+                        </span>
+                        <strong id="ventasTotales" class="vf-value">$0</strong>
+                        <small>Importe de los productos entregados</small>
+                    </article>
+
+                    <article class="vf-card">
+                        <span class="vf-card-label">
+                            <i class="bi bi-bag-check me-1"></i>
+                            Pedidos por completar
+                        </span>
+                        <strong id="pedidosPendientes" class="vf-value">0</strong>
+                        <small>Creados, recibidos, en proceso o en camino</small>
+                    </article>
+
+                    <article class="vf-card">
+                        <span class="vf-card-label">
+                            <i class="bi bi-box-seam me-1"></i>
+                            Productos vendidos
+                        </span>
+                        <strong id="productosVendidos" class="vf-value">0</strong>
+                        <small>Productos distintos en pedidos entregados</small>
+                    </article>
+
+                    <article class="vf-card">
+                        <span class="vf-card-label">
+                            <i class="bi bi-people me-1"></i>
+                            Clientes compradores
+                        </span>
+                        <strong id="clientesCompradores" class="vf-value">0</strong>
+                        <small>Clientes con pedidos entregados</small>
+                    </article>
+                </section>
+
+                <section
+                    class="vf-cards vf-cards-secondary"
+                    aria-label="Indicadores adicionales"
+                >
+                    <article class="vf-card">
+                        <span class="vf-card-label">Pedidos entregados</span>
+                        <strong id="pedidosVentas" class="vf-value">0</strong>
+                        <small>Pedidos incluidos en las ventas</small>
+                    </article>
+
+                    <article class="vf-card">
+                        <span class="vf-card-label">Promedio por pedido</span>
+                        <strong id="promedioPedido" class="vf-value">$0</strong>
+                        <small>Ingresos divididos entre pedidos entregados</small>
+                    </article>
+
+                    <article class="vf-card">
+                        <span class="vf-card-label">Unidades vendidas</span>
+                        <strong id="unidadesVendidas" class="vf-value">0</strong>
+                        <small>Artículos incluidos en pedidos entregados</small>
+                    </article>
+                </section>
+
+                <section class="vf-panel">
+                    <h2>Tendencia de ventas</h2>
+                    <p class="vf-description">
+                        Ingresos de pedidos entregados, agrupados por
+                        fecha de creación del pedido. Valores en COP.
+                    </p>
+
+                    <div id="graficaVentas" class="vf-chart-container"></div>
+
+                    <p id="avisoSinVentas" class="vf-empty" hidden>
+                        No hay pedidos entregados en este período.
+                    </p>
+
+                    <details>
+                        <summary>Ver reporte diario de ingresos y pedidos</summary>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Fecha del pedido</th>
+                                        <th scope="col">Pedidos entregados</th>
+                                        <th scope="col">Unidades</th>
+                                        <th scope="col">Ingresos</th>
+                                        <th scope="col">Promedio por pedido</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaDiaria"></tbody>
+                            </table>
+                        </div>
+                    </details>
+                </section>
+
+                <div class="vf-columns">
+                    <section class="vf-panel">
+                        <h2>Productos más vendidos</h2>
+                        <p class="vf-description">
+                            Top 5 por unidades vendidas,
+                            con categoría e ingresos por producto.
+                        </p>
+                        <div id="rankingProductos"></div>
+                    </section>
+
+                    <section class="vf-panel">
+                        <h2>Ingresos por categoría</h2>
+                        <p class="vf-description">
+                            Distribución de ingresos, valores
+                            y porcentaje de participación.
+                        </p>
+                        <div id="categoriasIngresos"></div>
+                    </section>
                 </div>
-                <div class="card-body p-0">
+
+                <section class="vf-panel">
+                    <h2>Últimos pedidos</h2>
+                    <p class="vf-description">
+                        Ocho pedidos más recientes dentro del período.
+                    </p>
+
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th># Orden</th>
-                                    <th>Cliente</th>
-                                    <th>Estado</th>
-                                    <th>Total</th>
-                                    <th>Fecha</th>
+                                    <th scope="col"># Orden</th>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Total de productos</th>
+                                    <th scope="col">Fecha</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="5" class="text-center text-muted py-4">No hay pedidos recientes registrados.</td>
-                                </tr>
-                            </tbody>
+                            <tbody id="tablaPedidos"></tbody>
                         </table>
                     </div>
-                </div>
+                </section>
+
+                <p class="vf-note">
+                    Fuente: backend de VidaFit. Las ventas incluyen
+                    exclusivamente pedidos ENTREGADO. Cada importe se
+                    calcula como cantidad por precio unitario del detalle.
+                    Los demás estados no suman ingresos. No se añaden
+                    descuentos, impuestos ni transporte que no figuren
+                    en los detalles. Los porcentajes se muestran redondeados.
+                </p>
             </div>
+
+            <noscript>
+                <p class="alert alert-warning">
+                    Activa JavaScript para consultar las métricas.
+                </p>
+            </noscript>
         </main>
     </div>
 
-    <!-- Scripts CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/style/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <!-- Script de lógica de Administrador -->
+
+    <!-- Se conserva el cierre de sesión existente. -->
     <script src="Assets/Js/adminCerrarSesion.js"></script>
+
+    <!-- Métricas conectadas al backend. -->
+    <script src="Assets/Js/metricas-dashboard.js"></script>
 </body>
 
 </html>
