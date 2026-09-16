@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Validamos si el usuario es Administrador o Cliente
         const esAdmin = usuarioSesionActiva.rol === "admin";
 
+        const nombreMostrar = usuarioSesionActiva.apellido 
+            ? `${usuarioSesionActiva.nombre} ${usuarioSesionActiva.apellido}` 
+            : usuarioSesionActiva.nombre;
+
         zonaUsuario.innerHTML = `
             <div class="dropdown">
                 <button
@@ -16,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <i class="bi ${esAdmin ? 'bi-shield-lock-fill text-primary' : 'bi-person-circle'}"></i>
-                    Hola, ${usuarioSesionActiva.nombre} ${usuarioSesionActiva.apellido}
+                    Hola, ${nombreMostrar}
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm">
