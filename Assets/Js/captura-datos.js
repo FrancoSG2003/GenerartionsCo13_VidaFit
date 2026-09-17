@@ -83,7 +83,7 @@ formProducto.addEventListener('submit', async function (event) {
     const descripcion = document.getElementById('descripcion').value.trim();
 
 
-    if (!nombre || isNaN(categoriaId) || !descripcion || !imagen || isNaN(precio) || isNaN(stock) || precio <= 0 || stock <= 0) {
+    if (!nombre || isNaN(categoriaId) || !descripcion || !imagen || isNaN(precio) || isNaN(stock) || precio <= 0 || stock < 0) {
         Swal.fire({
             icon: 'warning',
             title: 'Datos inválidos',
@@ -239,28 +239,72 @@ function renderizarProductos() {
     }
 
     listaProductos.forEach((producto) => {
+
+        const sinStock = producto.stock === 0;
+
         const col = document.createElement('div');
         col.className = 'col-12 col-md-6 col-lg-4';
 
         col.innerHTML = `
-            <div class="card h-100 border-0 shadow-sm">
-                <img src="${producto.imagen}" class="card-img-top object-fit-cover" alt="${producto.nombre}" style="height: 200px;" onerror="handleImageError(this)">
+            <div class="card h-100 border-0 shadow-sm ${sinStock ? 'producto-sin-stock' : ''}">
+                
+                <img 
+                    src="${producto.imagen}" 
+                    class="card-img-top object-fit-cover" 
+                    alt="${producto.nombre}" 
+                    style="height: 200px;" 
+                    onerror="handleImageError(this)"
+                >
+
                 <div class="card-body d-flex flex-column">
+
                     <span class="badge text-bg-secondary w-auto align-self-start mb-2">
                         ${listaCategorias.find(categoria => categoria.id === producto.categoriaId)?.nombre || 'Sin categoría'}
                     </span>
-                    <h5 class="card-title fw-bold">${producto.nombre}</h5>
-                    <p class="card-text text-secondary small flex-grow-1">${producto.descripcion}</p>
+
+                    ${sinStock ? `
+                        <span class="badge bg-danger w-auto align-self-start mb-2">
+                          Sin stock
+                        </span>
+                    ` : ''}
+
+                    <h5 class="card-title fw-bold">
+                        ${producto.nombre}
+                    </h5>
+
+                    <p class="card-text text-secondary small flex-grow-1">
+                        ${producto.descripcion}
+                    </p>
+
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="fs-5 fw-bold text-primary">$${producto.precio.toLocaleString()}</span>
-                        <span class="small text-muted">Stock: ${producto.stock}</span>
+                        
+                        <span class="fs-5 fw-bold ${sinStock ? 'text-secondary' : 'text-primary'}">
+                            $${producto.precio.toLocaleString()}
+                        </span>
+
+                        <span class="small ${sinStock ? 'text-danger fw-bold' : 'text-muted'}">
+                            ${sinStock ? 'Sin stock' : `Stock: ${producto.stock}`}
+                        </span>
+
                     </div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2" onclick="editarProducto(${producto.id})">
+
+
+                    <button 
+                        type="button" 
+                        class="btn btn-outline-secondary btn-sm w-100 mb-2" 
+                        onclick="editarProducto(${producto.id})"
+                    >
                         <i class="bi bi-pencil"></i> Editar
                     </button>
-                    <button type="button" class="btn btn-outline-danger btn-sm w-100 mt-auto" onclick="eliminarProducto(${producto.id})">
+
+                    <button 
+                        type="button" 
+                        class="btn btn-outline-danger btn-sm w-100 mt-auto" 
+                        onclick="eliminarProducto(${producto.id})"
+                    >
                         <i class="bi bi-trash"></i> Eliminar
                     </button>
+
                 </div>
             </div>
         `;
@@ -355,6 +399,9 @@ function imprimirJsonConsola() {
     console.log(JSON.stringify(listaProductos, null, 2));
 }
 
-actualizarInterfaz();
-cargarCategorias();
-cargarProductos();
+async function inicializarAdmin() {
+    await cargarCategorias();
+    await cargarProductos();
+}
+
+inicializarAdmin();

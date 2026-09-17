@@ -87,3 +87,24 @@ body {
     border-radius: 12px !important;
     box-shadow: 0 6px 18px rgba(13, 110, 253, 0.20) !important;
 }
+
+.producto-sin-stock {
+    background-color: #111827 !important;
+    color: white;
+}
+
+.producto-sin-stock .card-text {
+    color: #d1d5db !important;
+}
+
+.producto-sin-stock .card-title {
+    color: white;
+}
+
+.producto-sin-stock img {
+    opacity: 0.45;
+}
+
+.producto-sin-stock .btn-outline-danger {
+    border-color: #dc3545;
+}
