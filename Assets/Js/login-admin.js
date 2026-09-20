@@ -18,11 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 nombre: "Administrador",
                 apellido: "VidaFit",
                 email: ADMIN_EMAIL,
-                rol: "admin"
+                rol: "ADMIN"
             };
 
             // Guarda la sesión 
-            localStorage.setItem('userRole', 'admin');
+            localStorage.setItem('userRole', 'ADMIN');
             localStorage.setItem('usuarioSesionActiva', JSON.stringify(adminUser));
 
             Swal.fire({

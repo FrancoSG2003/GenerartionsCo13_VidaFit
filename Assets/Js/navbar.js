@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (usuarioSesionActiva && zonaUsuario) {
         // Validamos si el usuario es Administrador o Cliente
-        const esAdmin = usuarioSesionActiva.rol === "admin";
+        const esAdmin = usuarioSesionActiva.rol === "ADMIN";
 
         const nombreMostrar = usuarioSesionActiva.apellido 
             ? `${usuarioSesionActiva.nombre} ${usuarioSesionActiva.apellido}` 
