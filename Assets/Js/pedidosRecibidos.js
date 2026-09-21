@@ -1,8 +1,8 @@
 
 "use strict";
 
-const URL_PEDIDOS = "https://backend-vidafit.onrender.com/api/pedidos";
-const URL_USUARIOS = "https://backend-vidafit.onrender.com/api/usuarios";
+const URL_PEDIDOS = `${window.VidaFitApiAdmin}/pedidos`;
+const URL_USUARIOS = `${window.VidaFitApiAdmin}/usuarios`;
 
 // Estados definidos en EstadoPedido.java
 const estadosPedido = [
@@ -130,20 +130,45 @@ function renderizarPedidos(pedidos) {
         return;
     }
 
-    // Mostrar primero los pedidos más recientes.
-    const pedidosOrdenados = [...pedidos].sort((a, b) => {
-        return Number(b.id) - Number(a.id);
-    });
+    const busqueda = document.getElementById("filtroCliente").value.trim().toLocaleLowerCase("es");
+    const nombre = pedido => usuariosPorId.get(String(pedido.usuarioId))?.nombre || 'Usuario #' + pedido.usuarioId;
+    const pedidosOrdenados = pedidos.filter(pedido => {
+        const usuario = usuariosPorId.get(String(pedido.usuarioId));
+        return [nombre(pedido), usuario?.correo || '', String(pedido.usuarioId)]
+            .some(valor => valor.toLocaleLowerCase("es").includes(busqueda));
+    }).sort((a, b) => nombre(a).localeCompare(nombre(b), 'es', { sensitivity: 'base' }) ||
+        String(a.usuarioId).localeCompare(String(b.usuarioId), undefined, { numeric: true }) ||
+        (Date.parse(b.fechaPedido) || 0) - (Date.parse(a.fechaPedido) || 0) || Number(b.id) - Number(a.id));
+    let clienteAnterior = null;
+    if (!pedidosOrdenados.length) {
+        const fila = document.createElement('tr');
+        const celda = crearCelda('No hay pedidos para esta búsqueda.');
+        celda.colSpan = 6;
+        fila.appendChild(celda);
+        tablaPedidos.appendChild(fila);
+    }
 
     pedidosOrdenados.forEach(pedido => {
         const fila = document.createElement("tr");
 
         // Buscar el nombre del cliente por su ID.
-        const usuario = usuariosPorId.get(pedido.usuarioId);
+        const usuario = usuariosPorId.get(String(pedido.usuarioId));
 
         const nombreCliente = usuario
             ? usuario.nombre
             : `Usuario #${pedido.usuarioId ?? "desconocido"}`;
+
+        if (clienteAnterior !== String(pedido.usuarioId)) {
+            const grupo = document.createElement('tr');
+            grupo.className = 'table-light';
+            const titulo = document.createElement('th');
+            titulo.colSpan = 6;
+            titulo.scope = 'rowgroup';
+            titulo.textContent = nombreCliente + ' · #' + pedido.usuarioId + (usuario?.correo ? ' · ' + usuario.correo : '');
+            grupo.appendChild(titulo);
+            tablaPedidos.appendChild(grupo);
+            clienteAnterior = String(pedido.usuarioId);
+        }
 
         // Sumar las unidades de todos los detalles.
         const detalles = Array.isArray(pedido.detalles)
@@ -229,7 +254,7 @@ async function cargarPedidos() {
             const usuarios = await obtenerUsuarios();
 
             usuariosPorId = new Map(
-                usuarios.map(usuario => [usuario.id, usuario])
+                usuarios.map(usuario => [String(usuario.id), usuario])
             );
 
         } catch (errorUsuarios) {
@@ -370,9 +395,14 @@ btnActualizarPedidos.addEventListener("click", cargarPedidos);
 // Cerrar sesión.
 btnCerrarSesionAdmin.addEventListener("click", () => {
     localStorage.removeItem("userRole");
+    localStorage.removeItem("usuarioSesionActiva");
     window.location.href = "Login.html";
 });
 
 
+
+document.getElementById("filtroCliente").addEventListener("input", () => {
+    renderizarPedidos(pedidosCargados);
+});
 
 cargarPedidos();

@@ -5,7 +5,6 @@
  * No crea, modifica ni elimina registros.
  *
  * Las ventas corresponden a pedidos ENTREGADO.
- * La tendencia utiliza la fecha de creación del pedido.
  */
 
 (async () => {
@@ -15,7 +14,7 @@
         return;
     }
 
-    const API_BASE = "https://backend-vidafit.onrender.com/api";
+    const API_BASE = window.VidaFitApiAdmin;
 
     const obtener = id => document.getElementById(id);
 
@@ -46,7 +45,8 @@
         "RECIBIDO",
         "EN_PROCESO",
         "EN_CAMINO",
-        "ENTREGADO"
+        "ENTREGADO",
+        "PENDIENTE"
     ]);
 
     let pedidos = [];
@@ -174,8 +174,10 @@
     function prepararPedidos(
         pedidosBackend,
         productosBackend,
-        categoriasBackend
+        categoriasBackend,
+        usuariosBackend
     ) {
+        const usuariosPorId = new Map(usuariosBackend.map(usuario => [String(usuario.id), usuario]));
         const productosPorId = new Map();
         const categoriasPorId = new Map();
 
@@ -300,7 +302,9 @@
             return {
                 id: pedido.id,
                 clienteId: String(pedido.usuarioId),
-                clienteNombre: `Cliente #${pedido.usuarioId}`,
+                clienteNombre: usuariosPorId.get(String(pedido.usuarioId))?.nombre || `Cliente #${pedido.usuarioId}`,
+                clienteCorreo: usuariosPorId.get(String(pedido.usuarioId))?.correo || "",
+                fechaCompleta: pedido.fechaPedido,
                 fecha,
                 estado,
                 detalles
@@ -319,17 +323,20 @@
             const [
                 pedidosBackend,
                 productosBackend,
-                categoriasBackend
+                categoriasBackend,
+                usuariosBackend
             ] = await Promise.all([
                 consultarLista("/pedidos", controlador.signal),
                 consultarLista("/productos", controlador.signal),
-                consultarLista("/categorias", controlador.signal)
+                consultarLista("/categorias", controlador.signal),
+                consultarLista("/usuarios", controlador.signal)
             ]);
 
             return prepararPedidos(
                 pedidosBackend,
                 productosBackend,
-                categoriasBackend
+                categoriasBackend,
+                usuariosBackend
             );
 
         } catch (error) {
@@ -509,7 +516,9 @@
             }))
             .sort((a, b) => {
                 return (
-                    b.fecha.localeCompare(a.fecha) ||
+                    a.clienteNombre.localeCompare(b.clienteNombre, "es", { sensitivity: "base" }) ||
+                    a.clienteId.localeCompare(b.clienteId, undefined, { numeric: true }) ||
+                    b.fechaCompleta.localeCompare(a.fechaCompleta) ||
                     String(b.id).localeCompare(
                         String(a.id),
                         undefined,
@@ -537,149 +546,6 @@
             dias,
             recientes
         };
-    }
-
-    function dibujarTendencia(dias) {
-        const ancho = 900;
-        const alto = 260;
-        const izquierda = 85;
-        const derecha = 20;
-        const arriba = 20;
-        const abajo = 45;
-
-        const mayorIngreso = Math.max(
-            0,
-            ...dias.map(dia => dia.ingresos)
-        );
-
-        const maximo = mayorIngreso > 0 ? mayorIngreso : 1;
-
-        const x = indice => {
-            return izquierda +
-                indice * (ancho - izquierda - derecha) /
-                Math.max(dias.length - 1, 1);
-        };
-
-        const y = valor => {
-            return alto - abajo -
-                valor / maximo * (alto - arriba - abajo);
-        };
-
-        const etiquetaMoneda = valor => {
-            if (valor >= 1000000) {
-                return "$" + numero(valor / 1000000) + " M";
-            }
-
-            if (valor >= 1000) {
-                return "$" + numero(valor / 1000) + " mil";
-            }
-
-            return moneda(valor);
-        };
-
-        let svg = `
-            <svg
-                class="vf-chart"
-                viewBox="0 0 ${ancho} ${alto}"
-                role="img"
-                aria-label="Ingresos agrupados por fecha del pedido.
-                Consulta los valores exactos en la tabla inferior."
-            >
-        `;
-
-        for (let nivel = 0; nivel <= 4; nivel++) {
-            const valor = maximo * nivel / 4;
-            const altura = y(valor);
-
-            svg += `
-                <line
-                    x1="${izquierda}"
-                    y1="${altura}"
-                    x2="${ancho - derecha}"
-                    y2="${altura}"
-                    stroke="#e8edf5"
-                />
-            `;
-
-            if (mayorIngreso > 0 || nivel === 0) {
-                svg += `
-                    <text
-                        x="${izquierda - 10}"
-                        y="${altura + 4}"
-                        text-anchor="end"
-                    >
-                        ${etiquetaMoneda(valor)}
-                    </text>
-                `;
-            }
-        }
-
-        const puntos = dias.map((dia, indice) => {
-            return `${x(indice)},${y(dia.ingresos)}`;
-        }).join(" ");
-
-        svg += `
-            <polygon
-                points="
-                    ${izquierda},${alto - abajo}
-                    ${puntos}
-                    ${x(dias.length - 1)},${alto - abajo}
-                "
-                fill="#2563eb"
-                opacity="0.08"
-            />
-
-            <polyline
-                points="${puntos}"
-                fill="none"
-                stroke="#2563eb"
-                stroke-width="3"
-            />
-        `;
-
-        dias.forEach((dia, indice) => {
-            svg += `
-                <circle
-                    cx="${x(indice)}"
-                    cy="${y(dia.ingresos)}"
-                    r="3"
-                    fill="#2563eb"
-                >
-                    <title>
-                        ${dia.fecha}: ${moneda(dia.ingresos)}
-                        — ${dia.pedidos} pedidos entregados
-                    </title>
-                </circle>
-            `;
-        });
-
-        const etiquetas = [
-            ...new Set([
-                0,
-                Math.floor((dias.length - 1) / 2),
-                dias.length - 1
-            ])
-        ];
-
-        etiquetas.forEach(indice => {
-            const alineacion = indice === 0
-                ? "start"
-                : indice === dias.length - 1
-                    ? "end"
-                    : "middle";
-
-            svg += `
-                <text
-                    x="${x(indice)}"
-                    y="${alto - 12}"
-                    text-anchor="${alineacion}"
-                >
-                    ${mostrarFecha(dias[indice].fecha)}
-                </text>
-            `;
-        });
-
-        return svg + "</svg>";
     }
 
     function dibujarRanking(ranking) {
@@ -828,8 +694,6 @@
                 `${mostrarFecha(desde)} — ${mostrarFecha(hasta)}` +
                 ` · COP · ${resultado.cantidadPedidos} pedidos entregados`;
 
-            obtener("graficaVentas").innerHTML =
-                dibujarTendencia(resultado.dias);
 
             obtener("avisoSinVentas").hidden =
                 resultado.cantidadPedidos > 0;
@@ -854,32 +718,7 @@
                     </tr>
                 `).join("");
 
-            obtener("tablaPedidos").innerHTML =
-                resultado.recientes.length > 0
-                    ? resultado.recientes.slice(0, 8).map(pedido => `
-                        <tr>
-                            <td>#${escapar(pedido.id)}</td>
-                            <td>${escapar(pedido.clienteNombre)}</td>
-
-                            <td>
-                                <span class="vf-status ${pedido.estado}">
-                                    ${escapar(
-                                        pedido.estado.replaceAll("_", " ")
-                                    )}
-                                </span>
-                            </td>
-
-                            <td>${moneda(pedido.total)}</td>
-                            <td>${pedido.fecha}</td>
-                        </tr>
-                    `).join("")
-                    : `
-                        <tr>
-                            <td colspan="5" class="text-center py-4">
-                                No hay pedidos registrados en este período.
-                            </td>
-                        </tr>
-                    `;
+            mostrarHistorial();
 
             obtener("resultados").hidden = false;
             obtener("btnReporte").disabled = false;
@@ -887,6 +726,28 @@
         } catch (error) {
             mostrarError(error.message);
         }
+    }
+
+    function mostrarHistorial() {
+        if (!resultadoActual) return;
+        const busqueda = obtener("filtroCliente").value.trim().toLocaleLowerCase("es");
+        const lista = resultadoActual.recientes.filter(pedido =>
+            [pedido.clienteNombre, pedido.clienteCorreo, pedido.clienteId]
+                .some(valor => valor.toLocaleLowerCase("es").includes(busqueda))
+        );
+        let clienteAnterior = null;
+        obtener("tablaPedidos").innerHTML = lista.map(pedido => {
+            const encabezado = clienteAnterior !== pedido.clienteId
+                ? '<tr class="table-light"><th colspan="5" scope="rowgroup">' +
+                    escapar(pedido.clienteNombre) + ' · #' + escapar(pedido.clienteId) +
+                    (pedido.clienteCorreo ? ' · ' + escapar(pedido.clienteCorreo) : '') + '</th></tr>'
+                : '';
+            clienteAnterior = pedido.clienteId;
+            return encabezado + '<tr><td>#' + escapar(pedido.id) + '</td><td>' +
+                escapar(pedido.clienteNombre) + '</td><td><span class="vf-status ' + pedido.estado + '">' +
+                escapar(pedido.estado.replaceAll('_', ' ')) + '</span></td><td>' + moneda(pedido.total) +
+                '</td><td>' + escapar(new Date(pedido.fechaCompleta).toLocaleString('es-CO')) + '</td></tr>';
+        }).join('') || '<tr><td colspan="5" class="text-center py-4">No hay pedidos para esta búsqueda.</td></tr>';
     }
 
     function aplicarPeriodo() {
@@ -971,39 +832,60 @@
         }, 1000);
     }
 
+    obtener("filtroCliente").addEventListener("input", mostrarHistorial);
+    obtener("btnActualizarDashboard").addEventListener("click", async () => {
+        obtener("btnActualizarDashboard").disabled = true;
+        bloquearFiltros(true);
+        obtener("mensajeCarga").hidden = false;
+        try {
+            pedidos = await cargarPedidos();
+            if (obtener("selectorPeriodo").value === "personalizado") actualizar();
+            else aplicarPeriodo();
+            obtener("estadoConexion").textContent = 'Datos actualizados · ' + pedidos.length + ' pedidos cargados.';
+        } catch (error) {
+            mostrarError(error.message);
+        } finally {
+            bloquearFiltros(false);
+            obtener("btnReporte").disabled = !resultadoActual;
+            obtener("mensajeCarga").hidden = true;
+            obtener("btnActualizarDashboard").disabled = false;
+        }
+    });
+
     bloquearFiltros(true);
+    obtener("btnActualizarDashboard").disabled = true;
     obtener("mensajeCarga").hidden = false;
+
+    obtener("formularioFiltros").addEventListener(
+        "submit",
+        evento => {
+            evento.preventDefault();
+            actualizar();
+        }
+    );
+
+    obtener("selectorPeriodo").addEventListener(
+        "change",
+        aplicarPeriodo
+    );
+
+    ["fechaDesde", "fechaHasta"].forEach(id => {
+        obtener(id).addEventListener("input", () => {
+            obtener("selectorPeriodo").value = "personalizado";
+        });
+    });
+
+    obtener("btnReporte").addEventListener(
+        "click",
+        descargarReporte
+    );
 
     try {
         pedidos = await cargarPedidos();
 
-        obtener("formularioFiltros").addEventListener(
-            "submit",
-            evento => {
-                evento.preventDefault();
-                actualizar();
-            }
-        );
-
-        obtener("selectorPeriodo").addEventListener(
-            "change",
-            aplicarPeriodo
-        );
-
-        ["fechaDesde", "fechaHasta"].forEach(id => {
-            obtener(id).addEventListener("input", () => {
-                obtener("selectorPeriodo").value = "personalizado";
-            });
-        });
-
-        obtener("btnReporte").addEventListener(
-            "click",
-            descargarReporte
-        );
-
         obtener("estadoConexion").textContent =
             `Conectado al backend · ${pedidos.length} pedidos cargados. ` +
-            "Recarga la página para consultar cambios nuevos.";
+            "Usa Actualizar datos para consultar cambios nuevos.";
 
         bloquearFiltros(false);
         aplicarPeriodo();
@@ -1016,6 +898,7 @@
         console.error("Dashboard VidaFit:", error);
 
     } finally {
+        obtener("btnActualizarDashboard").disabled = false;
         obtener("mensajeCarga").hidden = true;
     }
 })();
