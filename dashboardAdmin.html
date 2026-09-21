@@ -14,9 +14,9 @@
     <!-- Verificación inicio de sesion-->
     <script>
         const userRole = localStorage.getItem('userRole');
-            if (userRole !== 'ADMIN') {
-                alert('Sesión no válida o expirada. Por favor ingresa como Administrador.');
-                window.location.href = 'Login.html';
+        if (userRole !== 'ADMIN') {
+            alert('Sesión no válida o expirada. Por favor ingresa como Administrador.');
+            window.location.href = 'Login.html';
         }
     </script>
 </head>
@@ -25,7 +25,8 @@
 
     <div class="d-flex min-vh-100">
         <!-- Sidebar Navigation -->
-        <aside class="bg-dark text-white p-3 d-flex flex-column justify-content-between style-sidebar" style="width: 280px; min-height: 100vh;">
+        <aside class="bg-dark text-white p-3 d-flex flex-column justify-content-between style-sidebar"
+            style="width: 280px; min-height: 100vh;">
             <div>
                 <!-- Brand / User Info -->
                 <div class="d-flex align-items-center gap-3 pb-3 mb-3 border-bottom border-secondary">
@@ -70,139 +71,151 @@
             </div>
         </aside>
 
-                <!-- Main Content Area -->
+        <!-- Main Content Area -->
         <main class="flex-grow-1 p-4">
             <header class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
                 <div>
                     <h1 class="h3 fw-bold mb-0">Manejo de productos</h1>
-                    <p class="text-muted mb-0">Bienvenido al panel de control de los productos del ecommerce de VidaFit</p>
+                    <p class="text-muted mb-0">Bienvenido al panel de control de los productos del ecommerce de VidaFit
+                    </p>
                 </div>
-                <a href="index.html" class="btn btn-outline-secondary btn-sm" >
+                <a href="index.html" class="btn btn-outline-secondary btn-sm">
                     <i class="bi bi-shop me-1"></i> Ver Tienda
                 </a>
-</header>
+            </header>
 
-    <main class="container pb-5" >
-        <section  class="card bg-white mb-5" id="padreFormulario">
-            <div class="card-body p-4 p-lg-5">
+            <main class="container pb-5">
+                <section class="card bg-white mb-5" id="padreFormulario">
+                    <div class="card-body p-4 p-lg-5">
 
-                <div class="mb-4">
-                    <h2 class="h4 fw-bold mb-1" id="tituloFormularioProducto">
-                        Crear nuevo producto
-                    </h2>
-                    <p class="text-secondary mb-0" id="descripcionFormularioProducto">
-                        Ingresa la información del producto para agregarlo al catálogo.
-                    </p>
-                </div>
-
-                <form id="form-producto">
-                    <div class="row g-4">
-
-                        <div class="col-12 col-md-6">
-                            <label for="nombre" class="form-label fw-semibold">
-                                Nombre del producto
-                            </label>
-                            <input type="text" class="form-control" id="nombre" name="nombre"
-                                placeholder="Ej. Whey Protein Gold 2lbs" required>
+                        <div class="mb-4">
+                            <h2 class="h4 fw-bold mb-1" id="tituloFormularioProducto">
+                                Crear nuevo producto
+                            </h2>
+                            <p class="text-secondary mb-0" id="descripcionFormularioProducto">
+                                Ingresa la información del producto para agregarlo al catálogo.
+                            </p>
                         </div>
 
-                        <div class="col-12 col-md-6">
-                            <label for="categoria" class="form-label fw-semibold">
-                                Categoría
-                            </label>
-                            <select class="form-select" id="categoria" name="categoria" required>
-                                <option value="" selected disabled>Selecciona una categoría</option>
-                            </select>
-                        </div>
+                        <form id="form-producto">
+                            <div class="row g-4">
 
-                        <div class="col-12 col-md-6">
-                            <label for="precio" class="form-label fw-semibold">
-                                Precio
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input type="number" class="form-control" id="precio" name="precio" placeholder="149990"
-                                    required>
+                                <div class="col-12 col-md-6">
+                                    <label for="nombre" class="form-label fw-semibold">
+                                        Nombre del producto
+                                    </label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                        placeholder="Ej. Whey Protein Gold 2lbs" required>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="categoria" class="form-label fw-semibold">
+                                        Categoría
+                                    </label>
+                                    <select class="form-select" id="categoria" name="categoria" required>
+                                        <option value="" selected disabled>Selecciona una categoría</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="marca" class="form-label fw-semibold">
+                                        Marca
+                                    </label>
+                                    <select class="form-select" id="marca" name="marca" required>
+                                        <option value="" selected disabled>Selecciona una marca</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="precio" class="form-label fw-semibold">
+                                        Precio
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" id="precio" name="precio"
+                                            placeholder="149990" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="stock" class="form-label fw-semibold">
+                                        Stock
+                                    </label>
+                                    <input type="number" class="form-control" id="stock" name="stock" placeholder="20"
+                                        required>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="imagen" class="form-label fw-semibold">
+                                        Imagen del producto
+                                    </label>
+                                    <input type="text" class="form-control" id="imagen" name="imagen"
+                                        placeholder="URL de la imagen">
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <label for="descripcion" class="form-label fw-semibold">
+                                        Descripción
+                                    </label>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
+                                        placeholder="Describe brevemente el producto"></textarea>
+                                </div>
+
                             </div>
-                        </div>
 
-                        <div class="col-12 col-md-6">
-                            <label for="stock" class="form-label fw-semibold">
-                                Stock
-                            </label>
-                            <input type="number" class="form-control" id="stock" name="stock" placeholder="20" required>
-                        </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="button" class="btn btn-outline-secondary me-2" id="btnCancelarEdicion"
+                                    hidden>
+                                    Cancelar edición
+                                </button>
+                                <button type="submit" class="btn btn-primary px-4" id="btnAdminAgregarProducto">
+                                    + Agregar producto
+                                </button>
+                            </div>
 
-                        <div class="col-12 col-md-6">
-                            <label for="imagen" class="form-label fw-semibold">
-                                Imagen del producto
-                            </label>
-                            <input type="text" class="form-control" id="imagen" name="imagen"
-                                placeholder="URL de la imagen">
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <label for="descripcion" class="form-label fw-semibold">
-                                Descripción
-                            </label>
-                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"
-                                placeholder="Describe brevemente el producto"></textarea>
-                        </div>
+                        </form>
 
                     </div>
+                </section>
 
-                    <div class="d-flex justify-content-end mt-4">
-                        <button type="button" class="btn btn-outline-secondary me-2" id="btnCancelarEdicion" hidden>
-                            Cancelar edición
-                        </button>
-                        <button type="submit" class="btn btn-primary px-4" id="btnAdminAgregarProducto">
-                            + Agregar producto
-                        </button>
+                <section>
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+                        <div>
+                            <span class="text-primary fw-semibold small">
+                                CATÁLOGO
+                            </span>
+                            <h2 class="h3 fw-bold mb-1">
+                                Productos registrados
+                            </h2>
+                            <p class="text-secondary mb-0">
+                                Productos disponibles en el catálogo.
+                            </p>
+                        </div>
+
+                        <span id="contador-productos" class="badge text-bg-primary mt-3 mt-md-0 px-3 py-2">
+                            0 Productos
+                        </span>
                     </div>
 
-                </form>
+                    <div id="contenedor-productos" class="row g-4">
+                    </div>
+                </section>
+            </main>
 
-            </div>
-        </section>
-
-        <section>
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
-                <div>
-                    <span class="text-primary fw-semibold small">
-                        CATÁLOGO
-                    </span>
-                    <h2 class="h3 fw-bold mb-1">
-                        Productos registrados
-                    </h2>
-                    <p class="text-secondary mb-0">
-                        Productos disponibles en el catálogo.
-                    </p>
+            <footer class="border-top py-4 bg-white">
+                <div class="container">
+                    <div class="text-center text-secondary small">
+                        © 2026 VidaFit. Todos los derechos reservados.
+                    </div>
                 </div>
+            </footer>
 
-                <span id="contador-productos" class="badge text-bg-primary mt-3 mt-md-0 px-3 py-2">
-                    0 Productos
-                </span>
-            </div>
-
-            <div id="contenedor-productos" class="row g-4">
-            </div>
-        </section>
-    </main>
-
-    <footer class="border-top py-4 bg-white">
-        <div class="container">
-            <div class="text-center text-secondary small">
-                © 2026 VidaFit. Todos los derechos reservados.
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="Assets/Js/config-admin.js"></script>
-    <script src="Assets/Js/captura-datos.js"></script>
-    <script src="Assets/Js/navbar.js"></script>
-    <script src="Assets/Js/adminCerrarSesion.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="Assets/Js/config-admin.js"></script>
+            <script src="Assets/Js/captura-datos.js"></script>
+            <script src="Assets/Js/navbar.js"></script>
+            <script src="Assets/Js/adminCerrarSesion.js"></script>
 
 </body>
 
