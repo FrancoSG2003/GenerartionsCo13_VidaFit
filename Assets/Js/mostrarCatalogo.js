@@ -7,61 +7,57 @@ let categoriasCatalogo = [];
 async function cargarCategorias() {
     try {
         const respuesta = await fetch(API_CATEGORIAS);
-
-        if (!respuesta.ok) {
-            throw new Error('Error al obtener las categorias.');
-        }
-
+        if (!respuesta.ok) throw new Error('Error al obtener las categorías.');
         categoriasCatalogo = await respuesta.json();
-
     } catch (error) {
-        console.error('Error al cargar categorias:', error);
+        console.error('Error al cargar categorías:', error);
     }
 }
 
-async function cargarProductos() { 
+async function cargarProductos() {
     try {
         const respuesta = await fetch(API_PRODUCTOS);
-
-        if (!respuesta.ok) {
-            throw new Error('Error al obtener los productos');
-        }
-
+        if (!respuesta.ok) throw new Error('Error al obtener los productos');
         productosCatalogo = await respuesta.json();
-        mostrarProductos();
 
+        mostrarProductos();
     } catch (error) {
         console.error('Error al cargar productos:', error);
     }
 }
 
 function obtenerNombreCategoria(categoriaId) {
-    const categoria = categoriasCatalogo.find(
-        cat => cat.id === categoriaId
-    );
+    const categoria = categoriasCatalogo.find(cat => cat.id === categoriaId);
+    if (!categoria) return '';
 
-    if (!categoria) {
-        return '';
+    return categoria.nombre
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replaceAll(' ', '-');
+}
+
+function obtenerMarcaProducto(marca) {
+    if (!marca || String(marca).trim() === '') {
+        return 'Sin marca';
     }
-
-    return categoria.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replaceAll(' ', '-');
+    return String(marca).trim();
 }
 
 function mostrarProductos() {
     const contenedor = document.getElementById('contenedor-productos');
-
     if (!contenedor) return;
 
     contenedor.innerHTML = '';
 
     productosCatalogo.forEach(function (producto, indice) {
-
         const columna = document.createElement('div');
         columna.className = 'col producto-columna';
         columna.dataset.posicionOriginal = indice;
 
         const categoria = obtenerNombreCategoria(producto.categoriaId);
         const imagenRuta = producto.imagen || 'Assets/img/vitaminas-bg.png';
+        const marcaNombre = obtenerMarcaProducto(producto.marca);
 
         columna.innerHTML = `
             <article
@@ -70,7 +66,7 @@ function mostrarProductos() {
                 data-categoria="${categoria}"
                 data-precio="${producto.precio}"
                 data-stock="${producto.stock ?? 100}"
-                data-marca=""
+                data-marca="${marcaNombre}"
                 data-ventas="0"
                 data-valoracion="0"
             >
@@ -83,12 +79,14 @@ function mostrarProductos() {
                 </button>
 
                 <div class="producto-imagen bg-light d-flex align-items-center justify-content-center rounded-top">
-                    <img
-                        src="${imagenRuta}"
-                        alt="${producto.nombre}">
+                    <img src="${imagenRuta}" alt="${producto.nombre}">
                 </div>
 
                 <div class="card-body d-flex flex-column text-start">
+                    <span class="badge bg-secondary mb-2 align-self-start fs-7">
+                        ${marcaNombre}
+                    </span>
+
                     <h6 class="card-title fw-bold mb-1">
                         ${producto.nombre}
                     </h6>
@@ -99,9 +97,7 @@ function mostrarProductos() {
 
                     <div class="my-2 text-warning small">
                         ★★★★★
-                        <span class="text-dark ms-1">
-                            (0)
-                        </span>
+                        <span class="text-dark ms-1">(0)</span>
                     </div>
 
                     <p class="card-text fw-bold mb-3">
@@ -122,10 +118,8 @@ function mostrarProductos() {
         contenedor.appendChild(columna);
     });
 
-    // Notificar a carrito-compra.js que la carga de productos ha terminado
-    document.dispatchEvent(
-        new Event('productosCatalogoCargados')
-    );
+    // Notificar a filtros-catalogos.js y a carrito-compra.js que la renderización terminó
+    document.dispatchEvent(new Event('productosCatalogoCargados'));
 }
 
 async function iniciarCatalogo() {
