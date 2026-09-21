@@ -49,11 +49,13 @@ const formatearPrecio = (precio) => "$" + Number(precio).toLocaleString("es-CO")
 
 function obtenerUsuarioIdSesion() {
     const sesion = localStorage.getItem("usuarioSesionActiva");
-    if (!sesion) return 1;
+
+    if (!sesion) return null;
+
     try {
-        return JSON.parse(sesion).id || 1;
+        return JSON.parse(sesion).id || null;
     } catch {
-        return 1;
+        return null;
     }
 }
 
@@ -200,7 +202,10 @@ function renderizarCarrito() {
         if (tarjetaProducto) tarjetaProducto.dataset.id = producto.id;
 
         const img = clon.querySelector(".producto-imagen-carrito");
-        if (img) { img.src = producto.imagen; img.alt = producto.nombre; }
+        if (img) {
+            img.src = producto.imagen;
+            img.alt = producto.nombre;
+        }
 
         const nombre = clon.querySelector(".producto-nombre");
         if (nombre) nombre.textContent = producto.nombre;
@@ -264,7 +269,10 @@ function vaciarCarrito() {
     if (carrito.length === 0) return;
 
     const swalWithBootstrapButtons = Swal.mixin({
-        customClass: { confirmButton: "btn btn-success me-2", cancelButton: "btn btn-danger" },
+        customClass: {
+            confirmButton: "btn btn-success me-2",
+            cancelButton: "btn btn-danger"
+        },
         buttonsStyling: false
     });
 
@@ -281,7 +289,12 @@ function vaciarCarrito() {
             carrito = [];
             guardarCarritoLocal();
             renderizarCarrito();
-            swalWithBootstrapButtons.fire({ title: "¡Carrito vacío!", text: "Todos los productos fueron eliminados.", icon: "success" });
+
+            swalWithBootstrapButtons.fire({
+                title: "¡Carrito vacío!",
+                text: "Todos los productos fueron eliminados.",
+                icon: "success"
+            });
         }
     });
 }
@@ -319,25 +332,54 @@ async function finalizarCompra() {
     try {
         const token = localStorage.getItem("token");
         const usuarioId = obtenerUsuarioIdSesion();
-        let direccionId = Number(localStorage.getItem("direccionId"));
 
-        // Verificación de respaldo si el ID de la dirección no está cargado localmente
+        if (!usuarioId) {
+            throw new Error("Debes iniciar sesión para realizar una compra.");
+        }
+
+        let direccionId = Number(localStorage.getItem("direccionId"));
+        let direccionSeleccionada = null;
+
         if (!direccionId || isNaN(direccionId)) {
             const resDirecciones = await fetch(`https://backend-vidafit.onrender.com/api/direcciones/usuario/${usuarioId}`, {
-                headers: { ...(token && { "Authorization": `Bearer ${token}` }) }
+                headers: {
+                    ...(token && {
+                        "Authorization": `Bearer ${token}`
+                    })
+                }
             });
 
             if (resDirecciones.ok) {
                 const direcciones = await resDirecciones.json();
+
                 if (Array.isArray(direcciones) && direcciones.length > 0) {
-                    direccionId = direcciones[0].id;
+                    direccionSeleccionada = direcciones[0];
+                    direccionId = direccionSeleccionada.id;
                     localStorage.setItem("direccionId", direccionId);
                 }
             }
         }
 
-        if (!direccionId) {
-            throw new Error("No tienes una dirección de envío registrada. Registra una dirección antes de realizar la compra.");
+        if (direccionId && !direccionSeleccionada) {
+            const resDirecciones = await fetch(`https://backend-vidafit.onrender.com/api/direcciones/usuario/${usuarioId}`, {
+                headers: {
+                    ...(token && {
+                        "Authorization": `Bearer ${token}`
+                    })
+                }
+            });
+
+            if (resDirecciones.ok) {
+                const direcciones = await resDirecciones.json();
+
+                direccionSeleccionada = direcciones.find(
+                    (direccion) => direccion.id === direccionId
+                );
+            }
+        }
+
+        if (!direccionId || !direccionSeleccionada) {
+            throw new Error("No tienes una dirección de envío válida. Registra una dirección antes de realizar la compra.");
         }
 
         const pedidoPayload = {
@@ -355,7 +397,9 @@ async function finalizarCompra() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                ...(token && { "Authorization": `Bearer ${token}` })
+                ...(token && {
+                    "Authorization": `Bearer ${token}`
+                })
             },
             body: JSON.stringify(pedidoPayload)
         });
@@ -366,6 +410,23 @@ async function finalizarCompra() {
         }
 
         const pedidoCreado = await response.json();
+
+        const compraConfirmada = {
+            pedidoId: pedidoCreado.id,
+            usuario: JSON.parse(localStorage.getItem("usuarioSesionActiva")),
+            direccion: direccionSeleccionada,
+            productos: [...carrito],
+            total: carrito.reduce(
+                (total, producto) =>
+                    total + producto.precio * producto.cantidad,
+                0
+            )
+        };
+
+        localStorage.setItem(
+            "ultimaCompraVidaFit",
+            JSON.stringify(compraConfirmada)
+        );
 
         carrito.forEach((producto) => {
             const tarjeta = document.querySelector(`.producto-card[data-id="${producto.id}"], .card[data-id="${producto.id}"]`);
@@ -384,12 +445,7 @@ async function finalizarCompra() {
         guardarCarritoLocal();
         renderizarCarrito();
 
-        Swal.fire({
-            icon: "success",
-            title: "¡Compra realizada!",
-            text: `Tu pedido #${pedidoCreado.id || ''} fue procesado correctamente.`,
-            confirmButtonColor: "#212529"
-        });
+        window.location.href = "compra-confirmada.html";
 
     } catch (error) {
         console.error("Error al procesar el pedido:", error);
@@ -424,6 +480,7 @@ function cargarCarritoLocal() {
 
     productosGuardados.forEach((producto) => {
         const stockDisponible = obtenerStockDisponible(producto.id);
+
         if (stockDisponible !== null) {
             if (stockDisponible > 0) {
                 producto.cantidad = Math.min(producto.cantidad, stockDisponible);
@@ -437,13 +494,14 @@ function cargarCarritoLocal() {
 
 function inicializarApp() {
     if (inicializado) return;
+
     cargarStockLocal();
     cargarCarritoLocal();
     actualizarDisponibilidadProductos();
     renderizarCarrito();
+
     inicializado = true;
 }
 
-// Inicialización
 document.addEventListener("productosCatalogoCargados", inicializarApp);
 document.addEventListener("DOMContentLoaded", inicializarApp);
