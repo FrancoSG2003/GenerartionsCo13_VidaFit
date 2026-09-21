@@ -55,11 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (els.telefono) els.telefono.value = telefono;
 
         obtenerDireccionesBackend();
-        
         obtenerPedidosBackend();
     };
 
-    // --- Funcion para obtener pedidos ---
+    // --- Función para obtener pedidos ---
     const obtenerPedidosBackend = async () => {
         try {
             const response = await fetch(ENDPOINTS.PEDIDOS_USUARIO(usuarioSesion.id));
@@ -124,6 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(pedido.total)
                 : '$0';
 
+            // Convierte el ID (ej: 5) en formato de orden (ej: VF-00005)
+            const codigoPedido = `VF-${String(pedido.id).padStart(5, '0')}`;
+
             // Generar la lista de productos dentro del pedido
             const HTMLDetalles = (pedido.detalles && pedido.detalles.length > 0)
                 ? pedido.detalles.map(det => {
@@ -145,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="card border rounded-4 mb-3 shadow-sm p-3">
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pb-2 border-bottom">
                         <div>
-                            <h6 class="fw-bold mb-1">Pedido #${pedido.id}</h6>
+                            <h6 class="fw-bold mb-1">Orden ${codigoPedido}</h6>
                             <p class="text-muted small mb-0"><i class="bi bi-calendar3 me-1"></i>${fechaFormateada}</p>
                         </div>
                         <div class="text-end">
