@@ -264,7 +264,7 @@ function renderizarProductos() {
 
                     ${sinStock ? `
                         <span class="badge bg-danger w-auto align-self-start mb-2">
-                          Sin stock
+                        Sin stock
                         </span>
                     ` : ''}
 
