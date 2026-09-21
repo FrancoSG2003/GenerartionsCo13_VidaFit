@@ -4,7 +4,7 @@ let listaMarcas = [];
 
 const API_PRODUCTOS = `${window.VidaFitApiAdmin}/productos`;
 const API_CATEGORIAS = `${window.VidaFitApiAdmin}/categorias`;
-const API_MARCAS = `${window.VidaFitApiAdmin}/marcas`;
+const API_MARCAS = `${window.VidaFitApiAdmin}/productos/marcas`;
 
 const formProducto = document.getElementById('form-producto');
 const contenedorProductos = document.getElementById('contenedor-productos');
@@ -31,6 +31,7 @@ async function cargarCategorias() {
 
         listaCategorias = await respuesta.json();
         const selectCategoria = document.getElementById('categoria');
+        selectCategoria.innerHTML = '<option value="" disabled selected>Selecciona una categoría</option>';
 
         listaCategorias.forEach(categoria => {
             const opcion = document.createElement('option');
@@ -54,11 +55,12 @@ async function cargarMarcas() {
         }
 
         const selectMarca = document.getElementById('marca');
+        selectMarca.innerHTML = '<option value="" disabled selected>Selecciona una marca</option>';
 
         listaMarcas.forEach(marca => {
             const opcion = document.createElement('option');
             const valorMarca = typeof marca === 'object' ? marca.id || marca.nombre : marca;
-            const textoMarca = typeof marca === 'object' ? marca.nombre : marca.replace('_', ' ');
+            const textoMarca = typeof marca === 'object' ? marca.nombre : String(marca).replaceAll('_', ' ');
 
             opcion.value = valorMarca;
             opcion.textContent = textoMarca;
@@ -175,8 +177,8 @@ window.editarProducto = function (id) {
     productoEnEdicionId = producto.id;
 
     document.getElementById('nombre').value = producto.nombre;
-    document.getElementById('categoria').value = producto.categoriaId || producto.categoria?.id;
-    document.getElementById('marca').value = producto.marca;
+    document.getElementById('categoria').value = producto.categoriaId || producto.categoria?.id || '';
+    document.getElementById('marca').value = producto.marca || '';
     document.getElementById('precio').value = producto.precio;
     document.getElementById('stock').value = producto.stock;
     document.getElementById('imagen').value = producto.imagen;
@@ -231,7 +233,7 @@ function renderizarProductos() {
                             ${nombreCategoria}
                         </span>
                         <span class="badge text-bg-dark">
-                            ${producto.marca ? producto.marca.replace('_', ' ') : 'Proscience'}
+                            ${producto.marca ? String(producto.marca).replaceAll('_', ' ') : 'Sin marca'}
                         </span>
                     </div>
 
