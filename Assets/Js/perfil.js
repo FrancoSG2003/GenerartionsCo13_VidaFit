@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
         DIRECCIONES_USUARIO: (id) => `${BASE_URL}/direcciones/usuario/${id}`,
         DIRECCIONES: `${BASE_URL}/direcciones`,
         DIRECCION_POR_ID: (id) => `${BASE_URL}/direcciones/${id}`,
-        USUARIO_POR_ID: (id) => `${BASE_URL}/usuarios/${id}`
+        USUARIO_POR_ID: (id) => `${BASE_URL}/usuarios/${id}`,
+        PEDIDOS_USUARIO: (id) => `${BASE_URL}/pedidos/usuario/${id}`
     };
 
     const usuarioSesion = JSON.parse(localStorage.getItem("usuarioSesionActiva"));
@@ -35,10 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
         depto: document.getElementById("departamento"),
         btnNuevaDir: document.getElementById("btnNuevaDireccion"),
         contenedorDir: document.getElementById("listaDirecciones"),
-        formDatos: document.getElementById("perfilDatosForm")
+        formDatos: document.getElementById("perfilDatosForm"),
+        contenedorPedidos: document.getElementById("contenedorHistorialPedidos")
     };
 
     let direccionesUsuario = [];
+    let pedidosUsuario = [];
 
     const cargarDatosPerfil = () => {
         const { nombre = "", apellido = "", email = "", telefono = "" } = usuarioSesion;
@@ -52,6 +55,113 @@ document.addEventListener("DOMContentLoaded", () => {
         if (els.telefono) els.telefono.value = telefono;
 
         obtenerDireccionesBackend();
+        
+        obtenerPedidosBackend();
+    };
+
+    // --- Funcion para obtener pedidos ---
+    const obtenerPedidosBackend = async () => {
+        try {
+            const response = await fetch(ENDPOINTS.PEDIDOS_USUARIO(usuarioSesion.id));
+            if (!response.ok) throw new Error("Error al obtener el historial de pedidos.");
+
+            pedidosUsuario = await response.json();
+            renderizarPedidos();
+        } catch (error) {
+            console.error("Error al obtener pedidos:", error);
+            if (els.contenedorPedidos) {
+                els.contenedorPedidos.innerHTML = `
+                    <div class="col-12 text-center py-4">
+                        <p class="text-danger">No se pudieron cargar tus compras desde el servidor.</p>
+                    </div>`;
+            }
+        }
+    };
+
+    // --- Renderizar las tarjetas de compra ---
+    const renderizarPedidos = () => {
+        if (!els.contenedorPedidos) return;
+
+        if (!pedidosUsuario.length) {
+            els.contenedorPedidos.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="bi bi-bag-x text-muted fs-1"></i>
+                    <p class="text-muted mt-2 mb-0">Aún no has realizado ninguna compra.</p>
+                </div>`;
+            return;
+        }
+
+        els.contenedorPedidos.innerHTML = pedidosUsuario.map(pedido => {
+            const valorFecha = pedido.fechaPedido || pedido.fecha || pedido.fechaCreacion || pedido.createdAt;
+
+            let fechaFormateada = 'Fecha no disponible';
+
+            if (valorFecha) {
+                let fechaObjeto;
+
+                if (Array.isArray(valorFecha)) {
+                    fechaObjeto = new Date(
+                        valorFecha[0], 
+                        valorFecha[1] - 1, 
+                        valorFecha[2], 
+                        valorFecha[3] || 0, 
+                        valorFecha[4] || 0
+                    );
+                } else {
+                    fechaObjeto = new Date(valorFecha);
+                }
+
+                if (!isNaN(fechaObjeto.getTime())) {
+                    fechaFormateada = fechaObjeto.toLocaleDateString('es-CO', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                }
+            }
+
+            const totalFormateado = pedido.total 
+                ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(pedido.total)
+                : '$0';
+
+            // Generar la lista de productos dentro del pedido
+            const HTMLDetalles = (pedido.detalles && pedido.detalles.length > 0)
+                ? pedido.detalles.map(det => {
+                    const precioFormateado = det.precioUnitario 
+                        ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(det.precioUnitario)
+                        : '$0';
+                    return `
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-1 border-0">
+                            <span class="small text-secondary">
+                                <i class="bi bi-box-seam me-1"></i>${det.nombreProducto || 'Producto #' + det.productoId} <strong class="text-dark">x${det.cantidad}</strong>
+                            </span>
+                            <span class="small fw-semibold text-muted">${precioFormateado}</span>
+                        </li>
+                    `;
+                }).join('')
+                : '<li class="list-group-item text-muted small bg-transparent px-0 border-0">Sin detalles del pedido.</li>';
+
+            return `
+                <div class="card border rounded-4 mb-3 shadow-sm p-3">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pb-2 border-bottom">
+                        <div>
+                            <h6 class="fw-bold mb-1">Pedido #${pedido.id}</h6>
+                            <p class="text-muted small mb-0"><i class="bi bi-calendar3 me-1"></i>${fechaFormateada}</p>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-success rounded-pill px-3 py-2 mb-1">${pedido.estado || 'Completado'}</span>
+                            <p class="fw-bold text-primary mb-0 fs-5">${totalFormateado}</p>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="small fw-bold text-muted mb-1">Productos:</p>
+                        <ul class="list-group list-group-flush">
+                            ${HTMLDetalles}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }).join('');
     };
 
     const obtenerDireccionesBackend = async () => {
@@ -159,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) throw new Error("Error al procesar la solicitud.");
 
             modalDireccion?.hide();
-            await obtenerDireccionesBackend(); // Esto refresca la lista y sincroniza el localStorage
+            await obtenerDireccionesBackend();
 
             Swal.fire({
                 icon: 'success',
@@ -224,7 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const usuarioActualizado = await response.json();
 
-            // Actualizar datos locales
             Object.assign(usuarioSesion, { 
                 nombre, 
                 apellido, 
