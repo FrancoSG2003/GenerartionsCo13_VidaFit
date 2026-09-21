@@ -2,9 +2,10 @@ let listaProductos = [];
 let listaCategorias = [];
 let listaMarcas = [];
 
-const API_PRODUCTOS = `${window.VidaFitApiAdmin}/productos`;
-const API_CATEGORIAS = `${window.VidaFitApiAdmin}/categorias`;
-const API_MARCAS = `${window.VidaFitApiAdmin}/productos/marcas`;
+const API_BASE = window.VidaFitApiAdmin || 'https://backend-vidafit.onrender.com/api';
+const API_PRODUCTOS = `${API_BASE}/productos`;
+const API_CATEGORIAS = `${API_BASE}/categorias`;
+const API_MARCAS = `${API_BASE}/productos/marcas`;
 
 const formProducto = document.getElementById('form-producto');
 const contenedorProductos = document.getElementById('contenedor-productos');
