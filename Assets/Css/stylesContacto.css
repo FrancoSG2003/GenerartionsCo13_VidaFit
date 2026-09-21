@@ -235,7 +235,7 @@
 
 .preguntas-frecuentes .icono-pregunta {
     flex-shrink: 0;
-    color: var(--color-nav);
+    color: var(--bs-primary);
     font-size: 1.25rem;
 }
 

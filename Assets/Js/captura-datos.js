@@ -1,8 +1,8 @@
 let listaProductos = [];
 let listaCategorias = [];
 
-const API_PRODUCTOS = 'https://backend-vidafit.onrender.com/api/productos';
-const API_CATEGORIAS = 'https://backend-vidafit.onrender.com/api/categorias';
+const API_PRODUCTOS = `${window.VidaFitApiAdmin}/productos`;
+const API_CATEGORIAS = `${window.VidaFitApiAdmin}/categorias`;
 
 const formProducto = document.getElementById('form-producto');
 const contenedorProductos = document.getElementById('contenedor-productos');

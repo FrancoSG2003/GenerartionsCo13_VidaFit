@@ -282,22 +282,6 @@
             border-radius: 50%;
         }
 
-        .vf-chart-container {
-            overflow-x: auto;
-        }
-
-        .vf-chart {
-            display: block;
-            width: 100%;
-            min-width: 500px;
-            height: auto;
-        }
-
-        .vf-chart text {
-            fill: #64748b;
-            font-size: 12px;
-            font-family: system-ui, sans-serif;
-        }
 
         .vf-empty {
             padding: 25px 10px;
@@ -342,7 +326,7 @@
 
         summary {
             margin-top: 15px;
-            color: #2563eb;
+            color: var(--bs-primary);
             cursor: pointer;
             font-size: 13px;
         }
@@ -520,6 +504,8 @@
                 </a>
             </header>
 
+            <button id="btnActualizarDashboard" type="button" class="btn btn-outline-primary btn-sm mb-3">Actualizar datos</button>
+
             <p id="estadoConexion" class="vf-note" aria-live="polite">
                 Conectando con el backend de VidaFit…
             </p>
@@ -607,7 +593,7 @@
                             Pedidos por completar
                         </span>
                         <strong id="pedidosPendientes" class="vf-value">0</strong>
-                        <small>Creados, recibidos, en proceso o en camino</small>
+                        <small>Pendientes, creados, recibidos, en proceso o en camino</small>
                     </article>
 
                     <article class="vf-card">
@@ -653,14 +639,7 @@
                 </section>
 
                 <section class="vf-panel">
-                    <h2>Tendencia de ventas</h2>
-                    <p class="vf-description">
-                        Ingresos de pedidos entregados, agrupados por
-                        fecha de creación del pedido. Valores en COP.
-                    </p>
-
-                    <div id="graficaVentas" class="vf-chart-container"></div>
-
+                    <h2>Reporte de ventas</h2>
                     <p id="avisoSinVentas" class="vf-empty" hidden>
                         No hay pedidos entregados en este período.
                     </p>
@@ -706,11 +685,13 @@
                 </div>
 
                 <section class="vf-panel">
-                    <h2>Últimos pedidos</h2>
+                    <h2>Historial de pedidos por cliente</h2>
                     <p class="vf-description">
-                        Ocho pedidos más recientes dentro del período.
+                        Pedidos del período agrupados por cliente, del más reciente al más antiguo.
                     </p>
 
+                    <label for="filtroCliente" class="form-label">Buscar cliente</label>
+                    <input id="filtroCliente" class="form-control mb-3" type="search" placeholder="Nombre, correo o número de cliente">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
@@ -752,6 +733,7 @@
     <script src="Assets/Js/adminCerrarSesion.js"></script>
 
     <!-- Métricas conectadas al backend. -->
+    <script src="Assets/Js/config-admin.js"></script>
     <script src="Assets/Js/metricas-dashboard.js"></script>
 </body>
 

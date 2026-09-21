@@ -1,4 +1,4 @@
-const API_USUARIOS = 'https://backend-vidafit.onrender.com/api/usuarios';
+const API_USUARIOS = `${window.VidaFitApiAdmin}/usuarios`;
 
 let usuarios = [];
 

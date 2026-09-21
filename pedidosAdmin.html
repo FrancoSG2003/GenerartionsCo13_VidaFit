@@ -88,12 +88,15 @@
 
                 <section class="vf-panel">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2>Pedidos recibidos</h2>
+                        <h2>Pedidos por cliente</h2>
                         <button class="btn btn-outline-primary" id="btnActualizarPedidos">
                             <i class="bi bi-arrow-clockwise me-1"></i>
                             Actualizar
                         </button>
                     </div>
+
+                    <label for="filtroCliente" class="form-label">Buscar cliente</label>
+                    <input id="filtroCliente" class="form-control mb-3" type="search" placeholder="Nombre, correo o número de cliente">
 
                     <div id="mensajePedidos" class="alert d-none" role="alert"></div>
 
@@ -112,7 +115,7 @@
 
                             <tbody id="tablaPedidos">
                                 <tr>
-                                    <td colspan="5" class="text-center py-4">
+                                    <td colspan="6" class="text-center py-4">
                                         Cargando pedidos...
                                     </td>
                                 </tr>
@@ -128,5 +131,6 @@
 
     </main>
 
+    <script src="Assets/Js/config-admin.js"></script>
     <script src="Assets/Js/pedidosRecibidos.js"></script>
 </body>
